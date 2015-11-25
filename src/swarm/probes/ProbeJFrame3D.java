@@ -36,11 +36,21 @@ import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
+/**
+ * 
+ * @author Alexandre JIN
+ * The probe displaying the simulation in a 3D way
+ *
+ */
 @SuppressWarnings("serial")
 public class ProbeJFrame3D extends Frame implements IProbe{
-	private static final int MULTIPLICATION_FACTOR = 1;
-
+/**
+ * the only and unique universe we are using
+ */
 	public SimpleUniverse simpleUniverse;
+/**
+* 
+*/
 	public BranchGroup branchGroup;
 	
 	public ProbeJFrame3D (){
@@ -126,61 +136,41 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	) { 
 		
 	}
-
+/**
+ * Create the agents at the initial position and state.
+ * @param timestamp The time stamp when the observation is made.
+ * @param simulationEngine The engine where the simulation is running.
+ */
 
 private void createagents(
 		SimulationTimeStamp timestamp,
 		ISimulationEngine simulationEngine
 ){
 	IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
-			SwarmLevelList.ROOM
-			
-	);
-	
-
+			SwarmLevelList.ROOM			
+	);	
+// Create each agents 
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
 			AgtSimpleDronePLSInRoom castedAgtState = (AgtSimpleDronePLSInRoom) agtState;
-			float tailleag=0.003f;
 			castedAgtState.sphere=new Cone(0.007f,0.009f);
-			// Agent	
-			/* Color3f col=new Color3f(1.8f,1.8f,0.1f);
-			   ColoringAttributes ca=new ColoringAttributes();
-			   ca.setColor(col);
-			   Appearance ap=new Appearance();
-			   ap.setColoringAttributes(ca);
-			   castedAgtState.sphere.setAppearance(ap);*/
-			   BoundingSphere bound =
-
-					      new BoundingSphere(new Point3d(0.0,0.0,0.0), 100.0);
-
-					   Color3f light1Color = new Color3f(0.0f, 2.0f, 0.0f);
-
-					   Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-
-					   DirectionalLight light1
-
-					      = new DirectionalLight(light1Color, light1Direction);
-
-					   light1.setInfluencingBounds(bound);
-
-					this.branchGroup.addChild(light1);
-			
-					   // Set up the ambient light
-
-					   Color3f ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
-
-					   AmbientLight ambientLightNode = new AmbientLight(ambientColor);
-
-					   ambientLightNode.setInfluencingBounds(bound);
-
-					   this.branchGroup.addChild(ambientLightNode);
-					 Transform3D translate=new Transform3D();
+			// set up the directional light to display the 3D Shape
+			   BoundingSphere bound =new BoundingSphere(new Point3d(0.0,0.0,0.0), 100.0);
+			   Color3f light1Color = new Color3f(0.0f, 2.0f, 0.0f);
+			   Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
+			   DirectionalLight light1 = new DirectionalLight(light1Color, light1Direction);
+			   light1.setInfluencingBounds(bound);
+			   this.branchGroup.addChild(light1);
+			 // Set up the ambient light
+			   Color3f ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
+			   AmbientLight ambientLightNode = new AmbientLight(ambientColor);
+			   ambientLightNode.setInfluencingBounds(bound);
+			   this.branchGroup.addChild(ambientLightNode);
+			  // Place the agent at the initial position
+			   Transform3D translate=new Transform3D();
 					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().getX()/1000
 							,-castedAgtState.getLocation().getY()/1000,castedAgtState.getLocationZ()/1000);
 				translate.setTranslation(vitesse);
-
-
 					castedAgtState.transformGroup= new TransformGroup();
 					castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 					castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
@@ -190,46 +180,44 @@ private void createagents(
 
 		}
 	}
+	
+	
+	
+	// Set the position of the camera
 	 TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
-double mousesensitivity=0.005;
-	    // Creation comportement navigation (rotation) a la souris CLICK GAUCHE
+	//sensitivity of the movement
+	 double mousesensitivity=0.005;
+	    // Creation of the rotation Y axis ( hold left click )
 	    MouseRotate mouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
 	    mouseRotate.setFactor(mousesensitivity);
 	    mouseRotate.setTransformGroup(tg);
-
-	    // Champ d'action de la souris (rotation)
+	    // Area of the rotation Y
 	    mouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
-
-	    // Ajout du comportement rotation a la souris a l'objet parent de la
-	    // scene 3D
 	 	this.branchGroup.addChild(mouseRotate);
 
-	    // Creation comportement navigation (translation) a la souris CLICK DROIT
-	    MouseTranslate mouseTranslate =
-	        new MouseTranslate(MouseBehavior.INVERT_INPUT);
+	    // Creation of the translation X(hold right click)
+	    MouseTranslate mouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
 	    mouseTranslate.setFactor(mousesensitivity);
 	    mouseTranslate.setTransformGroup(tg);
 
-	    // Champ d'action de la souris (translation)
-	    mouseTranslate.setSchedulingBounds(
-	        new BoundingSphere(new Point3d(), 1000));
-
-	    // Ajout du comportement translation a la souris a l'objet parent de la
-	    // scene 3D
+	    // Area of the translation X
+	    mouseTranslate.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
 	    this.branchGroup.addChild(mouseTranslate);
 
-	    // Creation comportement navigation (zoom) a la souris ALT+CLICK GAUCHE 
+	    // Creation of the zoom (hold alt+left click) 
 	    MouseZoom mouseZoom = new MouseZoom(MouseBehavior.INVERT_INPUT);
 	    mouseZoom.setFactor(mousesensitivity);
 	    mouseZoom.setTransformGroup(tg);
 
-	    // Champ d'action de la souris (zoom)
+	    // Area of the zoom
 	    mouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
-
-	    // Ajout du comportement zoom a la souris a l'objet parent de la
-	    // scene 3D
 	    this.branchGroup.addChild(mouseZoom);
 }
+/**
+ * Update the position of each agent at each stamptime.
+ * @param timestamptimestamp The time stamp when the observation is made.
+ * @param simulationEngine The engine where the simulation is running.
+ */
 
 public void updateagents(SimulationTimeStamp timestamp,
 		ISimulationEngine simulationEngine
@@ -240,19 +228,17 @@ public void updateagents(SimulationTimeStamp timestamp,
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
 			AgtSimpleDronePLSInRoom castedAgtState = (AgtSimpleDronePLSInRoom) agtState;
-
-			// castedAgtState.sphere =new Sphere(tailleag);
-
-			Transform3D currenttrans=new Transform3D();
-					 Transform3D trans=new Transform3D();
-					 Vector3d currentvect=new Vector3d();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().getX()/1000
-							,-castedAgtState.getLocation().getY()/1000,castedAgtState.getLocationZ()/1000);
 			
-				castedAgtState.transformGroup.getTransform(currenttrans);
-	
-				trans.get(currentvect);
-				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
+			Transform3D currenttrans=new Transform3D();
+			Transform3D trans=new Transform3D();
+			Vector3d currentvect=new Vector3d();
+			Vector3d vitesse=new Vector3d(castedAgtState.getLocation().getX()/1000
+							,-castedAgtState.getLocation().getY()/1000,castedAgtState.getLocationZ()/1000);
+			// get the current transform3D
+			castedAgtState.transformGroup.getTransform(currenttrans);
+			trans.get(currentvect);
+			// update the current vect with the new vect.
+			Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
 					trans.setTranslation(newvect);	
 					castedAgtState.transformGroup.setTransform(trans);
 		}
