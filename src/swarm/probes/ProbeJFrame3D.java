@@ -6,25 +6,21 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
-import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
-import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -33,9 +29,11 @@ import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
 import swarm.model.agents.SwarmAgentCategoriesList;
-import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
+import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
+import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
-
 /**
  * 
  * @author Alexandre JIN
@@ -44,15 +42,18 @@ import swarm.model.level.SwarmLevelList;
  */
 @SuppressWarnings("serial")
 public class ProbeJFrame3D extends Frame implements IProbe{
-/**
- * the only and unique universe we are using
- */
+	/**
+	 * the only and unique universe we are using
+	 */
 	public SimpleUniverse simpleUniverse;
-/**
-* 
-*/
+	/**
+	* 
+	*/
 	public BranchGroup branchGroup;
-	
+	/**
+	* 
+	*/
+
 	public ProbeJFrame3D (){
 		System.setProperty("sun.awt.noerasebackground", "true");
 		Canvas3D canvas3D=new Canvas3D(SimpleUniverse.getPreferredConfiguration());
@@ -136,54 +137,69 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	) { 
 		
 	}
-/**
- * Create the agents at the initial position and state.
- * @param timestamp The time stamp when the observation is made.
- * @param simulationEngine The engine where the simulation is running.
- */
 
-private void createagents(
+	/**
+	 * Create the agents at the initial position and state.
+	 * @param timestamp The time stamp when the observation is made.
+	 * @param simulationEngine The engine where the simulation is running.
+	 */
+	public void createagents(
 		SimulationTimeStamp timestamp,
 		ISimulationEngine simulationEngine
 ){
 	IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
-			SwarmLevelList.ROOM			
-	);	
-// Create each agents 
-	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
-			AgtSimpleDronePLSInRoom castedAgtState = (AgtSimpleDronePLSInRoom) agtState;
-			castedAgtState.sphere=new Cone(0.007f,0.009f);
-			// set up the directional light to display the 3D Shape
-			   BoundingSphere bound =new BoundingSphere(new Point3d(0.0,0.0,0.0), 100.0);
-			   Color3f light1Color = new Color3f(0.0f, 2.0f, 0.0f);
-			   Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-			   DirectionalLight light1 = new DirectionalLight(light1Color, light1Direction);
-			   light1.setInfluencingBounds(bound);
-			   this.branchGroup.addChild(light1);
-			 // Set up the ambient light
-			   Color3f ambientColor = new Color3f(1.0f, 1.0f, 1.0f);
-			   AmbientLight ambientLightNode = new AmbientLight(ambientColor);
-			   ambientLightNode.setInfluencingBounds(bound);
-			   this.branchGroup.addChild(ambientLightNode);
-			  // Place the agent at the initial position
-			   Transform3D translate=new Transform3D();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().getX()/1000
-							,-castedAgtState.getLocation().getY()/1000,castedAgtState.getLocationZ()/1000);
-				translate.setTranslation(vitesse);
-					castedAgtState.transformGroup= new TransformGroup();
-					castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-					castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
-					castedAgtState.transformGroup.setTransform(translate);
-					castedAgtState.transformGroup.addChild(castedAgtState.sphere);
-						this.branchGroup.addChild(castedAgtState.transformGroup);
+			SwarmLevelList.ROOM
+			
+	);
+	
 
+	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
+		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+		
+		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
 		}
+	
+		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+		castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
+
 	}
+		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+		 castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+	}
+
+	
+	
+	 Transform3D translate=new Transform3D();
+	 Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
+					,-castedAgtState.getLocation().x/1000,castedAgtState.getLocation().z/1000);
+		translate.setTranslation(vitesse);
+
+
+			castedAgtState.transformGroup= new TransformGroup();
+			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
+			castedAgtState.transformGroup.setTransform(translate);
+			castedAgtState.transformGroup.addChild(castedAgtState.forme);
+				this.branchGroup.addChild(castedAgtState.transformGroup);
+
+}
+		
+	
+	
+
+	
+	
+	
+
+	
+	
+	
 	
 	
 	
 	// Set the position of the camera
+	
 	 TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
 	//sensitivity of the movement
 	 double mousesensitivity=0.005;
@@ -226,23 +242,81 @@ public void updateagents(SimulationTimeStamp timestamp,
 			SwarmLevelList.ROOM
 	);
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
-			AgtSimpleDronePLSInRoom castedAgtState = (AgtSimpleDronePLSInRoom) agtState;
-			
+		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+			AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
+
+			// castedAgtState.sphere =new Sphere(tailleag);
+
 			Transform3D currenttrans=new Transform3D();
-			Transform3D trans=new Transform3D();
-			Vector3d currentvect=new Vector3d();
-			Vector3d vitesse=new Vector3d(castedAgtState.getLocation().getX()/1000
-							,-castedAgtState.getLocation().getY()/1000,castedAgtState.getLocationZ()/1000);
-			// get the current transform3D
-			castedAgtState.transformGroup.getTransform(currenttrans);
-			trans.get(currentvect);
-			// update the current vect with the new vect.
-			Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
+					 Transform3D trans=new Transform3D();
+					 Vector3d currentvect=new Vector3d();
+					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
+							,-castedAgtState.getLocation().y/1000,0);
+			
+				castedAgtState.transformGroup.getTransform(currenttrans);
+	
+				trans.get(currentvect);
+				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
+					trans.setTranslation(newvect);	
+					castedAgtState.transformGroup.setTransform(trans);
+		}
+		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+			AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
+
+			// castedAgtState.sphere =new Sphere(tailleag);
+
+			Transform3D currenttrans=new Transform3D();
+					 Transform3D trans=new Transform3D();
+					 Vector3d currentvect=new Vector3d();
+					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
+							,-castedAgtState.getLocation().y/1000,0);
+			
+				castedAgtState.transformGroup.getTransform(currenttrans);
+	
+				trans.get(currentvect);
+				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
+					trans.setTranslation(newvect);	
+					castedAgtState.transformGroup.setTransform(trans);
+		}
+		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
+			AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+
+			// castedAgtState.sphere =new Sphere(tailleag);
+
+			Transform3D currenttrans=new Transform3D();
+					 Transform3D trans=new Transform3D();
+					 Vector3d currentvect=new Vector3d();
+					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
+							,-castedAgtState.getLocation().y/1000,0);
+			
+				castedAgtState.transformGroup.getTransform(currenttrans);
+	
+				trans.get(currentvect);
+				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
+					trans.setTranslation(newvect);	
+					castedAgtState.transformGroup.setTransform(trans);
+		}
+		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+			AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+
+			// castedAgtState.sphere =new Sphere(tailleag);
+
+			Transform3D currenttrans=new Transform3D();
+					 Transform3D trans=new Transform3D();
+					 Vector3d currentvect=new Vector3d();
+					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
+							,-castedAgtState.getLocation().y/1000,castedAgtState.getLocation().z/1000);
+			
+				castedAgtState.transformGroup.getTransform(currenttrans);
+	
+				trans.get(currentvect);
+				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
 					trans.setTranslation(newvect);	
 					castedAgtState.transformGroup.setTransform(trans);
 		}
 	}
+	
+	
 }
-	}
+}
 

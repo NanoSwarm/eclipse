@@ -8,7 +8,10 @@ import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
 import swarm.model.agents.SwarmAgentCategoriesList;
-import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
+import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
+import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
 /**
@@ -74,14 +77,41 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 				SwarmLevelList.ROOM
 		);
 		for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
-			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
-				AgtSimpleDronePLSInRoom castedAgtState = (AgtSimpleDronePLSInRoom) agtState;
+			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+				AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
 				this.target.println( 
 						timestamp.getIdentifier() + 
 						"\t" + castedAgtState + 
-						"\t" + castedAgtState.getLocation().getX()  + 
-						"\t" + castedAgtState.getLocation().getY() +
-						"\t" + castedAgtState.getLocationZ()
+						"\t" + castedAgtState.getLocation().x  + 
+						"\t" + castedAgtState.getLocation().y  +
+						"\t" + castedAgtState.getLocation().z 
+				);
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+				AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
+				this.target.println( 
+						timestamp.getIdentifier() + 
+						"\t" + castedAgtState + 
+						"\t" + castedAgtState.getLocation().x  + 
+						"\t" + castedAgtState.getLocation().y  +
+						"\t" + castedAgtState.getLocation().z 
+				);
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
+				AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+				this.target.println( 
+						timestamp.getIdentifier() + 
+						"\t" + castedAgtState + 
+						"\t" + castedAgtState.getLocation().x  + 
+						"\t" + castedAgtState.getLocation().y +
+						"\t" + castedAgtState.getLocation().z 
+				);
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+				AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+				this.target.println( 
+						timestamp.getIdentifier() + 
+						"\t" + castedAgtState + 
+						"\t" + castedAgtState.getLocation().x + 
+						"\t" + castedAgtState.getLocation().y +
+						"\t" + castedAgtState.getLocation().z 
 				);
 			}
 		}

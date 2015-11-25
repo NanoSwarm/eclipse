@@ -1,22 +1,31 @@
-package swarm.model.agents.simpleDrone.room;
+package swarm.model.agents.Drone.room;
 
-import java.awt.geom.Point2D;
-
+import javax.media.j3d.Appearance;
+import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
+import javax.vecmath.Vector3d;
 
 import com.sun.j3d.utils.geometry.Cone;
+import com.sun.j3d.utils.geometry.Primitive;
 
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfAgent;
 import swarm.model.level.SwarmLevelList;
 
-/**
- * The public local state of the "Simple Drone" agent in the "Room" level.
- */
-public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
-	public Cone sphere;
+public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
+	/**
+	 * 
+	 */
 	public TransformGroup transformGroup;
-
+	/**
+	 * 
+	 */
+	public Primitive forme;
+	/**
+	 * 
+	 */
+	public Color3f color;
 	/**
 	 * Builds an initialized instance of this public local state.
 	 * @param owner The agent owning this public local state.
@@ -25,7 +34,8 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * @param initialVelocityAlongX The initial velocity of the drone along the X axis.
 	 * @param initialVelocityAlongY The initial velocity of the drone along the Y axis.
 	 */
-	public AgtSimpleDronePLSInRoom(
+
+	public AgtDronePLSInRoom(
 			IAgent4Engine owner,
 			double initialX,
 			double initialY,
@@ -35,25 +45,26 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 			double initialVelocityAlongZ,
 			double initialAccelerationAlongX,
 			double initialAccelerationAlongY,
-			double initialAccelerationAlongZ					
+			double initialAccelerationAlongZ,
+			Color3f color2
+
 	) {
-		
 		super(
 			SwarmLevelList.ROOM,
 			owner
 		);
-		this.location = new Point2D.Double( initialX, initialY );
-		this.velocity = new Point2D.Double(
-				initialVelocityAlongX,
-				initialVelocityAlongY
-		);
-		this.acceleration = new Point2D.Double(
-				initialAccelerationAlongX,
-				initialAccelerationAlongY
-		);
-		locationZ=initialZ;
-		velocityZ=initialVelocityAlongZ;
-		accelerationZ=initialAccelerationAlongZ;
+		this.location=new Vector3d(initialX,initialY,initialZ);
+		this.velocity = new Vector3d(initialVelocityAlongX,initialVelocityAlongY,initialVelocityAlongZ);
+		this.acceleration = new Vector3d(initialAccelerationAlongX,initialAccelerationAlongY,initialAccelerationAlongZ);
+		this.influence = new Vector3d(0,0,0);
+		this.forme=new Cone(0.007f,0.009f);
+		this.color=color2;
+		ColoringAttributes ca=new ColoringAttributes();
+		ca.setColor(this.color);	
+		Appearance ap=new Appearance();
+		ap.setColoringAttributes(ca);		
+		this.forme.setAppearance(ap);
+		
 	}
 	
 	//
@@ -65,20 +76,13 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 	/**
 	 * The location of the drone in the room.
 	 */
-	private Point2D location;
-	private double locationZ;
-	public double getLocationZ(){
-		return locationZ;
-	}
-	public void setLocationZ(double z)
-	{
-		locationZ=z;
-	}
+	private Vector3d location;
+
 	/**
 	 * Gets the location of the drone in the room.
 	 * @return The location of the drone in the room.
 	 */
-	public Point2D getLocation( ){
+	public Vector3d getLocation( ){
 		return this.location;
 	}
 
@@ -87,27 +91,20 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * @param x The new x coordinate of the drone in the room.
 	 * @param y The new y coordinate of the drone in the room.
 	 */
-	public void setLocation( double x, double y ){
-		this.location.setLocation( x, y );
+	public void setLocation( double x, double y,double z ){
+		this.location.set( x, y,z );
 	}
 	
 	/**
 	 * The vector determining the current velocity of the drone along both axes.
 	 */
-	private Point2D velocity;
-	private double velocityZ;
-	public double getVelocityZ(){
-		return velocityZ;
-	}
-	public void setVelocityZ(double z)
-	{
-		velocityZ=z;
-	}
+	private Vector3d velocity;
+
 	/**
 	 * Gets the velocity of the drone in the room.
 	 * @return The velocity of the drone in the room.
 	 */
-	public Point2D getVelocity( ){
+	public Vector3d getVelocity( ){
 		return this.velocity;
 	}
 	
@@ -116,27 +113,20 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * @param dx The velocity of the drone along the x axis.
 	 * @param dy The velocity of the drone along the y axis.
 	 */
-	public void setVelocity( double dx, double dy ){
-		this.velocity.setLocation( dx, dy );
+	public void setVelocity( double dx, double dy ,double dz){
+		this.velocity.set( dx, dy,dz );
 	}
 	
 	/**
 	 * The vector determining the current acceleration of the drone along both axes.
 	 */
-	private Point2D acceleration;
-	private double accelerationZ;
-	public double getAccelerationZ(){
-		return accelerationZ;
-	}
-	public void setAccelerationZ(double dz)
-	{
-		accelerationZ=dz;
-	}
+	private Vector3d acceleration;
+
 	/**
 	 * Gets the acceleration of the drone in the room.
 	 * @return The acceleration of the drone in the room.
 	 */
-	public Point2D getAcceleration( ){
+	public Vector3d getAcceleration( ){
 		return this.acceleration;
 	}
 	
@@ -145,7 +135,31 @@ public class AgtSimpleDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * @param dx2 The new acceleration of the drone in the room, along the x axis.
 	 * @param dy2 The new acceleration of the drone in the room, along the y axis.
 	 */
-	public void setAcceleration( double dx2, double dy2 ){
-		this.acceleration.setLocation( dx2, dy2 );
+	public void setAcceleration( double dx2, double dy2,double dz2 ){
+		this.acceleration.set( dx2, dy2, dz2 );
+	}
+	
+	/**
+	 * values of the influences on the drone 
+	 */
+	private Vector3d influence;
+	
+	
+	/**
+	 * get the value of the influences on the drone
+	 * @return the influence on the drone
+	 */
+	public Vector3d getInfluence(){
+		
+		return this.influence;
+	}
+	
+	/**
+	 * sets the sum of influences on the drone in the room
+	 * @param x influences on the x axis
+	 * @param y influences on the y axis
+	 */
+	public void setInfluence( double x, double y,double z){
+		this.influence.set(x,y,z);		
 	}
 }

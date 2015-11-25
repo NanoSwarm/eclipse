@@ -1,16 +1,13 @@
-package swarm.model.agents.simpleDrone;
+package swarm.model.agents.Drone;
 
 import fr.lgi2a.similar.microkernel.libs.generic.EmptyGlobalState;
 import fr.lgi2a.similar.microkernel.libs.generic.EmptyLocalStateOfAgent;
 import swarm.model.SwarmParameters;
-import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
+import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
 
-/**
- * The factory creating instances of agents the "Simple Drone" category.
- */
-public class AgtSimpleDroneFactory {
+public class AgtDroneFactory {
 	
 	/**
      * The parameters that are used in this agent factory.
@@ -43,34 +40,35 @@ public class AgtSimpleDroneFactory {
     }
 	
 	/**
-	 * Generates a new agent of the "Simple Drone" category.
+	 * Generates a new agent of the "Drone" category.
 	 * @param initialX The initial x coordinate of the bubble in the "Room" level.
 	 * @param initialY The initial y coordinate of the bubble in the "Room" level.
 	 * @return The newly created instance.
 	 */
-	public static AgtSimpleDrone generate(
+	public static AgtDrone generate(
 			double initialX,
-			double initialY
-			
+			double initialY,
+			double initialZ
 	){
-		AgtSimpleDrone result = new AgtSimpleDrone( );
+		AgtDrone result = new AgtDrone( );
 		// Define the initial global state of the agent.
 		result.initializeGlobalState( new EmptyGlobalState( ) );
 		// Define the agent in the "Room" level.
 		result.includeNewLevel(
 				SwarmLevelList.ROOM,
-				new AgtSimpleDronePLSInRoom( 
+				new AgtDronePLSInRoom( 
 						result, 
 						initialX, 
 						initialY, 
-						0.0,
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxSpeed, PARAMETERS.maxSpeed),
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxSpeed, PARAMETERS.maxSpeed),
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxSpeed, PARAMETERS.maxSpeed),
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxAcc, PARAMETERS.maxAcc),
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxAcc, PARAMETERS.maxAcc),
-						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxAcc, PARAMETERS.maxAcc)
-				),
+						initialZ,
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						PARAMETERS.droneColor
+						),
 				new EmptyLocalStateOfAgent(
 					SwarmLevelList.ROOM, 
 					result

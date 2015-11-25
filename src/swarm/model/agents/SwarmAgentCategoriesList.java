@@ -14,8 +14,22 @@ public class SwarmAgentCategoriesList {
 	protected SwarmAgentCategoriesList ( ){ }
 	
 	/**
-	 * The "Simple drone" agent category
+	 * The "camera drone" agent category
 	 */
+	public static final AgentCategory CAMERADRONE = new AgentCategory( "camera drone" );
 	
-	public static final AgentCategory SIMPLEDRONE = new AgentCategory( "simple drone" );
+	/**
+	 * The "microphone drone" agent category
+	 */
+	public static final AgentCategory MICROPHONEDRONE = new AgentCategory( "microphone drone" );
+	
+	/**
+	 * The "communicator drone" agent category
+	 */
+	public static final AgentCategory COMMUNICATORDRONE = new AgentCategory( "communicator drone" );
+	
+	/**
+	 * The "drone" agent category
+	 */
+	public static final AgentCategory DRONE = new AgentCategory( "drone" );
 }

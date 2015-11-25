@@ -11,8 +11,14 @@ import fr.lgi2a.similar.microkernel.environment.ILocalStateOfEnvironment;
 import fr.lgi2a.similar.microkernel.influences.InfluencesMap;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractEnvironment;
 import swarm.model.agents.SwarmAgentCategoriesList;
-import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
-import swarm.model.influences.toRoom.RIUpdateDronesSpatialStateInRoom;
+import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
+import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
+import swarm.model.influences.toRoom.RIUpdateCameraDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateCommunicatorDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
 
 /**
@@ -70,14 +76,29 @@ public class SwarmEnvironment extends AbstractEnvironment {
 		//		lies.
 		
 		// First create the influences asking for the update.
-		RIUpdateDronesSpatialStateInRoom updateInfluence = new RIUpdateDronesSpatialStateInRoom(
+		RIUpdateCameraDroneSpatialStateInRoom cameraUpdateInfluence = new RIUpdateCameraDroneSpatialStateInRoom(
+				timeLowerBound,
+				timeUpperBound
+			);
+		RIUpdateCommunicatorDroneSpatialStateInRoom communicatorUpdateInfluence = new RIUpdateCommunicatorDroneSpatialStateInRoom(
+				timeLowerBound,
+				timeUpperBound
+			);
+		RIUpdateDroneSpatialStateInRoom droneUpdateInfluence = new RIUpdateDroneSpatialStateInRoom(
 			timeLowerBound,
 			timeUpperBound
 		);
+		RIUpdateMicrophoneDroneSpatialStateInRoom microphoneUpdateInfluence = new RIUpdateMicrophoneDroneSpatialStateInRoom(
+				timeLowerBound,
+				timeUpperBound
+			);
 		
-		// Add this influences to the produced influences (the drones are registered
+		// Add these influences to the produced influences (the drones are registered
 		// to the influence later).
-		producedInfluences.add( updateInfluence );				
+		producedInfluences.add( cameraUpdateInfluence );	
+		producedInfluences.add( communicatorUpdateInfluence );
+		producedInfluences.add( droneUpdateInfluence );
+		producedInfluences.add( microphoneUpdateInfluence );
 		
 		// Then get the dynamic state of the "Chamber" level, to list the 
 		// particles
@@ -88,11 +109,26 @@ public class SwarmEnvironment extends AbstractEnvironment {
 		// Search for particles among the agents lying in that state.
 		for( ILocalStateOfAgent state : dynamicState.getPublicLocalStateOfAgents() ){
 			// Check if the agent is a SimpleDrone.
-			if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.SIMPLEDRONE ) ){
+			if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 				// Cast the public local state into the appropriate type.
-				AgtSimpleDronePLSInRoom castedState = (AgtSimpleDronePLSInRoom) state;
+				AgtCameraDronePLSInRoom castedState = (AgtCameraDronePLSInRoom) state;
 				// Add the particle to the particles to update.
-				updateInfluence.addParticleToUpdate( castedState );
+				cameraUpdateInfluence.addParticleToUpdate( castedState );
+			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+				// Cast the public local state into the appropriate type.
+				AgtCommunicatorDronePLSInRoom castedState = (AgtCommunicatorDronePLSInRoom) state;
+				// Add the particle to the particles to update.
+				communicatorUpdateInfluence.addParticleToUpdate( castedState );
+			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
+				// Cast the public local state into the appropriate type.
+				AgtDronePLSInRoom castedState = (AgtDronePLSInRoom) state;
+				// Add the particle to the particles to update.
+				droneUpdateInfluence.addParticleToUpdate( castedState );
+			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+				// Cast the public local state into the appropriate type.
+				AgtMicrophoneDronePLSInRoom castedState = (AgtMicrophoneDronePLSInRoom) state;
+				// Add the particle to the particles to update.
+				microphoneUpdateInfluence.addParticleToUpdate( castedState );
 			}
 		}		
 	}

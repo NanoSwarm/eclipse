@@ -12,7 +12,10 @@ import fr.lgi2a.similar.microkernel.levels.ILevel;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractSimulationModel;
 import fr.lgi2a.similar.microkernel.libs.generic.EmptyLocalStateOfEnvironment;
 import swarm.model.SwarmParameters;
-import swarm.model.agents.simpleDrone.AgtSimpleDroneFactory;
+import swarm.model.agents.Drone.AgtDroneFactory;
+import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
+import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
+import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.model.environment.SwarmEnvironment;
 import swarm.model.environment.room.EnvPLSInRoom;
 import swarm.model.level.SwarmLevelList;
@@ -106,9 +109,28 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			SimulationTimeStamp initialTime, Map<LevelIdentifier, ILevel> levels) {
 		SwarmParameters castedParameters = (SwarmParameters) parameters;
 		AgentInitializationData result = new AgentInitializationData();
-		for(int i = 0; i < castedParameters.nbOfAgents; i++) {
-			IAgent4Engine drone = AgtSimpleDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
-								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()));
+		for(int i = 0; i < castedParameters.nbOfCameraDroneAgents; i++) {
+			IAgent4Engine drone = AgtCameraDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
+								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()),
+								  								 0);
+			result.getAgents().add( drone );
+		}
+		for(int i = 0; i < castedParameters.nbOfCommunicatorDroneAgents; i++) {
+			IAgent4Engine drone = AgtCommunicatorDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
+								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()), 
+								  								0);
+			result.getAgents().add( drone );
+		}
+		for(int i = 0; i < castedParameters.nbOfDroneAgents; i++) {
+			IAgent4Engine drone = AgtDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
+								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()), 
+								  								0);
+			result.getAgents().add( drone );
+		}
+		for(int i = 0; i < castedParameters.nbOfMicrophoneDroneAgents; i++) {
+			IAgent4Engine drone = AgtMicrophoneDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
+								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()),
+								  								 0);
 			result.getAgents().add( drone );
 		}
 		return result;

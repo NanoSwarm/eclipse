@@ -1,4 +1,5 @@
 package swarm;
+
 import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.libs.engines.EngineMonothreadedDefaultdisambiguation;
@@ -7,7 +8,10 @@ import fr.lgi2a.similar.microkernel.libs.probes.ProbeExecutionTracker;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeImageSwingJFrame;
 import swarm.initialization.SwarmInitialization;
 import swarm.model.SwarmParameters;
-import swarm.model.agents.simpleDrone.AgtSimpleDroneFactory;
+import swarm.model.agents.Drone.AgtDroneFactory;
+import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
+import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
+import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.probes.DroneDrawer;
 import swarm.probes.ProbeJFrame3D;
 import swarm.probes.ProbePrintingParticleLocationOverTime;
@@ -18,18 +22,21 @@ public class SwarmMain {
 	 */
 	private SwarmMain() {
 		
-	
 	}
+	
 	/**
 	 * The main method of the simulation.
 	 * @param args The command line arguments.
 	 */
-	public static void main(String[] args)
+	public static void main(String[] Args)
 	{
 		// Create the parameters used in this simulation.
 		SwarmParameters parameters = new SwarmParameters();
 		// Register the parameters to the agent factories.
-				AgtSimpleDroneFactory.setParameters( parameters );				
+				AgtCameraDroneFactory.setParameters( parameters );
+				AgtCommunicatorDroneFactory.setParameters( parameters );
+				AgtDroneFactory.setParameters( parameters );
+				AgtMicrophoneDroneFactory.setParameters( parameters );
 		
 		// Create the simulation engine that will run simulations
 		ISimulationEngine engine = new EngineMonothreadedDefaultdisambiguation( );
@@ -47,7 +54,12 @@ public class SwarmMain {
 				"Drone location",
 				new ProbePrintingParticleLocationOverTime( System.out )
 		);
-
+		engine.addProbe(
+				"Chamber level Swing viewer3d",
+				new ProbeJFrame3D()															// The frame is resized automatically
+				
+		);
+			
 		engine.addProbe(
 				"Chamber level Swing viewer",
 				new ProbeImageSwingJFrame( 
@@ -57,11 +69,7 @@ public class SwarmMain {
 					null																// The frame is resized automatically
 				)
 		);
-		engine.addProbe(
-				"Chamber level Swing viewer3d",
-				new ProbeJFrame3D()															// The frame is resized automatically
-				
-		);
+		
 			
 			// Create the simulation model being used.
 			SwarmInitialization simulationModel = new SwarmInitialization(
@@ -71,8 +79,7 @@ public class SwarmMain {
 			);
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
-			System.setProperty("sun.awt.noerasebackground", "true");
 		
 	}
-	
+
 }

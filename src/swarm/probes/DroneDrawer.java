@@ -3,6 +3,9 @@ package swarm.probes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
@@ -10,7 +13,10 @@ import fr.lgi2a.similar.microkernel.dynamicstate.IPublicDynamicStateMap;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
 import fr.lgi2a.similar.microkernel.libs.probes.AbstractProbeImageSwingJPanel;
 import swarm.model.agents.SwarmAgentCategoriesList;
-import swarm.model.agents.simpleDrone.room.AgtSimpleDronePLSInRoom;
+import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
+import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.room.EnvPLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
@@ -57,26 +63,77 @@ public class DroneDrawer extends AbstractProbeImageSwingJPanel {
 		IPublicLocalDynamicState chamberLevel = dynamicStateMap.get(SwarmLevelList.ROOM);
 		//Draw the bubbles
 		for(ILocalStateOfAgent agentPLS : chamberLevel.getPublicLocalStateOfAgents()) {
-			if(agentPLS.getCategoryOfAgent().equals(SwarmAgentCategoriesList.SIMPLEDRONE)) {
-				AgtSimpleDronePLSInRoom simpleDronePLS = (AgtSimpleDronePLSInRoom) agentPLS;
-				graphics.setColor( Color.GREEN );
-				graphics.fillOval( 
-					(int) Math.floor( MULTIPLICATION_FACTOR * ( simpleDronePLS.getLocation().getX() - 0.5 ) ), 
-					(int) Math.floor( MULTIPLICATION_FACTOR * ( simpleDronePLS.getLocation().getY() - 0.5 ) ), 
-					
-					MULTIPLICATION_FACTOR * 2, 
-					MULTIPLICATION_FACTOR * 2
+			if(agentPLS.getCategoryOfAgent().equals(SwarmAgentCategoriesList.CAMERADRONE)) {
+				AgtCameraDronePLSInRoom cameraDronePLS = (AgtCameraDronePLSInRoom) agentPLS;				
+				
+				graphics.setColor( Color.BLUE );
+				Shape droneShape = new Ellipse2D.Double(
+					cameraDronePLS.getLocation().x - 0.5,
+					cameraDronePLS.getLocation().y + 0.5,
+					4,
+					8
 				);
+				AffineTransform at = AffineTransform.getRotateInstance(
+						-Math.atan2(cameraDronePLS.getVelocity().x,cameraDronePLS.getVelocity().y),
+						cameraDronePLS.getLocation().x,
+						cameraDronePLS.getLocation().y
+					);
+				droneShape = at.createTransformedShape(droneShape);
+				graphics.fill(droneShape);
+				
+			}else if(agentPLS.getCategoryOfAgent().equals(SwarmAgentCategoriesList.COMMUNICATORDRONE)) {
+				AgtCommunicatorDronePLSInRoom communicatorDronePLS = (AgtCommunicatorDronePLSInRoom) agentPLS;				
+				
+				graphics.setColor( Color.RED );
+				Shape droneShape = new Ellipse2D.Double(
+					communicatorDronePLS.getLocation().x - 0.5,
+					communicatorDronePLS.getLocation().y + 0.5,
+					4,
+					8
+				);
+				AffineTransform at = AffineTransform.getRotateInstance(
+						-Math.atan2(communicatorDronePLS.getVelocity().x,communicatorDronePLS.getVelocity().y),
+						communicatorDronePLS.getLocation().x,
+						communicatorDronePLS.getLocation().y
+					);
+				droneShape = at.createTransformedShape(droneShape);
+				graphics.fill(droneShape);
+			}else if(agentPLS.getCategoryOfAgent().equals(SwarmAgentCategoriesList.DRONE)) {
+				AgtDronePLSInRoom DronePLS = (AgtDronePLSInRoom) agentPLS;				
+				
+				graphics.setColor( Color.MAGENTA );
+				Shape droneShape = new Ellipse2D.Double(
+					DronePLS.getLocation().x - 0.5,
+					DronePLS.getLocation().y + 0.5,
+					4,
+					8
+				);
+				AffineTransform at = AffineTransform.getRotateInstance(
+						-Math.atan2(DronePLS.getVelocity().x,DronePLS.getVelocity().y),
+						DronePLS.getLocation().x,
+						DronePLS.getLocation().y
+					);
+				droneShape = at.createTransformedShape(droneShape);
+				graphics.fill(droneShape);
+			}else if(agentPLS.getCategoryOfAgent().equals(SwarmAgentCategoriesList.MICROPHONEDRONE)) {
+				AgtMicrophoneDronePLSInRoom microphoneDronePLS = (AgtMicrophoneDronePLSInRoom) agentPLS;				
+				
 				graphics.setColor( Color.BLACK );
-				graphics.drawOval(
-					(int) Math.floor( MULTIPLICATION_FACTOR * ( simpleDronePLS.getLocation().getX() - 0.5 ) ), 
-					(int) Math.floor( MULTIPLICATION_FACTOR * ( simpleDronePLS.getLocation().getY() - 0.5 ) ), 
-					MULTIPLICATION_FACTOR * 2, 
-					MULTIPLICATION_FACTOR * 2
+				Shape droneShape = new Ellipse2D.Double(
+					microphoneDronePLS.getLocation().x - 0.5,
+					microphoneDronePLS.getLocation().y + 0.5,
+					4,
+					8
 				);
+				AffineTransform at = AffineTransform.getRotateInstance(
+						-Math.atan2(microphoneDronePLS.getVelocity().x,microphoneDronePLS.getVelocity().y),
+						microphoneDronePLS.getLocation().x,
+						microphoneDronePLS.getLocation().y
+					);
+				droneShape = at.createTransformedShape(droneShape);
+				graphics.fill(droneShape);
 			}
 		}
-
 	}
 }
 
