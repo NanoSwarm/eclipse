@@ -6,6 +6,9 @@ import javax.vecmath.Vector3d;
 
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
+import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 
 public class UpdateInfluenceInRoom {
 	
@@ -93,5 +96,30 @@ public class UpdateInfluenceInRoom {
 					agtDrone.getInfluence().z + parameters.orientationCoeff * orientationAcc.z/nbOfDronesInOrientationArea
 					);
 		}
+	}
+	
+	public static void UpdateCameraDroneInfluence(AgtCameraDronePLSInRoom agtCameraDrone){
+		agtCameraDrone.setInfluence(
+				agtCameraDrone.getInfluence().x + 1 /*(parameters.roomBounds.getWidth()/2 + 400*Math.cos((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().x)/400*/,
+				agtCameraDrone.getInfluence().y /* + (parameters.roomBounds.getHeight()/2 + 400*Math.sin((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().y)/400*/,
+				agtCameraDrone.getInfluence().z
+				);
+	}
+	
+	
+	public static void UpdateCommunicatorDroneInfluence(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone){
+		agtCommunicatorDrone.setInfluence(
+				agtCommunicatorDrone.getInfluence().x,
+				agtCommunicatorDrone.getInfluence().y + 1,
+				agtCommunicatorDrone.getInfluence().z
+				);
+	}
+	
+	
+	public static void UpdateMicrophoneDroneInfluence(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone){
+		agtMicrophoneDrone.setInfluence(
+				agtMicrophoneDrone.getInfluence().x, 
+				agtMicrophoneDrone.getInfluence().y, 
+				agtMicrophoneDrone.getInfluence().z);
 	}
 }

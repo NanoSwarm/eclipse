@@ -104,27 +104,22 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "drone" agents.
 		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
-			
 			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
-			
 		}
 		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
-			agtCameraDrone.setInfluence(
-					agtCameraDrone.getInfluence().x + 1 /*(parameters.roomBounds.getWidth()/2 + 400*Math.cos((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().x)/400*/,
-					agtCameraDrone.getInfluence().y /* + (parameters.roomBounds.getHeight()/2 + 400*Math.sin((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().y)/400*/,
-					agtCameraDrone.getInfluence().z
-					);
+			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone);
 		}
 		
 		//Influences on "communicator drone" agents
 		for(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone: communicatorUpdateList){
-			agtCommunicatorDrone.setInfluence(
-					agtCommunicatorDrone.getInfluence().x,
-					agtCommunicatorDrone.getInfluence().y + 1,
-					agtCommunicatorDrone.getInfluence().z
-					);
+			UpdateInfluenceInRoom.UpdateCommunicatorDroneInfluence(agtCommunicatorDrone);
+		}
+		
+		//Influences on "microphone drones" agents
+		for(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone : microphoneUpdateList){
+			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone);
 		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
