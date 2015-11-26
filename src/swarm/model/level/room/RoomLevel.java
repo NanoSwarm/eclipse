@@ -100,91 +100,13 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		//Calculation of different influences
-		Vector3d repulsionAcc = new Vector3d();
-		Vector3d orientationAcc = new Vector3d();
-		Vector3d attractionAcc = new Vector3d();
-		int nbOfDronesInRepulsionArea = 0;
-		int nbOfDronesInOrientationArea = 0;
-		int nbOfDronesInAttractionArea = 0;	
+		
 		
 		//Influences on "drone" agents.
 		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
 			
-			agtDrone.setInfluence(0, 0, 0);
-			repulsionAcc.set(0, 0,0);
-			orientationAcc.set(0, 0,0);
-			attractionAcc.set(0, 0,0);
-			nbOfDronesInRepulsionArea = 0;
-			nbOfDronesInOrientationArea = 0;
-			nbOfDronesInAttractionArea = 0;	
+			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
 			
-			for( AgtDronePLSInRoom agtOtherDrone : droneUpdateList ){
-				if(agtDrone != agtOtherDrone){
-					double distance =Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
-											 + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
-											 + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
-					if (distance > parameters.attractionDistance){
-						//does nothing
-					}
-					else if(distance < parameters.attractionDistance && distance > parameters.orientationDistance){
-						nbOfDronesInAttractionArea++;
-						attractionAcc.set(
-								attractionAcc.x + (agtOtherDrone.getLocation().x - agtDrone.getLocation().x)/distance,
-								attractionAcc.y + (agtOtherDrone.getLocation().y - agtDrone.getLocation().y)/distance,
-								attractionAcc.z + (agtOtherDrone.getLocation().z - agtDrone.getLocation().z)/distance
-								);
-						
- 					}else if(distance < parameters.orientationDistance && distance > parameters.repulsionDistance){
-						nbOfDronesInOrientationArea++;
-						orientationAcc.set(
-								orientationAcc.x + (agtOtherDrone.getAcceleration().x)/distance,
-								orientationAcc.y + (agtOtherDrone.getAcceleration().y)/distance,
-								orientationAcc.z + (agtOtherDrone.getAcceleration().z)/distance
-								);
-					}else{
-						nbOfDronesInRepulsionArea++;
-						if (distance > 0.001){
-							repulsionAcc.set(
-									repulsionAcc.x - (agtOtherDrone.getLocation().x - agtDrone.getLocation().x)/distance,
-									repulsionAcc.y - (agtOtherDrone.getLocation().y - agtDrone.getLocation().y)/distance,
-									repulsionAcc.z - (agtOtherDrone.getLocation().z - agtDrone.getLocation().z)/distance
-									);
-							
-						}else{
-							repulsionAcc.set(
-									repulsionAcc.x - 1000*(agtOtherDrone.getLocation().x - agtDrone.getLocation().x),
-									repulsionAcc.y - 1000*(agtOtherDrone.getLocation().y - agtDrone.getLocation().y),
-									repulsionAcc.z - 1000*(agtOtherDrone.getLocation().z - agtDrone.getLocation().z)
-									);
-						}
-						
-					}
-				}				
-			}
-			
-			if (nbOfDronesInAttractionArea != 0){
-				
-				agtDrone.setInfluence(
-						parameters.attractionCoeff * attractionAcc.x / nbOfDronesInAttractionArea,
-						parameters.attractionCoeff * attractionAcc.y / nbOfDronesInAttractionArea,
-						parameters.attractionCoeff * attractionAcc.z / nbOfDronesInAttractionArea
-						);
-			}
-			if (nbOfDronesInRepulsionArea != 0){
-				agtDrone.setInfluence(
-						agtDrone.getInfluence().x + parameters.repulsionCoeff * repulsionAcc.x/nbOfDronesInRepulsionArea,
-						agtDrone.getInfluence().y + parameters.repulsionCoeff * repulsionAcc.y/nbOfDronesInRepulsionArea,
-						agtDrone.getInfluence().z + parameters.repulsionCoeff * repulsionAcc.z/nbOfDronesInRepulsionArea
-						);
-			}
-			if (nbOfDronesInOrientationArea != 0){
-				agtDrone.setInfluence(
-						agtDrone.getInfluence().x + parameters.orientationCoeff * orientationAcc.x/nbOfDronesInOrientationArea,
-						agtDrone.getInfluence().y + parameters.orientationCoeff * orientationAcc.y/nbOfDronesInOrientationArea,
-						agtDrone.getInfluence().z + parameters.orientationCoeff * orientationAcc.z/nbOfDronesInOrientationArea
-						);
-			}
 		}
 		
 		//Influences on "camera drone" agents
@@ -298,60 +220,8 @@ public class RoomLevel extends AbstractLevel {
 		
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			agtDrone.setAcceleration(
-					agtDrone.getAcceleration().x + agtDrone.getInfluence().x,
-					agtDrone.getAcceleration().y + agtDrone.getInfluence().y,
-					agtDrone.getAcceleration().z + agtDrone.getInfluence().z
-					);
-			//Keep the velocity vector under the maxSeed limit.
-			double speed = Math.sqrt(
-					Math.pow(agtDrone.getVelocity().x,2)+
-					Math.pow(agtDrone.getVelocity().y,2)+	
-					Math.pow(agtDrone.getVelocity().z,2));
+			UpdatePositionInRoom.UpdateDronePosition(agtDrone, parameters);
 			
-			if ( speed > parameters.maxSpeed){
-				agtDrone.setVelocity(parameters.maxSpeed * agtDrone.getVelocity().x / speed ,
-						parameters.maxSpeed * agtDrone.getVelocity().y / speed,
-						parameters.maxSpeed * agtDrone.getVelocity().z / speed );
-				agtDrone.setAcceleration(0, 0,0);
-			}
-			
-			//Keep the acceleration vector under the maxAcc limit
-			double acc = Math.sqrt(
-					Math.pow(agtDrone.getAcceleration().x,2)+	
-					Math.pow(agtDrone.getAcceleration().y,2)+	
-					Math.pow(agtDrone.getAcceleration().z,2));
-			
-			if ( acc > parameters.maxAcc){
-				agtDrone.setAcceleration(
-						parameters.maxAcc * agtDrone.getAcceleration().x / acc ,
-						parameters.maxAcc * agtDrone.getAcceleration().y / acc,
-						parameters.maxAcc * agtDrone.getAcceleration().z / acc);
-			}
-			
-			agtDrone.setLocation(
-					agtDrone.getLocation().x + agtDrone.getVelocity().x + agtDrone.getAcceleration().x / 2, 
-					agtDrone.getLocation().y + agtDrone.getVelocity().y + agtDrone.getAcceleration().y / 2,
-					agtDrone.getLocation().z + agtDrone.getVelocity().z + agtDrone.getAcceleration().z / 2
-				);
-			agtDrone.setVelocity(
-						agtDrone.getVelocity().x + agtDrone.getAcceleration().x, 
-						agtDrone.getVelocity().y + agtDrone.getAcceleration().y,
-						agtDrone.getVelocity().z + agtDrone.getAcceleration().z
-				);
-			// Keep the Drones in the limits of the room
-			if( agtDrone.getLocation().x > parameters.roomBounds.getWidth()) {
-				agtDrone.setLocation(0,agtDrone.getLocation().y,agtDrone.getLocation().z);
-			}
-			if( agtDrone.getLocation().y > parameters.roomBounds.getHeight()) {
-				agtDrone.setLocation(agtDrone.getLocation().x,0,agtDrone.getLocation().z);
-			}
-			if( agtDrone.getLocation().x < 0) {
-				agtDrone.setLocation(parameters.roomBounds.getWidth(),agtDrone.getLocation().y,agtDrone.getLocation().z);
-			}
-			if( agtDrone.getLocation().y < 0) {
-				agtDrone.setLocation(agtDrone.getLocation().x,parameters.roomBounds.getHeight(),agtDrone.getLocation().z);
-			}
 		}
 	}
 	
