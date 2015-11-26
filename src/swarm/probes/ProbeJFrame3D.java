@@ -172,6 +172,9 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 					-castedAgtState.getLocation().x/1000,
 					castedAgtState.getLocation().z/1000);
 	 		translate.setTranslation(vitesse);
+	 		Transform3D rotate=new Transform3D();
+	 		rotate.rotZ(Math.PI/2);
+	 		translate.mul(rotate);
 			castedAgtState.transformGroup= new TransformGroup();
 			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
@@ -238,6 +241,8 @@ public void updateagents(SimulationTimeStamp timestamp,
 	
 			Transform3D currenttrans=new Transform3D();
 			Transform3D trans=new Transform3D();
+			Transform3D rotate=new Transform3D();
+			Transform3D rotate2=new Transform3D();
 			Vector3d currentvect=new Vector3d();
 			Vector3d vitesse=new Vector3d(
 					castedAgtState.getLocation().x/1000,
@@ -249,8 +254,17 @@ public void updateagents(SimulationTimeStamp timestamp,
 					vitesse.x-currentvect.x,
 					vitesse.y-currentvect.y,
 					vitesse.z-currentvect.z);
+			
 			trans.setTranslation(newvect);	
+			Vector3d vit=new Vector3d(castedAgtState.getVelocity().getX(),castedAgtState.getVelocity().getY(),castedAgtState.getVelocity().getZ());
+			rotate.rotZ(-Math.PI/2+Math.atan2(-vit.y, vit.x));
+			rotate2.rotX(Math.PI+Math.atan2( -vit.z,-vit.y));
+			
+	 		trans.mul(rotate);
+	 		trans.mul(rotate2);
+
 			castedAgtState.transformGroup.setTransform(trans);
+			
 		}
 	
 	

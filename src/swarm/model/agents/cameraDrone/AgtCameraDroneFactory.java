@@ -1,11 +1,5 @@
 package swarm.model.agents.cameraDrone;
 
-import java.awt.Color;
-
-import javax.vecmath.Color3f;
-
-import com.sun.j3d.utils.geometry.Cone;
-
 import fr.lgi2a.similar.microkernel.libs.generic.EmptyGlobalState;
 import fr.lgi2a.similar.microkernel.libs.generic.EmptyLocalStateOfAgent;
 import swarm.model.SwarmParameters;
