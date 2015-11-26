@@ -91,6 +91,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public double microphoneDroneMassFactor;
 	
+	/**
+	 * 
+	 */
+	public double initialEnergy;
 	
 	
 	
@@ -169,6 +173,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
+		this.initialEnergy = 100;
 		
 		
 		this.nbOfCameraDroneAgents = 30;

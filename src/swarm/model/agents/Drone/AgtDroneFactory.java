@@ -67,6 +67,7 @@ public class AgtDroneFactory {
 						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
 						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
 						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
+						PARAMETERS.initialEnergy,
 						PARAMETERS.droneColor
 						),
 				new EmptyLocalStateOfAgent(

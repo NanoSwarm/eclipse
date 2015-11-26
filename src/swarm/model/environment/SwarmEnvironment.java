@@ -17,6 +17,7 @@ import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.influences.toRoom.RIUpdateCameraDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateCommunicatorDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateDroneEnergyLevelInRoom;
 import swarm.model.influences.toRoom.RIUpdateDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
@@ -67,13 +68,6 @@ public class SwarmEnvironment extends AbstractEnvironment {
 		IPublicDynamicStateMap dynamicStates,
 		InfluencesMap producedInfluences
 	) {
-		// The natural action of the environment has two roles in this
-		// simulation:
-		// 		1) Ask the reaction to update the location and velocity of 
-		// 		the particles according to their location, velocity and 
-		//		acceleration.
-		//		2) Ask the reaction to add a bubble agent where each particle
-		//		lies.
 		
 		// First create the influences asking for the update.
 		RIUpdateCameraDroneSpatialStateInRoom cameraUpdateInfluence = new RIUpdateCameraDroneSpatialStateInRoom(
@@ -85,10 +79,14 @@ public class SwarmEnvironment extends AbstractEnvironment {
 				timeUpperBound
 			);
 		RIUpdateDroneSpatialStateInRoom droneUpdateInfluence = new RIUpdateDroneSpatialStateInRoom(
-			timeLowerBound,
-			timeUpperBound
-		);
+				timeLowerBound,
+				timeUpperBound
+			);
 		RIUpdateMicrophoneDroneSpatialStateInRoom microphoneUpdateInfluence = new RIUpdateMicrophoneDroneSpatialStateInRoom(
+				timeLowerBound,
+				timeUpperBound
+			);
+		RIUpdateDroneEnergyLevelInRoom energyUpdateInfluence = new RIUpdateDroneEnergyLevelInRoom(
 				timeLowerBound,
 				timeUpperBound
 			);
@@ -99,6 +97,7 @@ public class SwarmEnvironment extends AbstractEnvironment {
 		producedInfluences.add( communicatorUpdateInfluence );
 		producedInfluences.add( droneUpdateInfluence );
 		producedInfluences.add( microphoneUpdateInfluence );
+		producedInfluences.add(energyUpdateInfluence);
 		
 		// Then get the dynamic state of the "Chamber" level, to list the 
 		// particles
@@ -108,7 +107,12 @@ public class SwarmEnvironment extends AbstractEnvironment {
 		
 		// Search for particles among the agents lying in that state.
 		for( ILocalStateOfAgent state : dynamicState.getPublicLocalStateOfAgents() ){
-			// Check if the agent is a SimpleDrone.
+			
+			//all drones are added to the "RIUpdateEnergyLevelInRoom" influence
+			AgtDronePLSInRoom castedDrone = (AgtDronePLSInRoom) state;
+			energyUpdateInfluence.addParticleToUpdate( castedDrone );			
+
+			//Drones are added to their related influences
 			if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 				// Cast the public local state into the appropriate type.
 				AgtCameraDronePLSInRoom castedState = (AgtCameraDronePLSInRoom) state;

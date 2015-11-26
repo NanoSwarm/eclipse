@@ -8,20 +8,14 @@ import fr.lgi2a.similar.microkernel.influences.RegularInfluence;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
-/**
- * This influence is sent by the environment to the "Room" level to trigger the computation 
- * of the new acceleration, speed, and location of the "Drone" agents.
- */
-public class RIUpdateDroneSpatialStateInRoom extends RegularInfluence{
-	
-
+public class RIUpdateDroneEnergyLevelInRoom extends RegularInfluence{
 	/**
 	 * The category of this influence.
 	 */
-	public static final String CATEGORY = "Update Drone spatial state";
+	public static final String CATEGORY = "Update drone energy level";
 	
 	/**
-	 * The "drones" which state has to be updated.
+	 * The "drones" which energy level has to be updated.
 	 */
 	private Set<AgtDronePLSInRoom> Drones;
 	
@@ -30,7 +24,7 @@ public class RIUpdateDroneSpatialStateInRoom extends RegularInfluence{
 	 * @param timeLowerBound The lower bound of the transitory period during which this influence was created.
 	 * @param timeUpperBound The upper bound of the transitory period during which this influence was created.
 	 */
-	public RIUpdateDroneSpatialStateInRoom(
+	public RIUpdateDroneEnergyLevelInRoom(
 		SimulationTimeStamp timeLowerBound,
 		SimulationTimeStamp timeUpperBound
 	) {

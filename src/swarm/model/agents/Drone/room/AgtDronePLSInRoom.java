@@ -26,15 +26,22 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * 
 	 */
 	public Color3f color;
+	
 	/**
-	 * Builds an initialized instance of this public local state.
+	 * 
 	 * @param owner The agent owning this public local state.
 	 * @param initialX The initial x coordinate of the drone.
 	 * @param initialY The initial y coordinate of the drone.
+	 * @param initialZ The initial z coordinate of the drone.
 	 * @param initialVelocityAlongX The initial velocity of the drone along the X axis.
 	 * @param initialVelocityAlongY The initial velocity of the drone along the Y axis.
+	 * @param initialVelocityAlongZ The initial velocity of the drone along the Z axis.
+	 * @param initialAccelerationAlongX The initial acceleration of the drone along the X axis.
+	 * @param initialAccelerationAlongY The initial acceleration of the drone along the Y axis.
+	 * @param initialAccelerationAlongZ The initial acceleration of the drone along the Z axis.
+	 * @param initialEnergy The initial energy level of the drone.
+	 * @param cameraDroneColor The color of the drone
 	 */
-
 	public AgtDronePLSInRoom(
 			IAgent4Engine owner,
 			double initialX,
@@ -46,6 +53,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 			double initialAccelerationAlongX,
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
+			double initialEnergy,
 			Color3f color2
 
 	) {
@@ -66,6 +74,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ);
 		this.influence = new Vector3d(0,0,0);
+		this.energy = initialEnergy;
 		this.forme=new Cone(0.007f,0.009f);
 		this.color=color2;
 		ColoringAttributes ca=new ColoringAttributes();
@@ -149,6 +158,27 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		this.acceleration.set( dx2, dy2, dz2 );
 	}
 	
+	
+	/**
+	 * 
+	 */
+	private double energy;
+	
+	/**
+	 * 
+	 * @return the energy level of the drone
+	 */
+	public double getEnergy(){
+		return this.energy;
+	}
+	
+	/**
+	 * 
+	 * @param en new energy level for the drone
+	 */
+	public void setEnergy(double en){
+		this.energy = en;
+	}
 	/**
 	 * values of the influences on the drone 
 	 */

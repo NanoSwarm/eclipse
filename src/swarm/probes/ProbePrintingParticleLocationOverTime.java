@@ -84,7 +84,8 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 						"\t" + castedAgtState + 
 						"\t" + castedAgtState.getLocation().x  + 
 						"\t" + castedAgtState.getLocation().y  +
-						"\t" + castedAgtState.getLocation().z 
+						"\t" + castedAgtState.getLocation().z  +
+						"\t" + castedAgtState.getEnergy()
 				);
 			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
 				AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
@@ -93,7 +94,8 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 						"\t" + castedAgtState + 
 						"\t" + castedAgtState.getLocation().x  + 
 						"\t" + castedAgtState.getLocation().y  +
-						"\t" + castedAgtState.getLocation().z 
+						"\t" + castedAgtState.getLocation().z  +
+						"\t" + castedAgtState.getEnergy()
 				);
 			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
 				AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
@@ -101,8 +103,9 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 						timestamp.getIdentifier() + 
 						"\t" + castedAgtState + 
 						"\t" + castedAgtState.getLocation().x  + 
-						"\t" + castedAgtState.getLocation().y +
-						"\t" + castedAgtState.getLocation().z 
+						"\t" + castedAgtState.getLocation().y  +
+						"\t" + castedAgtState.getLocation().z  +
+						"\t" + castedAgtState.getEnergy()
 				);
 			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
 				AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
@@ -111,7 +114,8 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 						"\t" + castedAgtState + 
 						"\t" + castedAgtState.getLocation().x + 
 						"\t" + castedAgtState.getLocation().y +
-						"\t" + castedAgtState.getLocation().z 
+						"\t" + castedAgtState.getLocation().z +
+						"\t" + castedAgtState.getEnergy()
 				);
 			}
 		}

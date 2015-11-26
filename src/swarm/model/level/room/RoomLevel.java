@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.vecmath.Vector3d;
-
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.dynamicstate.ConsistentPublicLocalDynamicState;
 import fr.lgi2a.similar.microkernel.influences.IInfluence;
@@ -19,6 +17,7 @@ import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.room.EnvPLSInRoom;
 import swarm.model.influences.toRoom.RIUpdateCameraDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateCommunicatorDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateDroneEnergyLevelInRoom;
 import swarm.model.influences.toRoom.RIUpdateDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
@@ -71,6 +70,7 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtCommunicatorDronePLSInRoom> communicatorUpdateList = new HashSet<AgtCommunicatorDronePLSInRoom>();
 		Set<AgtDronePLSInRoom> droneUpdateList = new HashSet<AgtDronePLSInRoom>();
 		Set<AgtMicrophoneDronePLSInRoom> microphoneUpdateList = new HashSet<AgtMicrophoneDronePLSInRoom>();
+		Set<AgtDronePLSInRoom> energyUpdateList = new HashSet<AgtDronePLSInRoom>();
 		
 		for( IInfluence influence : regularInfluencesOftransitoryStateDynamics ){
 			if( influence.getCategory().equals( RIUpdateCameraDroneSpatialStateInRoom.CATEGORY ) ){
@@ -93,6 +93,9 @@ public class RoomLevel extends AbstractLevel {
 				microphoneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 				droneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 				
+			}else if( influence.getCategory().equals( RIUpdateDroneEnergyLevelInRoom.CATEGORY )){
+				RIUpdateDroneEnergyLevelInRoom castedInfluence = (RIUpdateDroneEnergyLevelInRoom) influence;
+				energyUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 			}else {
 				throw new UnsupportedOperationException( 
 					"The influence '" + influence.getCategory() + "' is currently not supported in this reaction." 
@@ -153,6 +156,14 @@ public class RoomLevel extends AbstractLevel {
 				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
 				microphoneUpdateList,
 				remainingInfluences
+		);
+		
+		this.energyReactionTo(
+			transitoryTimeMin,
+			transitoryTimeMax,
+			(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
+			energyUpdateList,
+			remainingInfluences
 		);
 		
 	}
@@ -238,6 +249,21 @@ public class RoomLevel extends AbstractLevel {
 		InfluencesMap remainingInfluences
 	){
 		//Does nothing
+	}
+	
+	private void energyReactionTo(
+			SimulationTimeStamp transitoryTimeMin,
+			SimulationTimeStamp transitoryTimeMax,
+			EnvPLSInRoom roomEnvState,
+			Set<AgtDronePLSInRoom> dronesUpdateList,
+			InfluencesMap remainingInfluences
+	){
+		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
+			
+			UpdateEnergyLevelInRoom.updateEnergy(agtDrone);
+			
+		}
+		
 	}
 	
 	

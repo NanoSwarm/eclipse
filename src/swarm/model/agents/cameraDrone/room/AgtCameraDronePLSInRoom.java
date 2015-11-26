@@ -1,6 +1,5 @@
 package swarm.model.agents.cameraDrone.room;
 
-import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 
 import com.sun.j3d.utils.geometry.Primitive;
@@ -10,13 +9,21 @@ import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
 public class AgtCameraDronePLSInRoom extends AgtDronePLSInRoom {
 	public Primitive forme;
+	
 	/**
-	 * Builds an initialized instance of this public local state.
+	 * 
 	 * @param owner The agent owning this public local state.
 	 * @param initialX The initial x coordinate of the drone.
 	 * @param initialY The initial y coordinate of the drone.
+	 * @param initialZ The initial z coordinate of the drone.
 	 * @param initialVelocityAlongX The initial velocity of the drone along the X axis.
 	 * @param initialVelocityAlongY The initial velocity of the drone along the Y axis.
+	 * @param initialVelocityAlongZ The initial velocity of the drone along the Z axis.
+	 * @param initialAccelerationAlongX The initial acceleration of the drone along the X axis.
+	 * @param initialAccelerationAlongY The initial acceleration of the drone along the Y axis.
+	 * @param initialAccelerationAlongZ The initial acceleration of the drone along the Z axis.
+	 * @param initialEnergy The initial energy level of the drone.
+	 * @param cameraDroneColor The color of the drone
 	 */
 	public AgtCameraDronePLSInRoom(
 			IAgent4Engine owner,
@@ -29,6 +36,7 @@ public class AgtCameraDronePLSInRoom extends AgtDronePLSInRoom {
 			double initialAccelerationAlongX,
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
+			double initialEnergy,
 			Color3f cameraDroneColor
 	) {
 		super(
@@ -42,6 +50,7 @@ public class AgtCameraDronePLSInRoom extends AgtDronePLSInRoom {
 				initialAccelerationAlongX,
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ,
+				initialEnergy,
 				cameraDroneColor
 		);
 
