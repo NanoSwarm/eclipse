@@ -123,7 +123,7 @@ public class RoomLevel extends AbstractLevel {
 				if(agtDrone != agtOtherDrone){
 					double distance =Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
 											 + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
-											 +Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
+											 + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
 					if (distance > parameters.attractionDistance){
 						//does nothing
 					}
@@ -304,7 +304,11 @@ public class RoomLevel extends AbstractLevel {
 					agtDrone.getAcceleration().z + agtDrone.getInfluence().z
 					);
 			//Keep the velocity vector under the maxSeed limit.
-			double speed = Math.sqrt(Math.pow(agtDrone.getVelocity().x,2) +	Math.pow(agtDrone.getVelocity().y,2));
+			double speed = Math.sqrt(
+					Math.pow(agtDrone.getVelocity().x,2)+
+					Math.pow(agtDrone.getVelocity().y,2)+	
+					Math.pow(agtDrone.getVelocity().z,2));
+			
 			if ( speed > parameters.maxSpeed){
 				agtDrone.setVelocity(parameters.maxSpeed * agtDrone.getVelocity().x / speed ,
 						parameters.maxSpeed * agtDrone.getVelocity().y / speed,
@@ -313,9 +317,14 @@ public class RoomLevel extends AbstractLevel {
 			}
 			
 			//Keep the acceleration vector under the maxAcc limit
-			double acc = Math.sqrt(Math.pow(agtDrone.getAcceleration().x,2) +	Math.pow(agtDrone.getAcceleration().y,2));
+			double acc = Math.sqrt(
+					Math.pow(agtDrone.getAcceleration().x,2)+	
+					Math.pow(agtDrone.getAcceleration().y,2)+	
+					Math.pow(agtDrone.getAcceleration().z,2));
+			
 			if ( acc > parameters.maxAcc){
-				agtDrone.setAcceleration(parameters.maxAcc * agtDrone.getAcceleration().x / acc ,
+				agtDrone.setAcceleration(
+						parameters.maxAcc * agtDrone.getAcceleration().x / acc ,
 						parameters.maxAcc * agtDrone.getAcceleration().y / acc,
 						parameters.maxAcc * agtDrone.getAcceleration().z / acc);
 			}

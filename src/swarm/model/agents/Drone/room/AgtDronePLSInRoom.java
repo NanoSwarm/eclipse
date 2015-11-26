@@ -53,17 +53,27 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 			SwarmLevelList.ROOM,
 			owner
 		);
-		this.location=new Vector3d(initialX,initialY,initialZ);
-		this.velocity = new Vector3d(initialVelocityAlongX,initialVelocityAlongY,initialVelocityAlongZ);
-		this.acceleration = new Vector3d(initialAccelerationAlongX,initialAccelerationAlongY,initialAccelerationAlongZ);
+		this.location=new Vector3d(
+				initialX,
+				initialY,
+				initialZ);
+		this.velocity = new Vector3d(
+				initialVelocityAlongX,
+				initialVelocityAlongY,
+				initialVelocityAlongZ);
+		this.acceleration = new Vector3d(
+				initialAccelerationAlongX,
+				initialAccelerationAlongY,
+				initialAccelerationAlongZ);
 		this.influence = new Vector3d(0,0,0);
 		this.forme=new Cone(0.007f,0.009f);
 		this.color=color2;
 		ColoringAttributes ca=new ColoringAttributes();
-		ca.setColor(this.color);	
+		ca.setColor(color);	
 		Appearance ap=new Appearance();
 		ap.setColoringAttributes(ca);		
 		this.forme.setAppearance(ap);
+		
 		
 	}
 	

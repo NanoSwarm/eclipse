@@ -155,49 +155,30 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
 		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-		
+
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
 		}
 	
 		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
 		castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
-
 	}
 		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
 		 castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-	}
-
-	
-	
-	 Transform3D translate=new Transform3D();
-	 Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
-					,-castedAgtState.getLocation().x/1000,castedAgtState.getLocation().z/1000);
-		translate.setTranslation(vitesse);
-
-
+	}				 
+			Transform3D translate=new Transform3D();
+			Vector3d vitesse=new Vector3d(
+					castedAgtState.getLocation().x/1000,
+					-castedAgtState.getLocation().x/1000,
+					castedAgtState.getLocation().z/1000);
+	 		translate.setTranslation(vitesse);
 			castedAgtState.transformGroup= new TransformGroup();
 			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 			castedAgtState.transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
 			castedAgtState.transformGroup.setTransform(translate);
 			castedAgtState.transformGroup.addChild(castedAgtState.forme);
-				this.branchGroup.addChild(castedAgtState.transformGroup);
-
-}
-		
-	
-	
-
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+			this.branchGroup.addChild(castedAgtState.transformGroup);
+}		
 	// Set the position of the camera
 	
 	 TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
@@ -242,79 +223,35 @@ public void updateagents(SimulationTimeStamp timestamp,
 			SwarmLevelList.ROOM
 	);
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
+		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
-			AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
-
-			// castedAgtState.sphere =new Sphere(tailleag);
-
-			Transform3D currenttrans=new Transform3D();
-					 Transform3D trans=new Transform3D();
-					 Vector3d currentvect=new Vector3d();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
-							,-castedAgtState.getLocation().y/1000,0);
-			
-				castedAgtState.transformGroup.getTransform(currenttrans);
-	
-				trans.get(currentvect);
-				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
-					trans.setTranslation(newvect);	
-					castedAgtState.transformGroup.setTransform(trans);
+			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
 		}
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
-			AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
-
-			// castedAgtState.sphere =new Sphere(tailleag);
-
-			Transform3D currenttrans=new Transform3D();
-					 Transform3D trans=new Transform3D();
-					 Vector3d currentvect=new Vector3d();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
-							,-castedAgtState.getLocation().y/1000,0);
-			
-				castedAgtState.transformGroup.getTransform(currenttrans);
 	
-				trans.get(currentvect);
-				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
-					trans.setTranslation(newvect);	
-					castedAgtState.transformGroup.setTransform(trans);
-		}
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
-			AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-
-			// castedAgtState.sphere =new Sphere(tailleag);
-
-			Transform3D currenttrans=new Transform3D();
-					 Transform3D trans=new Transform3D();
-					 Vector3d currentvect=new Vector3d();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
-							,-castedAgtState.getLocation().y/1000,0);
-			
-				castedAgtState.transformGroup.getTransform(currenttrans);
-	
-				trans.get(currentvect);
-				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
-					trans.setTranslation(newvect);	
-					castedAgtState.transformGroup.setTransform(trans);
-		}
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
-			AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-
-			// castedAgtState.sphere =new Sphere(tailleag);
-
-			Transform3D currenttrans=new Transform3D();
-					 Transform3D trans=new Transform3D();
-					 Vector3d currentvect=new Vector3d();
-					Vector3d vitesse=new Vector3d(castedAgtState.getLocation().x/1000
-							,-castedAgtState.getLocation().y/1000,castedAgtState.getLocation().z/1000);
-			
-				castedAgtState.transformGroup.getTransform(currenttrans);
-	
-				trans.get(currentvect);
-				Vector3d newvect=new Vector3d(vitesse.x-currentvect.x,vitesse.y-currentvect.y,vitesse.z-currentvect.z);
-					trans.setTranslation(newvect);	
-					castedAgtState.transformGroup.setTransform(trans);
-		}
+		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+		castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
 	}
+		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+		 castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+	}				 
+	
+			Transform3D currenttrans=new Transform3D();
+			Transform3D trans=new Transform3D();
+			Vector3d currentvect=new Vector3d();
+			Vector3d vitesse=new Vector3d(
+					castedAgtState.getLocation().x/1000,
+					-castedAgtState.getLocation().y/1000,
+					castedAgtState.getLocation().z/1000);			
+			castedAgtState.transformGroup.getTransform(currenttrans);
+			trans.get(currentvect);
+			Vector3d newvect=new Vector3d(
+					vitesse.x-currentvect.x,
+					vitesse.y-currentvect.y,
+					vitesse.z-currentvect.z);
+			trans.setTranslation(newvect);	
+			castedAgtState.transformGroup.setTransform(trans);
+		}
 	
 	
 }

@@ -178,7 +178,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 		
 		this.roomBounds = new Rectangle2D.Double(0, 0, 1500, 750);
-		this.simulationTime = 50000;
+		this.simulationTime = 5000;
 	}
 
 }
