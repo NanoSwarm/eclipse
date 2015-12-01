@@ -25,7 +25,6 @@ public class UpdateEnergyLevelInRoom {
 			agtDrone.setEnergy(agtDrone.getEnergy() - energyDiff);
 		}else{
 			agtDrone.setEnergy(0);
-			agtDrone
 		}
 
 			
