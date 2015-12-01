@@ -31,6 +31,7 @@ public class RoomLevel extends AbstractLevel {
 	 * 	to be set during the initialization phase of the simulation.
 	 * </p>
 	 * @param initialTime The initial time of the simulation.
+	 * @param parameters the different parameters of the simulation
 	 */
 	private SwarmParameters parameters;
 	
@@ -251,6 +252,15 @@ public class RoomLevel extends AbstractLevel {
 		//Does nothing
 	}
 	
+	/**
+	 * The reaction to the sum of all the {@link RIUpdateEnergyLevelInRoom} influences
+	 * that were sent to this level.
+	 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param roomEnvState The public local state of the environment in the chamber level.
+	 * @param dronesUpdateList The drones listed in these influences.
+	 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
+	 */
 	private void energyReactionTo(
 			SimulationTimeStamp transitoryTimeMin,
 			SimulationTimeStamp transitoryTimeMax,
