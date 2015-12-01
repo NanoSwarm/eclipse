@@ -42,18 +42,20 @@ import swarm.model.level.SwarmLevelList;
  */
 @SuppressWarnings("serial")
 public class ProbeJFrame3D extends Frame implements IProbe{
+	
 	/**
 	 * the only and unique universe we are using
 	 */
 	public SimpleUniverse simpleUniverse;
+	
 	/**
 	* 
 	*/
 	public BranchGroup branchGroup;
+	
 	/**
 	* 
 	*/
-
 	public ProbeJFrame3D (){
 		System.setProperty("sun.awt.noerasebackground", "true");
 		Canvas3D canvas3D=new Canvas3D(SimpleUniverse.getPreferredConfiguration());
