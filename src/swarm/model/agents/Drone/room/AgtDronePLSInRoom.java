@@ -75,7 +75,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 				initialAccelerationAlongZ);
 		this.influence = new Vector3d(0,0,0);
 		this.energy = initialEnergy;
-		this.forme=new Cone(0.007f,0.009f);
+		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
 		ColoringAttributes ca=new ColoringAttributes();
 		ca.setColor(color);	
@@ -131,6 +131,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * Sets the velocity of the drone in the room.
 	 * @param dx The velocity of the drone along the x axis.
 	 * @param dy The velocity of the drone along the y axis.
+	 * @param dz The velocity of the drone along the z axis.
 	 */
 	public void setVelocity( double dx, double dy ,double dz){
 		this.velocity.set( dx, dy,dz );
@@ -153,6 +154,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * Sets the acceleration of the drone in the room.
 	 * @param dx2 The new acceleration of the drone in the room, along the x axis.
 	 * @param dy2 The new acceleration of the drone in the room, along the y axis.
+	 * @param dz2 The new acceleration of the drone in the room, along the z axis.
 	 */
 	public void setAcceleration( double dx2, double dy2,double dz2 ){
 		this.acceleration.set( dx2, dy2, dz2 );
@@ -196,10 +198,29 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	
 	/**
 	 * sets the sum of influences on the drone in the room
-	 * @param x influences on the x axis
-	 * @param y influences on the y axis
+	 * @param x influences on the x axis.
+	 * @param y influences on the y axis.
+	 * @param z influences on the z axis.
 	 */
 	public void setInfluence( double x, double y,double z){
 		this.influence.set(x,y,z);		
 	}
+	
+	/**
+	 * change the color of the drone
+	 * @param color the new color of the drone
+	 */
+	public void setColor (Color3f color){
+		this.color = color;
+	}
+	
+	/**
+	 * return the color of the drone
+	 * @return the color of the drone
+	 */
+	public Color3f getColor(){
+		return this.color;
+	}
+	
+	
 }
