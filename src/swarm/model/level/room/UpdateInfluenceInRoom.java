@@ -128,8 +128,8 @@ public class UpdateInfluenceInRoom {
 	
 	public static void UpdateCameraDroneInfluence(AgtCameraDronePLSInRoom agtCameraDrone){
 		agtCameraDrone.setInfluence(
-				agtCameraDrone.getInfluence().x + 1 /*(parameters.roomBounds.getWidth()/2 + 400*Math.cos((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().x)/400*/,
-				agtCameraDrone.getInfluence().y /* + (parameters.roomBounds.getHeight()/2 + 400*Math.sin((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().y)/400*/,
+				agtCameraDrone.getInfluence().x, /*(parameters.roomBounds.getWidth()/2 + 400*Math.cos((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().x)/400*/
+				agtCameraDrone.getInfluence().y, /* + (parameters.roomBounds.getHeight()/2 + 400*Math.sin((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().y)/400*/
 				agtCameraDrone.getInfluence().z
 				);
 	}
@@ -138,7 +138,7 @@ public class UpdateInfluenceInRoom {
 	public static void UpdateCommunicatorDroneInfluence(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone){
 		agtCommunicatorDrone.setInfluence(
 				agtCommunicatorDrone.getInfluence().x,
-				agtCommunicatorDrone.getInfluence().y + 1,
+				agtCommunicatorDrone.getInfluence().y,
 				agtCommunicatorDrone.getInfluence().z
 				);
 	}
@@ -148,6 +148,7 @@ public class UpdateInfluenceInRoom {
 		agtMicrophoneDrone.setInfluence(
 				agtMicrophoneDrone.getInfluence().x, 
 				agtMicrophoneDrone.getInfluence().y, 
-				agtMicrophoneDrone.getInfluence().z);
+				agtMicrophoneDrone.getInfluence().z
+				);
 	}
 }
