@@ -5,9 +5,6 @@ import java.awt.geom.Rectangle2D;
 
 import javax.vecmath.Color3f;
 
-import com.sun.j3d.utils.geometry.Cone;
-import com.sun.j3d.utils.geometry.Primitive;
-
 import fr.lgi2a.similar2logo.kernel.model.LogoSimulationParameters;
 
 public class SwarmParameters extends LogoSimulationParameters{
@@ -119,7 +116,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public int nbOfMicrophoneDroneAgents;
 	
-	
+	/**
+	 * The number of "Measurement Drone" agents in the simulation.
+	 */
+	public int nbOfMeasurementDroneAgents;
 	
 	
 	
@@ -147,13 +147,16 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 	public Color3f microphoneDroneColor;
 	
+	public Color3f measurementDroneColor;
+	
 	public SwarmParameters () {
 		super();
 		
-		this.cameraDroneColor=new Color3f(Color.blue);
-		this.droneColor=new Color3f(Color.magenta);
-		this.communicatorDroneColor=new Color3f(Color.red);
-		this.microphoneDroneColor=new Color3f(Color.orange);
+		this.cameraDroneColor = new Color3f(Color.blue);
+		this.droneColor = new Color3f(Color.magenta);
+		this.communicatorDroneColor = new Color3f(Color.red);
+		this.microphoneDroneColor = new Color3f(Color.orange);
+		this.measurementDroneColor = new Color3f(Color.cyan);
 		
 		this.repulsionDistance = 20;
 		this.orientationDistance = 900;
@@ -180,6 +183,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.nbOfCommunicatorDroneAgents = 30;
 		this.nbOfDroneAgents = 10;
 		this.nbOfMicrophoneDroneAgents = 30;
+		this.nbOfMeasurementDroneAgents = 10;
 		
 		
 		this.roomBounds = new Rectangle2D.Double(0, 0, 1500, 750);

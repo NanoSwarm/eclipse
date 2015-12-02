@@ -15,6 +15,7 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.AgtDroneFactory;
 import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
+import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.model.environment.SwarmEnvironment;
 import swarm.model.environment.room.EnvPLSInRoom;
@@ -131,6 +132,12 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtMicrophoneDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
 								  								 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()),
 								  								 0);
+			result.getAgents().add( drone );
+		}
+		for(int i = 0; i < castedParameters.nbOfMeasurementDroneAgents; i++) {
+			IAgent4Engine drone = AgtMeasurementDroneFactory.generate(RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getWidth()),
+						 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.getHeight()),
+						 0);
 			result.getAgents().add( drone );
 		}
 		return result;

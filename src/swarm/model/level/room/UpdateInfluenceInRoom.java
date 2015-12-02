@@ -8,6 +8,7 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 
 public class UpdateInfluenceInRoom {
@@ -149,6 +150,14 @@ public class UpdateInfluenceInRoom {
 				agtMicrophoneDrone.getInfluence().x, 
 				agtMicrophoneDrone.getInfluence().y, 
 				agtMicrophoneDrone.getInfluence().z
+				);
+	}
+	
+	public static void UpdateMeasurementDroneInfluence(AgtMeasurementDronePLSInRoom agtmeasurementDrone){
+		agtmeasurementDrone.setInfluence(
+				agtmeasurementDrone.getInfluence().x, 
+				agtmeasurementDrone.getInfluence().y, 
+				agtmeasurementDrone.getInfluence().z
 				);
 	}
 }

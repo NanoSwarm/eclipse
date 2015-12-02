@@ -5,14 +5,13 @@ import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.libs.engines.EngineMonothreadedDefaultdisambiguation;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExceptionPrinter;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExecutionTracker;
-import fr.lgi2a.similar.microkernel.libs.probes.ProbeImageSwingJFrame;
 import swarm.initialization.SwarmInitialization;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.AgtDroneFactory;
 import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
+import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
-import swarm.probes.DroneDrawer;
 import swarm.probes.ProbeJFrame3D;
 import swarm.probes.ProbePrintingParticleLocationOverTime;
 
@@ -37,6 +36,7 @@ public class SwarmMain {
 				AgtCommunicatorDroneFactory.setParameters( parameters );
 				AgtDroneFactory.setParameters( parameters );
 				AgtMicrophoneDroneFactory.setParameters( parameters );
+				AgtMeasurementDroneFactory.setParameters( parameters );
 		
 		// Create the simulation engine that will run simulations
 		ISimulationEngine engine = new EngineMonothreadedDefaultdisambiguation( );
@@ -58,16 +58,6 @@ public class SwarmMain {
 				"Chamber level Swing viewer3d",
 				new ProbeJFrame3D()															// The frame is resized automatically
 				
-		);
-			
-		engine.addProbe(
-				"Chamber level Swing viewer",
-				new ProbeImageSwingJFrame( 
-					"Room level", 													// The name of the frame
-					new DroneDrawer(), 										
-					ProbeImageSwingJFrame.ClosingManagementStrategy.ABORT_SIMULATION, 	// The simulation will abort if the frame is closed
-					null																// The frame is resized automatically
-				)
 		);
 		
 			

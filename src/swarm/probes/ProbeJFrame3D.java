@@ -32,6 +32,7 @@ import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 /**
@@ -167,7 +168,10 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	}
 		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
 		 castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-	}				 
+		 
+	}	else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
+		 castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
+	}			 
 			Transform3D translate=new Transform3D();
 			Vector3d vitesse=new Vector3d(
 					castedAgtState.getLocation().x/1000,
@@ -232,14 +236,15 @@ public void updateagents(SimulationTimeStamp timestamp,
 
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
-		}
-	
-		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+			
+		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
 		castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
-	}
-		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+		
+		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
 		 castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-	}				 
+		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
+		 castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
+		}
 	
 			Transform3D currenttrans=new Transform3D();
 			Transform3D trans=new Transform3D();

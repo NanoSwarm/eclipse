@@ -13,12 +13,14 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
+import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.room.EnvPLSInRoom;
 import swarm.model.influences.toRoom.RIUpdateCameraDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateCommunicatorDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateDroneEnergyLevelInRoom;
 import swarm.model.influences.toRoom.RIUpdateDroneSpatialStateInRoom;
+import swarm.model.influences.toRoom.RIUpdateMeasurementDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
 
@@ -72,6 +74,7 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtDronePLSInRoom> droneUpdateList = new HashSet<AgtDronePLSInRoom>();
 		Set<AgtMicrophoneDronePLSInRoom> microphoneUpdateList = new HashSet<AgtMicrophoneDronePLSInRoom>();
 		Set<AgtDronePLSInRoom> energyUpdateList = new HashSet<AgtDronePLSInRoom>();
+		Set<AgtMeasurementDronePLSInRoom> measurementUpdateList = new HashSet<AgtMeasurementDronePLSInRoom>();
 		
 		for( IInfluence influence : regularInfluencesOftransitoryStateDynamics ){
 			if( influence.getCategory().equals( RIUpdateCameraDroneSpatialStateInRoom.CATEGORY ) ){
@@ -88,16 +91,21 @@ public class RoomLevel extends AbstractLevel {
 				RIUpdateDroneSpatialStateInRoom castedInfluence = (RIUpdateDroneSpatialStateInRoom) influence;
 				droneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 				
-				
 			}else if( influence.getCategory().equals( RIUpdateMicrophoneDroneSpatialStateInRoom.CATEGORY ) ){
 				RIUpdateMicrophoneDroneSpatialStateInRoom castedInfluence = (RIUpdateMicrophoneDroneSpatialStateInRoom) influence;
 				microphoneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 				droneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
 				
+			}else if( influence.getCategory().equals( RIUpdateMeasurementDroneSpatialStateInRoom.CATEGORY )){
+				RIUpdateMeasurementDroneSpatialStateInRoom castedInfluence = (RIUpdateMeasurementDroneSpatialStateInRoom) influence;
+				measurementUpdateList.addAll( castedInfluence.getParticlesToUpdate() );	
+				droneUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
+				
 			}else if( influence.getCategory().equals( RIUpdateDroneEnergyLevelInRoom.CATEGORY )){
 				RIUpdateDroneEnergyLevelInRoom castedInfluence = (RIUpdateDroneEnergyLevelInRoom) influence;
 				energyUpdateList.addAll( castedInfluence.getParticlesToUpdate() );
-			}else {
+			
+			}else{
 				throw new UnsupportedOperationException( 
 					"The influence '" + influence.getCategory() + "' is currently not supported in this reaction." 
 				);
@@ -124,6 +132,11 @@ public class RoomLevel extends AbstractLevel {
 		//Influences on "microphone drones" agents
 		for(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone : microphoneUpdateList){
 			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone);
+		}
+		
+		//Influences on "measurement drones" agents
+		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
+			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone);
 		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
@@ -160,13 +173,20 @@ public class RoomLevel extends AbstractLevel {
 		);
 		
 		this.energyReactionTo(
-			transitoryTimeMin,
-			transitoryTimeMax,
-			(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
-			energyUpdateList,
-			remainingInfluences
+				transitoryTimeMin,
+				transitoryTimeMax,
+				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
+				energyUpdateList,
+				remainingInfluences
 		);
 		
+		this.measurementReactionTo(
+				transitoryTimeMin,
+				transitoryTimeMax,
+				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
+				measurementUpdateList,
+				remainingInfluences
+		);
 	}
 	
 	/**
@@ -189,24 +209,24 @@ public class RoomLevel extends AbstractLevel {
 	}
 	
 		
-		/**
-		 * The reaction to the sum of all the {@link RIUpdateCommunicatorDroneSpatialStateInRoom} influences
-		 * that were sent to this level.
-		 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
-		 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
-		 * @param roomEnvState The public local state of the environment in the chamber level.
-		 * @param dronesUpdateList The drones listed in these influences.
-		 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
-		 */
-		private void communicatorReactionTo( 
-			SimulationTimeStamp transitoryTimeMin,
-			SimulationTimeStamp transitoryTimeMax,
-			EnvPLSInRoom roomEnvState,
-			Set<AgtCommunicatorDronePLSInRoom> dronesUpdateList,
-			InfluencesMap remainingInfluences
-		){	
-			//Does nothing
-		}
+	/**
+	 * The reaction to the sum of all the {@link RIUpdateCommunicatorDroneSpatialStateInRoom} influences
+	 * that were sent to this level.
+	 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param roomEnvState The public local state of the environment in the chamber level.
+	 * @param dronesUpdateList The drones listed in these influences.
+	 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
+	 */
+	private void communicatorReactionTo( 
+		SimulationTimeStamp transitoryTimeMin,
+		SimulationTimeStamp transitoryTimeMax,
+		EnvPLSInRoom roomEnvState,
+		Set<AgtCommunicatorDronePLSInRoom> dronesUpdateList,
+		InfluencesMap remainingInfluences
+	){	
+		//Does nothing
+	}
 	
 	/**
 	 * The reaction to the sum of all the {@link RIUpdateDroneSpatialStateInRoom} influences
@@ -274,6 +294,26 @@ public class RoomLevel extends AbstractLevel {
 			
 		}
 		
+	}
+	
+	
+	/**
+	 * The reaction to the sum of all the {@link RIUpdateMeasurementDroneSpatialStateInRoom} influences
+	 * that were sent to this level.
+	 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param roomEnvState The public local state of the environment in the chamber level.
+	 * @param dronesUpdateList The drones listed in these influences.
+	 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
+	 */
+	private void measurementReactionTo( 
+		SimulationTimeStamp transitoryTimeMin,
+		SimulationTimeStamp transitoryTimeMax,
+		EnvPLSInRoom roomEnvState,
+		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
+		InfluencesMap remainingInfluences
+	){	
+		//Does nothing
 	}
 	
 	
