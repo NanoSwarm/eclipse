@@ -32,4 +32,9 @@ public class SwarmAgentCategoriesList {
 	 * The "drone" agent category
 	 */
 	public static final AgentCategory DRONE = new AgentCategory( "drone" );
+	
+	/**
+	 * the "measurement drone" agent category
+	 */
+	public static final AgentCategory MEASUREMENTDRONE = new AgentCategory( "measurement drone" );
 }

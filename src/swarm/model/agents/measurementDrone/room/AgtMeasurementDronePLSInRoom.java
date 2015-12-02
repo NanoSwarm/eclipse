@@ -1,4 +1,4 @@
-package swarm.model.agents.communicatorDrone.room;
+package swarm.model.agents.measurementDrone.room;
 
 import javax.vecmath.Color3f;
 
@@ -7,8 +7,8 @@ import com.sun.j3d.utils.geometry.Primitive;
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
-public class AgtCommunicatorDronePLSInRoom extends AgtDronePLSInRoom {
-	
+public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
+
 	public Primitive forme;
 	/**
 	 * 
@@ -23,9 +23,9 @@ public class AgtCommunicatorDronePLSInRoom extends AgtDronePLSInRoom {
 	 * @param initialAccelerationAlongY The initial acceleration of the drone along the Y axis.
 	 * @param initialAccelerationAlongZ The initial acceleration of the drone along the Z axis.
 	 * @param initialEnergy The initial energy level of the drone.
-	 * @param cameraDroneColor The color of the drone
+	 * @param measurementDroneColor The color of the drone
 	 */
-	public AgtCommunicatorDronePLSInRoom(
+	public AgtMeasurementDronePLSInRoom(
 			IAgent4Engine owner,
 			double initialX,
 			double initialY,
@@ -37,7 +37,7 @@ public class AgtCommunicatorDronePLSInRoom extends AgtDronePLSInRoom {
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
 			double initialEnergy,
-			Color3f communicatorDroneColor
+			Color3f measurementDroneColor
 	) {
 		super(
 				owner,
@@ -51,7 +51,7 @@ public class AgtCommunicatorDronePLSInRoom extends AgtDronePLSInRoom {
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ,
 				initialEnergy,
-				communicatorDroneColor
+				measurementDroneColor
 		);
 	}	
 }
