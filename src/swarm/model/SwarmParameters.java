@@ -153,7 +153,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneColor=new Color3f(Color.blue);
 		this.droneColor=new Color3f(Color.magenta);
 		this.communicatorDroneColor=new Color3f(Color.red);
-		this.microphoneDroneColor=new Color3f(Color.black);
+		this.microphoneDroneColor=new Color3f(Color.orange);
 		
 		this.repulsionDistance = 20;
 		this.orientationDistance = 90;

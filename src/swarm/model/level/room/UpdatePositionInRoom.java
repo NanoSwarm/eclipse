@@ -40,7 +40,8 @@ public class UpdatePositionInRoom {
 			agtDrone.setAcceleration(
 					parameters.maxAcc * agtDrone.getAcceleration().x / acc ,
 					parameters.maxAcc * agtDrone.getAcceleration().y / acc,
-					parameters.maxAcc * agtDrone.getAcceleration().z / acc);
+					parameters.maxAcc * agtDrone.getAcceleration().z / acc
+					);
 		}
 		
 		//Update position and speed by integration (of speed and acceleration)

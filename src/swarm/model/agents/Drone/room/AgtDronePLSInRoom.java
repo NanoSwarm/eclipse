@@ -81,8 +81,9 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		ca.setColor(color);	
 		Appearance ap=new Appearance();
 		ap.setColoringAttributes(ca);		
+		ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_READ);
+		ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE);
 		this.forme.setAppearance(ap);
-		
 		
 	}
 	

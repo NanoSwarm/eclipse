@@ -32,9 +32,9 @@ public class UpdateInfluenceInRoom {
 		
 		for( AgtDronePLSInRoom agtOtherDrone : droneUpdateList ){
 			if(agtDrone != agtOtherDrone){
-				double distance =Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
-										 + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
-										 + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
+				double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
+										  + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
+										  + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
 				if (distance > parameters.attractionDistance){
 					//does nothing
 				}
@@ -71,6 +71,34 @@ public class UpdateInfluenceInRoom {
 					}
 					
 				}
+				
+				//Keep the influences vector under the maxAcc limit
+				double acc = Math.sqrt(
+						Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
+						Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
+						Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
+				
+				if ( acc > parameters.maxAcc){
+					
+					
+					attractionAcc.set(
+							parameters.maxAcc * (attractionAcc.x) / acc ,
+							parameters.maxAcc * (attractionAcc.y) / acc,
+							parameters.maxAcc * (attractionAcc.z) / acc
+							);
+					orientationAcc.set(
+							parameters.maxAcc * (orientationAcc.x) / acc ,
+							parameters.maxAcc * (orientationAcc.y) / acc,
+							parameters.maxAcc * (orientationAcc.z) / acc
+							);
+					repulsionAcc.set(
+							parameters.maxAcc * (repulsionAcc.x) / acc ,
+							parameters.maxAcc * (repulsionAcc.y) / acc,
+							parameters.maxAcc * (repulsionAcc.z) / acc
+							);
+				}
+				
+				
 			}				
 		}
 		
