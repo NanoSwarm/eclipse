@@ -25,6 +25,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public double orientationDistance;
 	
 	/**
+	 * 
+	 * test
+	 */
+	
+	/**
 	 * the repulsion distance.
 	 */
 	public double repulsionCoeff;
