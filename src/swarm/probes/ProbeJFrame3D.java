@@ -17,6 +17,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
@@ -154,7 +155,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			SwarmLevelList.ROOM
 			
 	);
-	Vector3d centre=new Vector3d(0,0,0);
+	Vector3d centre=new Vector3d(0,0,2.41);
 	int somme=0;
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
 		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
@@ -187,27 +188,25 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			castedAgtState.transformGroup.setTransform(translate);
 			castedAgtState.transformGroup.addChild(castedAgtState.forme);
 			this.branchGroup.addChild(castedAgtState.transformGroup);
+			// Center of the group of nanodrone
 			centre.x+=castedAgtState.getLocation().x;
 			centre.y+=castedAgtState.getLocation().y;
-			centre.z+=castedAgtState.getLocation().z;
+
 			somme++;
 }		
 	// Set the position of the camera
 	
 	TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
+	
 	Transform3D transs=new Transform3D();
 	centre.x/=1000*somme;
-	centre.y/=1000*somme;
-	centre.y=-centre.y;
-	//centre.z/=1000*somme;
-	centre.z=2.41;
-	
+	centre.y=-(centre.y/(1000*somme));
 	transs.setTranslation(centre);
 	tg.setTransform(transs);
 	 //sensitivity of the movement
 	 double mousesensitivity=0.005;
 	    // Creation of the rotation Y axis ( hold left click )
-	    MouseRotate mouseRotate = new MouseRotate();
+	    MouseRotate mouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
 	    mouseRotate.setFactor(mousesensitivity);
 	    mouseRotate.setTransformGroup(tg);
 	    // Area of the rotation Y
@@ -234,7 +233,18 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    // Area of the zoom
 	    mouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
 	    this.branchGroup.addChild(mouseZoom);
-}
+	    
+	    //Navigation using keypad
+	    /* Down/up arrow : move backward/forward
+	     * right/left_arrow : move right/left
+	     * page up/down : move up/down
+	     * +shift to slow movement
+	     */
+	    KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
+	    key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
+	    this.branchGroup.addChild(key);
+	
+	}
 /**
  * Update the position of each agent at each stamptime.
  * @param timestamptimestamp The time stamp when the observation is made.
