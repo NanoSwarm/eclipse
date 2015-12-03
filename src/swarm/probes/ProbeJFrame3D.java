@@ -154,8 +154,8 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			SwarmLevelList.ROOM
 			
 	);
-	
-
+	Vector3d centre=new Vector3d(0,0,0);
+	int somme=0;
 	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
 		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
 
@@ -187,18 +187,31 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			castedAgtState.transformGroup.setTransform(translate);
 			castedAgtState.transformGroup.addChild(castedAgtState.forme);
 			this.branchGroup.addChild(castedAgtState.transformGroup);
+			centre.x+=castedAgtState.getLocation().x;
+			centre.y+=castedAgtState.getLocation().y;
+			centre.z+=castedAgtState.getLocation().z;
+			somme++;
 }		
 	// Set the position of the camera
 	
-	 TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
-	//sensitivity of the movement
+	TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
+	Transform3D transs=new Transform3D();
+	centre.x/=1000*somme;
+	centre.y/=1000*somme;
+	centre.y=-centre.y;
+	//centre.z/=1000*somme;
+	centre.z=2.41;
+	
+	transs.setTranslation(centre);
+	tg.setTransform(transs);
+	 //sensitivity of the movement
 	 double mousesensitivity=0.005;
 	    // Creation of the rotation Y axis ( hold left click )
-	    MouseRotate mouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
+	    MouseRotate mouseRotate = new MouseRotate();
 	    mouseRotate.setFactor(mousesensitivity);
 	    mouseRotate.setTransformGroup(tg);
 	    // Area of the rotation Y
-	    mouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
+	    mouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0), 1000));
 	 	this.branchGroup.addChild(mouseRotate);
 
 	    // Creation of the translation X(hold right click)
@@ -206,8 +219,11 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    mouseTranslate.setFactor(mousesensitivity);
 	    mouseTranslate.setTransformGroup(tg);
 
+
 	    // Area of the translation X
-	    mouseTranslate.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
+	    BoundingBox box= new BoundingBox(new Point3d (0,0,0),new Point3d(0.0001,0,0));
+	    //   mouseTranslate.setSchedulingBounds(new BoundingSphere(new Point3d(10,10,10), 0.2));
+	   mouseTranslate.setSchedulingBounds(box);
 	    this.branchGroup.addChild(mouseTranslate);
 
 	    // Creation of the zoom (hold alt+left click) 
