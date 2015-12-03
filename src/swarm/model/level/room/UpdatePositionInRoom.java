@@ -50,6 +50,7 @@ public class UpdatePositionInRoom {
 				agtDrone.getLocation().y + agtDrone.getVelocity().y + agtDrone.getAcceleration().y / 2,
 				agtDrone.getLocation().z + agtDrone.getVelocity().z + agtDrone.getAcceleration().z / 2
 			);
+			
 		agtDrone.setVelocity(
 					agtDrone.getVelocity().x + agtDrone.getAcceleration().x, 
 					agtDrone.getVelocity().y + agtDrone.getAcceleration().y,
