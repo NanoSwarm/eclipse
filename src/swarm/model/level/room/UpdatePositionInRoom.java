@@ -12,11 +12,17 @@ public class UpdatePositionInRoom {
 	 */
 	public static void UpdateDronePosition(AgtDronePLSInRoom agtDrone, SwarmParameters parameters){
 		
+		if(agtDrone.getEnergy()!=0){
 		agtDrone.setAcceleration(
 				agtDrone.getAcceleration().x + agtDrone.getInfluence().x,
 				agtDrone.getAcceleration().y + agtDrone.getInfluence().y,
 				agtDrone.getAcceleration().z + agtDrone.getInfluence().z
 				);
+		}
+		//If drone 
+		else{
+			agtDrone.setAcceleration(0, 0, -9.81);
+		}
 		//Keep the velocity vector under the maxSeed limit.
 		double speed = Math.sqrt(
 				Math.pow(agtDrone.getVelocity().x,2)+
@@ -45,6 +51,7 @@ public class UpdatePositionInRoom {
 		}
 		
 		//Update position and speed by integration (of speed and acceleration)
+	
 		agtDrone.setLocation(
 				agtDrone.getLocation().x + agtDrone.getVelocity().x + agtDrone.getAcceleration().x / 2, 
 				agtDrone.getLocation().y + agtDrone.getVelocity().y + agtDrone.getAcceleration().y / 2,
@@ -55,6 +62,7 @@ public class UpdatePositionInRoom {
 					agtDrone.getVelocity().y + agtDrone.getAcceleration().y,
 					agtDrone.getVelocity().z + agtDrone.getAcceleration().z
 			);
+		
 		
 		// Keep the Drones in the limits of the room, temporary (before real limitation to the room.
 		if( agtDrone.getLocation().x > parameters.roomBounds.getWidth()) {

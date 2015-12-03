@@ -92,6 +92,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public double microphoneDroneMassFactor;
 	
 	/**
+	 * The Mass of a drone with the tools to fly
+	 */
+	public double basicDroneMass;
+	
+	/**
 	 * 
 	 */
 	public double initialEnergy;
@@ -173,7 +178,8 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 100;
+		this.basicDroneMass= 0.04;
+		this.initialEnergy = 0.01;
 		
 		
 		this.nbOfCameraDroneAgents = 30;
@@ -183,7 +189,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 		
 		this.roomBounds = new Rectangle2D.Double(0, 0, 1500, 750);
-		this.simulationTime = 5000;
+		this.simulationTime = 50000;
 	}
 
 }

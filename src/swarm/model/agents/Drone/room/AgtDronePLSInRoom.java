@@ -103,13 +103,16 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * @return The location of the drone in the room.
 	 */
 	public Vector3d getLocation( ){
+		
 		return this.location;
+		
 	}
 
 	/**
 	 * Sets the location of the drone in the room.
 	 * @param x The new x coordinate of the drone in the room.
 	 * @param y The new y coordinate of the drone in the room.
+	 * @param y The new z coordinate of the drone in the room.
 	 */
 	public void setLocation( double x, double y,double z ){
 		this.location.set( x, y,z );
