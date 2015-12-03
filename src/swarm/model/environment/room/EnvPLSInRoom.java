@@ -1,6 +1,6 @@
 package swarm.model.environment.room;
 
-import java.awt.geom.Rectangle2D;
+import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfEnvironment;
 import swarm.model.level.SwarmLevelList;
@@ -18,22 +18,17 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	 * or if its dimensions are lower or equal to 0.
 	 */
 	public EnvPLSInRoom(
-			Rectangle2D bounds
+			Vector3d bounds
 	) {
 		super(
 			SwarmLevelList.ROOM
 		);
 		if( bounds == null ){
 			throw new IllegalArgumentException( "The argument cannot be null." );
-		} else if( bounds.getWidth() <=0 || bounds.getHeight() <= 0 ){
+		} else if( bounds.x <=0 || bounds.y <= 0 || bounds.z <= 0 ){
 			throw new IllegalArgumentException( "The dimensions cannot be lower or equal to 0." );
 		} else {
-			this.bounds = new Rectangle2D.Double(
-					bounds.getX(), 
-					bounds.getY(), 
-					bounds.getWidth(), 
-					bounds.getHeight()
-			);
+			this.bounds = new Vector3d (bounds.x, bounds.y, bounds.z);
 		}
 	}
 	
@@ -45,13 +40,13 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 
 	/**
 	 * The bounds of the room.
-	 */
-	private Rectangle2D bounds;
+	 */	
+	private Vector3d bounds;
 
 	/**
 	 * The bounds of the room.
 	 */
-	public Rectangle2D getBounds( ) {
+	public Vector3d getBounds( ) {
 		return this.bounds;
 	}
 }

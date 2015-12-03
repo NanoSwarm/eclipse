@@ -1,9 +1,9 @@
 package swarm.model;
 
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
 
 import javax.vecmath.Color3f;
+import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar2logo.kernel.model.LogoSimulationParameters;
 
@@ -132,7 +132,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The bounds of the swarm room.
 	 */
-	public Rectangle2D roomBounds;
+	public Vector3d roomBounds;
 	
 	/**
 	 * The length of the simulation
@@ -191,7 +191,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.nbOfMeasurementDroneAgents = 10;
 		
 		
-		this.roomBounds = new Rectangle2D.Double(0, 0, 1500, 750);
+		this.roomBounds = new Vector3d(500, 500, 500);
 		this.simulationTime = 5000;
 	}
 

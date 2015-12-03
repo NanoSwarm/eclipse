@@ -223,5 +223,26 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		return this.color;
 	}
 	
+	/**
+	 * The boolean telling if the drone is able to fly or not
+	 */
+	public Boolean flying = true;
+	
+	/**
+	 *  get the state of the drone
+	 * @return flying, the state of the drone
+	 */
+	public Boolean isFlying(){
+		return flying;
+	}
+	
+	/**
+	 * set the state of the drone
+	 * @param b the new state of the drone
+	 */
+	public void setFlying(Boolean b){
+		flying = b;
+	}
+	
 	
 }

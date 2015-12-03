@@ -57,19 +57,5 @@ public class UpdatePositionInRoom {
 					agtDrone.getVelocity().z + agtDrone.getAcceleration().z
 			);
 		
-		// Keep the Drones in the limits of the room, temporary (before real limitation to the room.
-		if( agtDrone.getLocation().x > parameters.roomBounds.getWidth()) {
-			agtDrone.setLocation(0,agtDrone.getLocation().y,agtDrone.getLocation().z);
-		}
-		if( agtDrone.getLocation().y > parameters.roomBounds.getHeight()) {
-			agtDrone.setLocation(agtDrone.getLocation().x,0,agtDrone.getLocation().z);
-		}
-		if( agtDrone.getLocation().x < 0) {
-			agtDrone.setLocation(parameters.roomBounds.getWidth(),agtDrone.getLocation().y,agtDrone.getLocation().z);
-		}
-		if( agtDrone.getLocation().y < 0) {
-			agtDrone.setLocation(agtDrone.getLocation().x,parameters.roomBounds.getHeight(),agtDrone.getLocation().z);
-		}
-		
 	}
 }
