@@ -32,7 +32,7 @@ public class UpdateInfluenceInRoom {
 		nbOfDronesInAttractionArea = 0;	
 		
 		for( AgtDronePLSInRoom agtOtherDrone : droneUpdateList ){
-			if(agtDrone != agtOtherDrone){
+			if(agtDrone != agtOtherDrone && agtOtherDrone.getEnergy()!=0){
 				double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
 										  + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
 										  + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));

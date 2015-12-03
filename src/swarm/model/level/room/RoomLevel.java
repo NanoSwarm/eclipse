@@ -290,7 +290,7 @@ public class RoomLevel extends AbstractLevel {
 	){
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			UpdateEnergyLevelInRoom.updateEnergy(agtDrone);
+			UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters);
 			
 		}
 		

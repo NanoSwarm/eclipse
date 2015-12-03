@@ -125,7 +125,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 * The number of "Measurement Drone" agents in the simulation.
 	 */
 	public int nbOfMeasurementDroneAgents;
-	
+	/**
+	 * The Mass of a drone with the tools to fly
+	 */
+	public double basicDroneMass;
 	
 	
 	
@@ -181,8 +184,8 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 1000000;
-		
+		this.initialEnergy = 10;
+		this.basicDroneMass= 0.04;
 		
 		this.nbOfCameraDroneAgents = 30;
 		this.nbOfCommunicatorDroneAgents = 30;
