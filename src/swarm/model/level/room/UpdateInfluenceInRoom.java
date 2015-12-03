@@ -38,8 +38,7 @@ public class UpdateInfluenceInRoom {
 										  + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
 				if (distance > parameters.attractionDistance){
 					//does nothing
-				}
-				else if(distance < parameters.attractionDistance && distance > parameters.orientationDistance){
+				}else if(distance < parameters.attractionDistance && distance > parameters.orientationDistance){
 					nbOfDronesInAttractionArea++;
 					attractionAcc.set(
 							attractionAcc.x + (agtOtherDrone.getLocation().x - agtDrone.getLocation().x)/distance,
@@ -47,7 +46,7 @@ public class UpdateInfluenceInRoom {
 							attractionAcc.z + (agtOtherDrone.getLocation().z - agtDrone.getLocation().z)/distance
 							);
 					
-					}else if(distance < parameters.orientationDistance && distance > parameters.repulsionDistance){
+				}else if(distance < parameters.orientationDistance && distance > parameters.repulsionDistance){
 					nbOfDronesInOrientationArea++;
 					orientationAcc.set(
 							orientationAcc.x + (agtOtherDrone.getAcceleration().x)/distance,
