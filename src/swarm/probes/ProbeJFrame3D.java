@@ -173,11 +173,11 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		 castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
 	}			 
 			Transform3D translate=new Transform3D();
-			Vector3d vitesse=new Vector3d(
+			Vector3d position=new Vector3d(
 					castedAgtState.getLocation().x/1000,
 					-castedAgtState.getLocation().x/1000,
 					castedAgtState.getLocation().z/1000);
-	 		translate.setTranslation(vitesse);
+	 		translate.setTranslation(position);
 	 		Transform3D rotate=new Transform3D();
 	 		rotate.rotZ(Math.PI/2);
 	 		translate.mul(rotate);
@@ -249,26 +249,29 @@ public void updateagents(SimulationTimeStamp timestamp,
 			Transform3D currenttrans=new Transform3D();
 			Transform3D trans=new Transform3D();
 			Transform3D rotate=new Transform3D();
-			Transform3D rotate2=new Transform3D();
 			Vector3d currentvect=new Vector3d();
-			Vector3d vitesse=new Vector3d(
+			Vector3d position =new Vector3d(
 					castedAgtState.getLocation().x/1000,
 					-castedAgtState.getLocation().y/1000,
 					castedAgtState.getLocation().z/1000);			
 			castedAgtState.transformGroup.getTransform(currenttrans);
 			trans.get(currentvect);
 			Vector3d newvect=new Vector3d(
-					vitesse.x-currentvect.x,
-					vitesse.y-currentvect.y,
-					vitesse.z-currentvect.z);
+					position.x-currentvect.x,
+					position.y-currentvect.y,
+					position.z-currentvect.z);
 			
 			trans.setTranslation(newvect);	
 			Vector3d vit=new Vector3d(castedAgtState.getVelocity().getX(),castedAgtState.getVelocity().getY(),castedAgtState.getVelocity().getZ());
-			rotate.rotZ(-Math.PI/2+Math.atan2(-vit.y, vit.x));
-			rotate2.rotX(Math.PI+Math.atan2( -vit.z,-vit.y));
 			
+			rotate.rotX( Math.atan2( vit.z, vit.y) );			
 	 		trans.mul(rotate);
-	 		trans.mul(rotate2);
+	 		
+			rotate.rotY( Math.atan2( Math.pow(vit.x,2) + Math.pow(vit.y, 2) , vit.z) );
+	 		trans.mul(rotate);
+	 		
+	 		rotate.rotZ( 0 );
+	 		trans.mul(rotate);
 
 			castedAgtState.transformGroup.setTransform(trans);
 			
