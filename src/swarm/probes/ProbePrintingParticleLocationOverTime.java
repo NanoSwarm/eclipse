@@ -1,6 +1,11 @@
 package swarm.probes;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 import fr.lgi2a.similar.microkernel.IProbe;
 import fr.lgi2a.similar.microkernel.ISimulationEngine;
@@ -24,6 +29,8 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 	 * The stream where the data are written.
 	 */
 	private PrintStream target;
+	
+	public File f = new File("energy_level.txt");
 	
 	/**
 	 * Creates an instance of this probe writing in a specific print stream.
@@ -50,6 +57,14 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 			SimulationTimeStamp initialTimestamp,
 			ISimulationEngine simulationEngine
 	) {
+		try{ 
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f,false))); // >>>> on ajoutera après suppression de ce qui existait éventuellement
+					pw.print("");// ajout de la ligne vierge si print sans ln bien entendu
+					pw.close();
+			}
+			catch(IOException exeption) {
+				System.out.println("Erreur lors de la lecture");
+			}
 		this.displayLocations( initialTimestamp, simulationEngine );
 	}
 
@@ -76,48 +91,87 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 		IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
 				SwarmLevelList.ROOM
 		);
-		for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
-			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
-				AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
-				this.target.println( 
-						timestamp.getIdentifier() + 
-						"\t" + castedAgtState + 
-						"\t" + castedAgtState.getLocation().x  + 
-						"\t" + castedAgtState.getLocation().y  +
-						"\t" + castedAgtState.getLocation().z  +
-						"\t" + castedAgtState.getEnergy()
-				);
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
-				AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
-				this.target.println( 
-						timestamp.getIdentifier() + 
-						"\t" + castedAgtState + 
-						"\t" + castedAgtState.getLocation().x  + 
-						"\t" + castedAgtState.getLocation().y  +
-						"\t" + castedAgtState.getLocation().z  +
-						"\t" + castedAgtState.getEnergy()
-				);
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
-				AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-				this.target.println( 
-						timestamp.getIdentifier() + 
-						"\t" + castedAgtState + 
-						"\t" + castedAgtState.getLocation().x  + 
-						"\t" + castedAgtState.getLocation().y  +
-						"\t" + castedAgtState.getLocation().z  +
-						"\t" + castedAgtState.getEnergy()
-				);
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
-				AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-				this.target.println( 
-						timestamp.getIdentifier() + 
-						"\t" + castedAgtState + 
-						"\t" + castedAgtState.getLocation().x + 
-						"\t" + castedAgtState.getLocation().y +
-						"\t" + castedAgtState.getLocation().z +
-						"\t" + castedAgtState.getEnergy()
-				);
+		try{
+			double ener;
+			
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f,true)));
+		
+			for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
+				if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+					AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
+					this.target.println( 
+							timestamp.getIdentifier() + 
+							"\t" + castedAgtState + 
+							"\t" + castedAgtState.getLocation().x  + 
+							"\t" + castedAgtState.getLocation().y  +
+							"\t" + castedAgtState.getLocation().z  +
+							"\t" + castedAgtState.getEnergy()
+					);
+					AgtCameraDronePLSInRoom name;
+					name=castedAgtState;
+					ener=castedAgtState.getEnergy();
+					pw.println(timestamp.getIdentifier()+
+							"\t" + name +
+							"\t" + ener);
+					
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+					AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
+					this.target.println( 
+							timestamp.getIdentifier() + 
+							"\t" + castedAgtState + 
+							"\t" + castedAgtState.getLocation().x  + 
+							"\t" + castedAgtState.getLocation().y  +
+							"\t" + castedAgtState.getLocation().z  +
+							"\t" + castedAgtState.getEnergy()
+					);
+					AgtCommunicatorDronePLSInRoom name;
+					name=castedAgtState;
+					ener=castedAgtState.getEnergy();
+					pw.println(timestamp.getIdentifier()+
+							"\t" + name +
+							"\t" + ener);
+					
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
+					AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+					this.target.println( 
+							timestamp.getIdentifier() + 
+							"\t" + castedAgtState + 
+							"\t" + castedAgtState.getLocation().x  + 
+							"\t" + castedAgtState.getLocation().y  +
+							"\t" + castedAgtState.getLocation().z  +
+							"\t" + castedAgtState.getEnergy()
+					);
+					AgtDronePLSInRoom name;
+					name=castedAgtState;
+					ener=castedAgtState.getEnergy();
+					pw.println(timestamp.getIdentifier()+
+							"\t" + name +
+							"\t" + ener);
+					
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+					AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+					this.target.println( 
+							timestamp.getIdentifier() + 
+							"\t" + castedAgtState + 
+							"\t" + castedAgtState.getLocation().x + 
+							"\t" + castedAgtState.getLocation().y +
+							"\t" + castedAgtState.getLocation().z +
+							"\t" + castedAgtState.getEnergy()
+					);
+					AgtMicrophoneDronePLSInRoom name;
+					name=castedAgtState;
+					ener=castedAgtState.getEnergy();
+					pw.println(timestamp.getIdentifier()+
+							"\t" + name +
+							"\t" + ener);
+					
+				}
 			}
+			pw.close();
+		}
+		catch(IOException exeption)
+		{
+			System.out.println("Erreur de lecture");
 		}
 	}
 
