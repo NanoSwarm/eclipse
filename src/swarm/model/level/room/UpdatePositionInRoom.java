@@ -11,14 +11,18 @@ public class UpdatePositionInRoom {
 	 * @param parameters the parameters of the simulation
 	 */
 	public static void UpdateDronePosition(AgtDronePLSInRoom agtDrone, SwarmParameters parameters){
-		if(agtDrone.getEnergy()!=0){
+		if(agtDrone.getEnergy()!=0 && agtDrone.getLocation().z >= 0){
 		agtDrone.setAcceleration(
 				agtDrone.getAcceleration().x + agtDrone.getInfluence().x,
 				agtDrone.getAcceleration().y + agtDrone.getInfluence().y,
 				agtDrone.getAcceleration().z + agtDrone.getInfluence().z
 				);
-		}else{
+		}else if (agtDrone.getEnergy()==0 && agtDrone.getLocation().z >= 0){
 				agtDrone.setAcceleration(0, 0, -9.81);
+		}else{
+			agtDrone.setAcceleration(0, 0, 0);
+			agtDrone.setVelocity(0, 0, 0);
+			agtDrone.setLocation(agtDrone.getLocation().x, agtDrone.getLocation().y, -0.01);
 		}
 		//Keep the velocity vector under the maxSeed limit.
 		double speed = Math.sqrt(

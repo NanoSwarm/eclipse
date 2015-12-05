@@ -142,9 +142,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public int simulationTime;
 	
+		
 	/**
-	 * Builds a parameters set containing default values.
-	 */	
+	 * The minimum space to keep between the drones and the ground
+	 */
+	public int limitHeight;
 
 	
 	public Color3f cameraDroneColor;
@@ -157,6 +159,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 	
 	public Color3f measurementDroneColor;
 	
+	
+	/**
+	 * Builds a parameters set containing default values.
+	 */
 	public SwarmParameters () {
 		super();
 		
@@ -176,7 +182,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 		this.maxInitialSpeed = 0.02;
 		this.minInitialSpeed = 0.01;
-		this.maxSpeed = 20;
+		this.maxSpeed = 8;
 		this.maxAcc = 2;
 		this.initialSize = 5;
 		this.xTorus = true;
@@ -184,8 +190,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 10;
+		this.initialEnergy = 30;
 		this.basicDroneMass= 0.04;
+		this.limitHeight = 100;
 		
 		this.nbOfCameraDroneAgents = 30;
 		this.nbOfCommunicatorDroneAgents = 30;
