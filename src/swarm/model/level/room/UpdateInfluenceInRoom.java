@@ -71,12 +71,18 @@ public class UpdateInfluenceInRoom {
 					}
 					
 				}
-				
 				//Keep the influences vector under the maxAcc limit
 				double acc = Math.sqrt(
 						Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
 						Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
 						Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
+				
+				if (agtDrone.getLocation().z < parameters.limitHeight){
+					repulsionAcc.set(0,0,10);
+					attractionAcc.set(0,0,10);
+					orientationAcc.set(0,0,10);
+				}
+				
 				
 				if ( acc > parameters.maxAcc){
 					
