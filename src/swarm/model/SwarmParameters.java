@@ -176,7 +176,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
 		this.repulsionCoeff = 100;
-		this.orientationCoeff = 3000;
+		this.orientationCoeff = 2500;
 		this.attractionCoeff = 1;
 		
 		
@@ -190,7 +190,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 30;
+		this.initialEnergy = 90;
 		this.basicDroneMass= 0.04;
 		this.limitHeight = 100;
 		

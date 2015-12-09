@@ -309,14 +309,24 @@ public void updateagents(SimulationTimeStamp timestamp,
 			trans.setTranslation(newvect);	
 			Vector3d vit=new Vector3d(castedAgtState.getVelocity().getX(),castedAgtState.getVelocity().getY(),castedAgtState.getVelocity().getZ());
 			
-			rotate.rotX( Math.atan2( vit.z, vit.y) );			
+			
+			
+			
+			rotate.rotX(0);
+			rotate.rotY(0);
+			rotate.rotZ(Math.PI + Math.atan2(vit.x, vit.y) );			
 	 		trans.mul(rotate);
 	 		
-			rotate.rotY( Math.atan2( Math.pow(vit.x,2) + Math.pow(vit.y, 2) , vit.z) );
+	 		rotate.rotX(0);
+	 		rotate.rotY( Math.atan2( vit.z , Math.sqrt(Math.pow(vit.x,2) + Math.pow(vit.y, 2))) );
+	 		rotate.rotZ(0);
 	 		trans.mul(rotate);
 	 		
-	 		rotate.rotZ( 0 );
+	 		rotate.rotX( Math.PI/2 );
+	 		rotate.rotY(0);
+	 		rotate.rotZ(0);
 	 		trans.mul(rotate);
+	 		
 
 			castedAgtState.transformGroup.setTransform(trans);
 			

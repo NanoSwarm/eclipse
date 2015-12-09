@@ -1,6 +1,8 @@
 package swarm.model.level.room;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.ColoringAttributes;
+import javax.media.j3d.Material;
 import javax.vecmath.Color3f;
 
 import swarm.model.SwarmParameters;
@@ -33,9 +35,16 @@ public class UpdateEnergyLevelInRoom {
 			agtDrone.setEnergy(agtDrone.getEnergy() - energyDiff);
 		}else{
 			agtDrone.setEnergy(0);
-			ColoringAttributes ca=new ColoringAttributes();
-			ca.setColor(new Color3f(0,0,0));
-			agtDrone.forme.getAppearance().setColoringAttributes(ca);
+			Color3f black=new Color3f(0.0f,0.0f,0.0f);
+			Material material = new Material(
+					black
+					, black
+					, black
+					, black
+					, 64);
+			material.setLightingEnable(true);
+			agtDrone.forme.getAppearance().setMaterial(material);
+
 		}
 		
 	}

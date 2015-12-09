@@ -14,33 +14,6 @@ import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfAgent;
 import swarm.model.level.SwarmLevelList;
 
 public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
-	  static Color3f black = new Color3f(0.0f, 0.0f, 0.0f);
-
-	  static Color3f red = new Color3f(1.0f, 0.0f, 0.0f);
-
-	  static Color3f green = new Color3f(0.0f, 1.0f, 0.0f);
-
-	  static Color3f blue = new Color3f(0.0f, 0.0f, 1.0f);
-
-	  static Color3f skyBlue = new Color3f(0.6f, 0.7f, 0.9f);
-
-	  static Color3f cyan = new Color3f(0.0f, 1.0f, 1.0f);
-
-	  static Color3f magenta = new Color3f(1.0f, 0.0f, 1.0f);
-
-	  static Color3f yellow = new Color3f(1.0f, 1.0f, 0.0f);
-
-	  static Color3f brightWhite = new Color3f(1.0f, 1.5f, 1.5f);
-
-	  static Color3f white = new Color3f(1.0f, 1.0f, 1.0f);
-
-	  static Color3f darkGrey = new Color3f(0.15f, 0.15f, 0.15f);
-
-	  static Color3f medGrey = new Color3f(0.3f, 0.3f, 0.3f);
-
-	  static Color3f grey = new Color3f(0.5f, 0.5f, 0.5f);
-
-	  static Color3f lightGrey = new Color3f(0.75f, 0.75f, 0.75f);
 	/**
 	 * 
 	 */
@@ -104,23 +77,16 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		this.energy = initialEnergy;
 		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
-		/*ColoringAttributes ca=new ColoringAttributes();
-		ca.setColor(color);	
+
+		Color3f black=new Color3f(0.0f,0.0f,0.0f);
+		Color3f white=new Color3f(1.0f,1.0f,1.0f);
 		Appearance ap=new Appearance();
-		ap.setColoringAttributes(ca);		
-		ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_READ);
-		ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE);
-		this.forme.setAppearance(ap);
-		*/
-		
-		Appearance o=new Appearance();
 		Material material = new Material(color, black, color, white, 64);
 		material.setLightingEnable(true);
-		// These are the colors used for the book figures:
-		//Material material = new Material(white, black, white, black, 64);
-
-		o.setMaterial(material);
-		forme.setAppearance(o);
+		ap.setCapability(Appearance.ALLOW_MATERIAL_READ);
+		ap.setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		ap.setMaterial(material);
+		forme.setAppearance(ap);
 		
 	}
 	
