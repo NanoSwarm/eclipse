@@ -6,16 +6,19 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
+import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
@@ -68,7 +71,22 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		background.setApplicationBounds(new BoundingBox()); 
 		this.branchGroup.addChild(background);
 		this.simpleUniverse.getViewingPlatform().setNominalViewingTransform();	
+		BoundingSphere bounds = new BoundingSphere(new Point3d(), 100.0);
+		Color3f ambientColor = new Color3f(0.1f, 0.1f, 0.1f);
+	    AmbientLight ambientLightNode = new AmbientLight(ambientColor);
+	    ambientLightNode.setInfluencingBounds(bounds);
+	    branchGroup.addChild(ambientLightNode);
+
+	    // Set up the directional lights
+	    Color3f light1Color = new Color3f(1.0f, 1.0f, 1.0f);
+	    Vector3f light1Direction = new Vector3f(0.0f, -0.2f, -1.0f);
+
+	    DirectionalLight light1 = new DirectionalLight(light1Color,
+	        light1Direction);
+	    light1.setInfluencingBounds(bounds);
+	    branchGroup.addChild(light1);
 		setTitle("3D BOIDS");
+	
 		
 		setBounds(0,0,1000,1000);
 		setVisible(true);
@@ -243,6 +261,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
 	    key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
 	    this.branchGroup.addChild(key);
+		branchGroup.compile();
 	
 	}
 /**
