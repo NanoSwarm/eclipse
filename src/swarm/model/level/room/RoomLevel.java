@@ -112,13 +112,6 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		
-		
-		//Influences on "drone" agents.
-		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
-			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
-		}
-		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
 			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone);
@@ -137,6 +130,11 @@ public class RoomLevel extends AbstractLevel {
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
 			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone);
+		}
+		
+		//Influences on "drone" (all) agents, this one is calculated last.
+		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
+			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
 		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
@@ -187,6 +185,8 @@ public class RoomLevel extends AbstractLevel {
 				measurementUpdateList,
 				remainingInfluences
 		);
+		
+		
 	}
 	
 	/**

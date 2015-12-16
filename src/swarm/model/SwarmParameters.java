@@ -94,7 +94,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public double microphoneDroneMassFactor;
 	
 	/**
-	 * 
+	 * The initial energy in the battery of every drones
 	 */
 	public double initialEnergy;
 	
@@ -147,8 +147,17 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public int simulationTime;
 
+	/**
+	 * The objective of the mission
+	 * objectiveType = 1 -> the drones have to find a point in space (a drone find the point when he is close enough to detect it)
+	 * objectiveType = 2 -> the drones have to measure certain characteristic everywhere in space (in order to create a 2D or 3D map) 
+	 */
+	public int objectiveType;
 
 	
+	/**
+	 * The color of the different drones
+	 */
 	public Color3f cameraDroneColor;
 
 	public Color3f droneColor;
@@ -190,7 +199,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 60;
+		this.initialEnergy = 600;
 		this.basicDroneMass= 0.04;
 		
 		this.nbOfCameraDroneAgents = 30;
@@ -203,6 +212,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.roomBounds = new Vector3d(1000, 1000, 1000);
 		this.securityDistance = 100;
 		this.simulationTime = 5000;
+		this.objectiveType = 1;
 	}
 
 }

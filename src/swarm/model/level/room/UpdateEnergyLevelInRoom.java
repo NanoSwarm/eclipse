@@ -1,7 +1,5 @@
 package swarm.model.level.room;
 
-import javax.media.j3d.Appearance;
-import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Material;
 import javax.vecmath.Color3f;
 
