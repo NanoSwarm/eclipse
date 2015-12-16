@@ -16,6 +16,7 @@ import swarm.probes.ProbeJFrame3D;
 import swarm.probes.ProbePrintingParticleLocationOverTime;
 
 public class SwarmMain {
+	
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
@@ -70,6 +71,6 @@ public class SwarmMain {
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
 		
+			
 	}
-
 }

@@ -59,7 +59,7 @@ public class UpdateInfluenceInRoom {
 							orientationAcc.y + (agtOtherDrone.getAcceleration().y)/distance,
 							orientationAcc.z + (agtOtherDrone.getAcceleration().z)/distance
 							);
-				}else{
+				}else if(distance < parameters.repulsionDistance) {
 					nbOfDronesInRepulsionArea++;
 					if (distance > 0.001){
 						repulsionAcc.set(
@@ -78,65 +78,52 @@ public class UpdateInfluenceInRoom {
 					
 				}
 				
-				
-				if (agtDrone.getLocation().x < parameters.securityDistance ){
-					repulsionAcc.set(10,0,0);
-					attractionAcc.set(10,0,0);
-					orientationAcc.set(10,0,0);
-				}else if (agtDrone.getLocation().x > parameters.roomBounds.x - parameters.securityDistance){
-					repulsionAcc.set(-10,0,0);
-					attractionAcc.set(-10,0,0);
-					orientationAcc.set(-10,0,0);
-				}
-				
-				if (agtDrone.getLocation().y < parameters.securityDistance ){
-					repulsionAcc.set(0,10,0);
-					attractionAcc.set(0,10,0);
-					orientationAcc.set(0,10,0);
-				}else if (agtDrone.getLocation().y > parameters.roomBounds.y - parameters.securityDistance){
-					repulsionAcc.set(0,-10,0);
-					attractionAcc.set(0,-10,0);
-					orientationAcc.set(0,-10,0);
-				}
+			}	
+			
+		}
+		
+		if (agtDrone.getLocation().x < parameters.securityDistance ){
+			agtDrone.setInfluence(5*parameters.maxAcc,0,0);
+		}else if (agtDrone.getLocation().x > parameters.roomBounds.x - parameters.securityDistance){
+			agtDrone.setInfluence(-5*parameters.maxAcc,0,0);
+		}
+		
+		if (agtDrone.getLocation().y < parameters.securityDistance ){
+			agtDrone.setInfluence(0,5*parameters.maxAcc,0);
+		}else if (agtDrone.getLocation().y > parameters.roomBounds.y - parameters.securityDistance){
+			agtDrone.setInfluence(0,-5*parameters.maxAcc,0);
+		}
 
-				if (agtDrone.getLocation().z < parameters.securityDistance ){
-					repulsionAcc.set(0,0,10);
-					attractionAcc.set(0,0,10);
-					orientationAcc.set(0,0,10);
-				}else if (agtDrone.getLocation().z > parameters.roomBounds.z - parameters.securityDistance){
-					repulsionAcc.set(0,0,-10);
-					attractionAcc.set(0,0,-10);
-					orientationAcc.set(0,0,-10);
-				}
-				
-				//Keep the influences vector under the maxAcc limit
-				double acc = Math.sqrt(
-						Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
-						Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
-						Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
-				
-				if ( acc > parameters.maxAcc){
-					
-					
-					attractionAcc.set(
-							parameters.maxAcc * (attractionAcc.x) / acc ,
-							parameters.maxAcc * (attractionAcc.y) / acc,
-							parameters.maxAcc * (attractionAcc.z) / acc
-							);
-					orientationAcc.set(
-							parameters.maxAcc * (orientationAcc.x) / acc ,
-							parameters.maxAcc * (orientationAcc.y) / acc,
-							parameters.maxAcc * (orientationAcc.z) / acc
-							);
-					repulsionAcc.set(
-							parameters.maxAcc * (repulsionAcc.x) / acc ,
-							parameters.maxAcc * (repulsionAcc.y) / acc,
-							parameters.maxAcc * (repulsionAcc.z) / acc
-							);
-				}
-				
-				
-			}				
+		if (agtDrone.getLocation().z < parameters.securityDistance ){
+			agtDrone.setInfluence(0,0,5*parameters.maxAcc);
+		}else if (agtDrone.getLocation().z > parameters.roomBounds.z - parameters.securityDistance){
+			agtDrone.setInfluence(0,0,-5*parameters.maxAcc);
+		}
+		
+		//Keep the influences vector under the maxAcc limit
+		double acc = Math.sqrt(
+				Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
+				Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
+				Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
+		
+		if ( acc > parameters.maxAcc){
+			
+			
+			attractionAcc.set(
+					parameters.maxAcc * (attractionAcc.x) / acc ,
+					parameters.maxAcc * (attractionAcc.y) / acc,
+					parameters.maxAcc * (attractionAcc.z) / acc
+					);
+			orientationAcc.set(
+					parameters.maxAcc * (orientationAcc.x) / acc ,
+					parameters.maxAcc * (orientationAcc.y) / acc,
+					parameters.maxAcc * (orientationAcc.z) / acc
+					);
+			repulsionAcc.set(
+					parameters.maxAcc * (repulsionAcc.x) / acc ,
+					parameters.maxAcc * (repulsionAcc.y) / acc,
+					parameters.maxAcc * (repulsionAcc.z) / acc
+					);
 		}
 		
 		if (nbOfDronesInAttractionArea != 0){
