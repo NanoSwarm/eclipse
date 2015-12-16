@@ -14,13 +14,12 @@ import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
-import swarm.probes.ProbePrintingParticleLocationOverTime;
 
 public class SwarmMain {
 	
 	
 	private static ISimulationEngine engine;
-	
+	private static ProbeInterface resultInterface;
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
@@ -64,9 +63,10 @@ public class SwarmMain {
 				new ProbeJFrame3D()															// The frame is resized automatically
 				
 		);
+		
 		engine.addProbe(
 				"Energy consumption results",
-				new ProbeInterface(parameters)															// The frame is resized automatically
+				 resultInterface=new ProbeInterface(parameters)															// The frame is resized automatically
 				
 		);
 	
@@ -82,13 +82,15 @@ public class SwarmMain {
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
 			
-
+			
 		
 			
 	}
 	
 	public static void abordSimulation(){
 		engine.requestSimulationAbortion();
+		
+		resultInterface.setVisible(true);
 	}
 	
 
