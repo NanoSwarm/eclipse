@@ -138,15 +138,15 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public Vector3d roomBounds;
 	
 	/**
+	 * The minimum distance to maintain between the drones and the limits of the room
+	 */
+	public int securityDistance;
+	
+	/**
 	 * The length of the simulation
 	 */
 	public int simulationTime;
-	
-		
-	/**
-	 * The minimum space to keep between the drones and the ground
-	 */
-	public int limitHeight;
+
 
 	
 	public Color3f cameraDroneColor;
@@ -176,7 +176,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
 		this.repulsionCoeff = 100;
-		this.orientationCoeff = 2500;
+		this.orientationCoeff = 2200;
 		this.attractionCoeff = 1;
 		
 		
@@ -190,18 +190,18 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 90;
+		this.initialEnergy = 60;
 		this.basicDroneMass= 0.04;
-		this.limitHeight = 100;
 		
 		this.nbOfCameraDroneAgents = 30;
 		this.nbOfCommunicatorDroneAgents = 30;
-		this.nbOfDroneAgents = 100;
+		this.nbOfDroneAgents = 30;
 		this.nbOfMicrophoneDroneAgents = 30;
 		this.nbOfMeasurementDroneAgents = 10;
 		
 		
-		this.roomBounds = new Vector3d(500, 500, 500);
+		this.roomBounds = new Vector3d(1000, 1000, 1000);
+		this.securityDistance = 100;
 		this.simulationTime = 5000;
 	}
 

@@ -114,7 +114,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtCameraDroneFactory.generate(
 					 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.x),
 					 RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.y),
-					 0
+					 1
 					 );
 			
 			result.getAgents().add( drone );
@@ -123,7 +123,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtCommunicatorDroneFactory.generate(
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.x),
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.y), 
-					0
+					1
 					);
 			
 			result.getAgents().add( drone );
@@ -132,7 +132,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtDroneFactory.generate(
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.x),
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.y), 
-					0
+					1
 					);
 			
 			result.getAgents().add( drone );
@@ -141,7 +141,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtMicrophoneDroneFactory.generate(
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.x),
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.y),
-		    		0
+		    		1
 		    		);
 			
 			result.getAgents().add( drone );
@@ -150,7 +150,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			IAgent4Engine drone = AgtMeasurementDroneFactory.generate(
 					RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.x),
 				    RandomValueFactory.getStrategy().randomDouble(0,castedParameters.roomBounds.y),
-					0
+					1
 					);
 			
 			result.getAgents().add( drone );

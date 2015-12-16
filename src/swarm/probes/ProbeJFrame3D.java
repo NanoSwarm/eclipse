@@ -71,7 +71,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		background.setApplicationBounds(new BoundingBox()); 
 		this.branchGroup.addChild(background);
 		this.simpleUniverse.getViewingPlatform().setNominalViewingTransform();	
-		BoundingSphere bounds = new BoundingSphere(new Point3d(), 100.0);
+		BoundingSphere bounds = new BoundingSphere(new Point3d(), 10000.0);
 		Color3f ambientColor = new Color3f(0.1f, 0.1f, 0.1f);
 	    AmbientLight ambientLightNode = new AmbientLight(ambientColor);
 	    ambientLightNode.setInfluencingBounds(bounds);
