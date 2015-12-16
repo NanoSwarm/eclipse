@@ -9,6 +9,7 @@ import fr.lgi2a.similar.microkernel.dynamicstate.ConsistentPublicLocalDynamicSta
 import fr.lgi2a.similar.microkernel.influences.IInfluence;
 import fr.lgi2a.similar.microkernel.influences.InfluencesMap;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLevel;
+import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
@@ -288,10 +289,19 @@ public class RoomLevel extends AbstractLevel {
 			Set<AgtDronePLSInRoom> dronesUpdateList,
 			InfluencesMap remainingInfluences
 	){
+		int i = 0;
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters);
+			i += UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters); //Count the number of dead drones and update energy levels
 			
+			
+		}
+		if (i == (parameters.nbOfCameraDroneAgents 
+				+ parameters.nbOfCommunicatorDroneAgents
+				+ parameters.nbOfDroneAgents 
+				+ parameters.nbOfMeasurementDroneAgents 
+				+ parameters.nbOfMicrophoneDroneAgents)){
+			SwarmMain.abordSimulation();
 		}
 		
 	}

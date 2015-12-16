@@ -12,7 +12,7 @@ public class UpdateEnergyLevelInRoom {
 	 *  the method updating the energy level of the drones.
 	 * @param agtDrone a drone send by RoomLevel if he is eligible to this influence.
 	 */
-	public static void updateEnergy(AgtDronePLSInRoom agtDrone,SwarmParameters parameters){
+	public static int updateEnergy(AgtDronePLSInRoom agtDrone,SwarmParameters parameters){
 
 		/**
 		 * The loss in energy is calculated directly from the influences 
@@ -31,6 +31,7 @@ public class UpdateEnergyLevelInRoom {
 		//the energy level can't be negative.
 		if (energyDiff < agtDrone.getEnergy()){
 			agtDrone.setEnergy(agtDrone.getEnergy() - energyDiff);
+			return 0;
 		}else{
 			agtDrone.setEnergy(0);
 			Color3f black=new Color3f(0.0f,0.0f,0.0f);
@@ -42,6 +43,7 @@ public class UpdateEnergyLevelInRoom {
 					, 64);
 			material.setLightingEnable(true);
 			agtDrone.forme.getAppearance().setMaterial(material);
+			return 1;
 
 		}
 		
