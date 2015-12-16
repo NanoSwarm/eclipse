@@ -108,6 +108,7 @@ public class ProbePrintingParticleLocationOverTime implements IProbe {
 							"\t" + castedAgtState.getEnergy()
 					);
 					AgtCameraDronePLSInRoom name;
+					//listCameraDrone.add(name);				
 					name=castedAgtState;
 					ener=castedAgtState.getEnergy();
 					pw.println(timestamp.getIdentifier()+

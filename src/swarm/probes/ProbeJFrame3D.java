@@ -15,6 +15,7 @@ import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.swing.JButton;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -71,12 +72,11 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		background.setApplicationBounds(new BoundingBox()); 
 		this.branchGroup.addChild(background);
 		this.simpleUniverse.getViewingPlatform().setNominalViewingTransform();	
-		BoundingSphere bounds = new BoundingSphere(new Point3d(), 100.0);
+		BoundingSphere bounds = new BoundingSphere(new Point3d(), 10000.0);
 		Color3f ambientColor = new Color3f(0.1f, 0.1f, 0.1f);
 	    AmbientLight ambientLightNode = new AmbientLight(ambientColor);
 	    ambientLightNode.setInfluencingBounds(bounds);
 	    branchGroup.addChild(ambientLightNode);
-
 	    // Set up the directional lights
 	    Color3f light1Color = new Color3f(1.0f, 1.0f, 1.0f);
 	    Vector3f light1Direction = new Vector3f(0.0f, -0.2f, -1.0f);

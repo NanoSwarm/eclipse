@@ -12,6 +12,7 @@ import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
+import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
 import swarm.probes.ProbePrintingParticleLocationOverTime;
 
@@ -50,15 +51,22 @@ public class SwarmMain {
 				"Trace printer", 
 				new ProbeExecutionTracker( System.err, false )
 		);
-		engine.addProbe(
+	/*	engine.addProbe(
 				"Drone location",
 				new ProbePrintingParticleLocationOverTime( System.out )
-		);
+		);*/
 		engine.addProbe(
 				"Chamber level Swing viewer3d",
 				new ProbeJFrame3D()															// The frame is resized automatically
 				
 		);
+		engine.addProbe(
+				"Energy consumption results",
+				new ProbeInterface(parameters)															// The frame is resized automatically
+				
+		);
+	
+	
 		
 			
 			// Create the simulation model being used.
@@ -69,6 +77,8 @@ public class SwarmMain {
 			);
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
+			
+
 		
 	}
 

@@ -202,7 +202,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 		
 		this.roomBounds = new Vector3d(500, 500, 500);
-		this.simulationTime = 5000;
+		this.simulationTime = 20000;
 	}
 
 }
