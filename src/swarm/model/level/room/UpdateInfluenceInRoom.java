@@ -102,9 +102,9 @@ public class UpdateInfluenceInRoom {
 		
 		//Keep the influences vector under the maxAcc limit
 		double acc = Math.sqrt(
-				Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
-				Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
-				Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
+				Math.pow(parameters.attractionCoeff * attractionAcc.x + parameters.orientationCoeff * orientationAcc.x + parameters.repulsionCoeff * repulsionAcc.x ,2)+	
+				Math.pow(parameters.attractionCoeff * attractionAcc.y + parameters.orientationCoeff * orientationAcc.y + parameters.repulsionCoeff * repulsionAcc.y ,2)+	
+				Math.pow(parameters.attractionCoeff * attractionAcc.z + parameters.orientationCoeff * orientationAcc.z + parameters.repulsionCoeff * repulsionAcc.z ,2));
 		
 		if ( acc > parameters.maxAcc){
 			
@@ -129,23 +129,23 @@ public class UpdateInfluenceInRoom {
 		if (nbOfDronesInAttractionArea != 0){
 			
 			agtDrone.setInfluence(
-					agtDrone.getInfluence().x + parameters.attractionCoeff * attractionAcc.x / nbOfDronesInAttractionArea,
-					agtDrone.getInfluence().y + parameters.attractionCoeff * attractionAcc.y / nbOfDronesInAttractionArea,
-					agtDrone.getInfluence().z + parameters.attractionCoeff * attractionAcc.z / nbOfDronesInAttractionArea
+					agtDrone.getInfluence().x + attractionAcc.x / nbOfDronesInAttractionArea,
+					agtDrone.getInfluence().y + attractionAcc.y / nbOfDronesInAttractionArea,
+					agtDrone.getInfluence().z + attractionAcc.z / nbOfDronesInAttractionArea
 					);
 		}
 		if (nbOfDronesInRepulsionArea != 0){
 			agtDrone.setInfluence(
-					agtDrone.getInfluence().x + parameters.repulsionCoeff * repulsionAcc.x/nbOfDronesInRepulsionArea,
-					agtDrone.getInfluence().y + parameters.repulsionCoeff * repulsionAcc.y/nbOfDronesInRepulsionArea,
-					agtDrone.getInfluence().z + parameters.repulsionCoeff * repulsionAcc.z/nbOfDronesInRepulsionArea
+					agtDrone.getInfluence().x + repulsionAcc.x/nbOfDronesInRepulsionArea,
+					agtDrone.getInfluence().y + repulsionAcc.y/nbOfDronesInRepulsionArea,
+					agtDrone.getInfluence().z + repulsionAcc.z/nbOfDronesInRepulsionArea
 					);
 		}
 		if (nbOfDronesInOrientationArea != 0){
 			agtDrone.setInfluence(
-					agtDrone.getInfluence().x + parameters.orientationCoeff * orientationAcc.x/nbOfDronesInOrientationArea,
-					agtDrone.getInfluence().y + parameters.orientationCoeff * orientationAcc.y/nbOfDronesInOrientationArea,
-					agtDrone.getInfluence().z + parameters.orientationCoeff * orientationAcc.z/nbOfDronesInOrientationArea
+					agtDrone.getInfluence().x + orientationAcc.x/nbOfDronesInOrientationArea,
+					agtDrone.getInfluence().y + orientationAcc.y/nbOfDronesInOrientationArea,
+					agtDrone.getInfluence().z + orientationAcc.z/nbOfDronesInOrientationArea
 					);
 		}
 	}
