@@ -17,6 +17,10 @@ import swarm.probes.ProbeJFrame3D;
 import swarm.probes.ProbePrintingParticleLocationOverTime;
 
 public class SwarmMain {
+	
+	
+	private static ISimulationEngine engine;
+	
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
@@ -40,7 +44,7 @@ public class SwarmMain {
 				AgtMeasurementDroneFactory.setParameters( parameters );
 		
 		// Create the simulation engine that will run simulations
-		ISimulationEngine engine = new EngineMonothreadedDefaultdisambiguation( );
+		engine = new EngineMonothreadedDefaultdisambiguation( );
 		// Create the probes that will listen to the execution of the simulation.	
 		
 		engine.addProbe( 
@@ -80,6 +84,12 @@ public class SwarmMain {
 			
 
 		
+			
 	}
+	
+	public static void abordSimulation(){
+		engine.requestSimulationAbortion();
+	}
+	
 
 }

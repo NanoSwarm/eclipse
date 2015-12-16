@@ -23,6 +23,7 @@ public class UpdatePositionInRoom {
 			agtDrone.setAcceleration(0, 0, 0);
 			agtDrone.setVelocity(0, 0, 0);
 			agtDrone.setLocation(agtDrone.getLocation().x, agtDrone.getLocation().y, -0.01);
+			agtDrone.setEnergy(0);
 		}
 		//Keep the velocity vector under the maxSeed limit.
 		double speed = Math.sqrt(

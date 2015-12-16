@@ -9,6 +9,7 @@ import fr.lgi2a.similar.microkernel.dynamicstate.ConsistentPublicLocalDynamicSta
 import fr.lgi2a.similar.microkernel.influences.IInfluence;
 import fr.lgi2a.similar.microkernel.influences.InfluencesMap;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLevel;
+import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
@@ -112,13 +113,6 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		
-		
-		//Influences on "drone" agents.
-		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
-			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
-		}
-		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
 			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone);
@@ -137,6 +131,11 @@ public class RoomLevel extends AbstractLevel {
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
 			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone);
+		}
+		
+		//Influences on "drone" (all) agents, this one is calculated last.
+		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
+			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
 		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
@@ -187,6 +186,8 @@ public class RoomLevel extends AbstractLevel {
 				measurementUpdateList,
 				remainingInfluences
 		);
+		
+		
 	}
 	
 	/**
@@ -288,10 +289,19 @@ public class RoomLevel extends AbstractLevel {
 			Set<AgtDronePLSInRoom> dronesUpdateList,
 			InfluencesMap remainingInfluences
 	){
+		int i = 0;
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters);
+			i += UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters); //Count the number of dead drones and update energy levels
 			
+			
+		}
+		if (i == (parameters.nbOfCameraDroneAgents 
+				+ parameters.nbOfCommunicatorDroneAgents
+				+ parameters.nbOfDroneAgents 
+				+ parameters.nbOfMeasurementDroneAgents 
+				+ parameters.nbOfMicrophoneDroneAgents)){
+			SwarmMain.abordSimulation();
 		}
 		
 	}

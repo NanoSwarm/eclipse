@@ -94,7 +94,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public double microphoneDroneMassFactor;
 	
 	/**
-	 * 
+	 * The initial energy in the battery of every drones
 	 */
 	public double initialEnergy;
 	
@@ -138,17 +138,26 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public Vector3d roomBounds;
 	
 	/**
+	 * The minimum distance to maintain between the drones and the limits of the room
+	 */
+	public int securityDistance;
+	
+	/**
 	 * The length of the simulation
 	 */
 	public int simulationTime;
-	
-		
+
 	/**
-	 * The minimum space to keep between the drones and the ground
+	 * The objective of the mission
+	 * objectiveType = 1 -> the drones have to find a point in space (a drone find the point when he is close enough to detect it)
+	 * objectiveType = 2 -> the drones have to measure certain characteristic everywhere in space (in order to create a 2D or 3D map) 
 	 */
-	public int limitHeight;
+	public int objectiveType;
 
 	
+	/**
+	 * The color of the different drones
+	 */
 	public Color3f cameraDroneColor;
 
 	public Color3f droneColor;
@@ -176,7 +185,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
 		this.repulsionCoeff = 100;
-		this.orientationCoeff = 2500;
+		this.orientationCoeff = 2200;
 		this.attractionCoeff = 1;
 		
 		
@@ -190,19 +199,19 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 90;
+		this.initialEnergy = 60;
 		this.basicDroneMass= 0.04;
-		this.limitHeight = 100;
 		
 		this.nbOfCameraDroneAgents = 30;
 		this.nbOfCommunicatorDroneAgents = 30;
-		this.nbOfDroneAgents = 100;
+		this.nbOfDroneAgents = 30;
 		this.nbOfMicrophoneDroneAgents = 30;
 		this.nbOfMeasurementDroneAgents = 10;
 		
-		
-		this.roomBounds = new Vector3d(500, 500, 500);
-		this.simulationTime = 20000;
+		this.roomBounds = new Vector3d(1000, 1000, 1000);
+		this.securityDistance = 100;
+		this.simulationTime = 5000;
+		this.objectiveType = 1;
 	}
 
 }

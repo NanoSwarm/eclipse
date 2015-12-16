@@ -13,6 +13,12 @@ import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 
 public class UpdateInfluenceInRoom {
 	
+	/**
+	 * General influences on all drones, this one is calculated last
+	 * @param agtDrone the drone concerned by the influence
+	 * @param droneUpdateList the list of all drones in the simulation
+	 * @param parameters the parameters of the simulation
+	 */
 	public static void UpdateDroneInfluence(AgtDronePLSInRoom agtDrone, Set<AgtDronePLSInRoom> droneUpdateList, SwarmParameters parameters){
 		
 		//Calculation of different influences
@@ -32,13 +38,13 @@ public class UpdateInfluenceInRoom {
 		nbOfDronesInAttractionArea = 0;	
 		
 		for( AgtDronePLSInRoom agtOtherDrone : droneUpdateList ){
-			if(agtDrone != agtOtherDrone && agtOtherDrone.getEnergy()!=0){
+			if(agtDrone != agtOtherDrone){
 				double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
 										  + Math.pow(agtDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
 										  + Math.pow(agtDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
 				if (distance > parameters.attractionDistance){
 					//does nothing
-				}else if(distance < parameters.attractionDistance && distance > parameters.orientationDistance){
+				}else if(distance < parameters.attractionDistance && distance > parameters.orientationDistance  && agtOtherDrone.getEnergy()!=0){
 					nbOfDronesInAttractionArea++;
 					attractionAcc.set(
 							attractionAcc.x + (agtOtherDrone.getLocation().x - agtDrone.getLocation().x)/distance,
@@ -46,14 +52,14 @@ public class UpdateInfluenceInRoom {
 							attractionAcc.z + (agtOtherDrone.getLocation().z - agtDrone.getLocation().z)/distance
 							);
 					
-				}else if(distance < parameters.orientationDistance && distance > parameters.repulsionDistance){
+				}else if(distance < parameters.orientationDistance && distance > parameters.repulsionDistance  && agtOtherDrone.getEnergy()!=0){
 					nbOfDronesInOrientationArea++;
 					orientationAcc.set(
 							orientationAcc.x + (agtOtherDrone.getAcceleration().x)/distance,
 							orientationAcc.y + (agtOtherDrone.getAcceleration().y)/distance,
 							orientationAcc.z + (agtOtherDrone.getAcceleration().z)/distance
 							);
-				}else{
+				}else if(distance < parameters.repulsionDistance) {
 					nbOfDronesInRepulsionArea++;
 					if (distance > 0.001){
 						repulsionAcc.set(
@@ -71,49 +77,61 @@ public class UpdateInfluenceInRoom {
 					}
 					
 				}
-				//Keep the influences vector under the maxAcc limit
-				double acc = Math.sqrt(
-						Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
-						Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
-						Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
 				
-				if (agtDrone.getLocation().z < parameters.limitHeight){
-					repulsionAcc.set(0,0,10);
-					attractionAcc.set(0,0,10);
-					orientationAcc.set(0,0,10);
-				}
-				
-				
-				if ( acc > parameters.maxAcc){
-					
-					
-					attractionAcc.set(
-							parameters.maxAcc * (attractionAcc.x) / acc ,
-							parameters.maxAcc * (attractionAcc.y) / acc,
-							parameters.maxAcc * (attractionAcc.z) / acc
-							);
-					orientationAcc.set(
-							parameters.maxAcc * (orientationAcc.x) / acc ,
-							parameters.maxAcc * (orientationAcc.y) / acc,
-							parameters.maxAcc * (orientationAcc.z) / acc
-							);
-					repulsionAcc.set(
-							parameters.maxAcc * (repulsionAcc.x) / acc ,
-							parameters.maxAcc * (repulsionAcc.y) / acc,
-							parameters.maxAcc * (repulsionAcc.z) / acc
-							);
-				}
-				
-				
-			}				
+			}	
+			
+		}
+		
+		if (agtDrone.getLocation().x < parameters.securityDistance ){
+			agtDrone.setInfluence(5*parameters.maxAcc,0,0);
+		}else if (agtDrone.getLocation().x > parameters.roomBounds.x - parameters.securityDistance){
+			agtDrone.setInfluence(-5*parameters.maxAcc,0,0);
+		}
+		
+		if (agtDrone.getLocation().y < parameters.securityDistance ){
+			agtDrone.setInfluence(0,5*parameters.maxAcc,0);
+		}else if (agtDrone.getLocation().y > parameters.roomBounds.y - parameters.securityDistance){
+			agtDrone.setInfluence(0,-5*parameters.maxAcc,0);
+		}
+
+		if (agtDrone.getLocation().z < parameters.securityDistance ){
+			agtDrone.setInfluence(0,0,5*parameters.maxAcc);
+		}else if (agtDrone.getLocation().z > parameters.roomBounds.z - parameters.securityDistance){
+			agtDrone.setInfluence(0,0,-5*parameters.maxAcc);
+		}
+		
+		//Keep the influences vector under the maxAcc limit
+		double acc = Math.sqrt(
+				Math.pow(attractionAcc.x + orientationAcc.x + repulsionAcc.x ,2)+	
+				Math.pow(attractionAcc.y + orientationAcc.y + repulsionAcc.y ,2)+	
+				Math.pow(attractionAcc.z + orientationAcc.z + repulsionAcc.z ,2));
+		
+		if ( acc > parameters.maxAcc){
+			
+			
+			attractionAcc.set(
+					parameters.maxAcc * (attractionAcc.x) / acc ,
+					parameters.maxAcc * (attractionAcc.y) / acc,
+					parameters.maxAcc * (attractionAcc.z) / acc
+					);
+			orientationAcc.set(
+					parameters.maxAcc * (orientationAcc.x) / acc ,
+					parameters.maxAcc * (orientationAcc.y) / acc,
+					parameters.maxAcc * (orientationAcc.z) / acc
+					);
+			repulsionAcc.set(
+					parameters.maxAcc * (repulsionAcc.x) / acc ,
+					parameters.maxAcc * (repulsionAcc.y) / acc,
+					parameters.maxAcc * (repulsionAcc.z) / acc
+					);
 		}
 		
 		if (nbOfDronesInAttractionArea != 0){
 			
 			agtDrone.setInfluence(
-					parameters.attractionCoeff * attractionAcc.x / nbOfDronesInAttractionArea,
-					parameters.attractionCoeff * attractionAcc.y / nbOfDronesInAttractionArea,
-					parameters.attractionCoeff * attractionAcc.z / nbOfDronesInAttractionArea
+					agtDrone.getInfluence().x + parameters.attractionCoeff * attractionAcc.x / nbOfDronesInAttractionArea,
+					agtDrone.getInfluence().y + parameters.attractionCoeff * attractionAcc.y / nbOfDronesInAttractionArea,
+					agtDrone.getInfluence().z + parameters.attractionCoeff * attractionAcc.z / nbOfDronesInAttractionArea
 					);
 		}
 		if (nbOfDronesInRepulsionArea != 0){
@@ -132,15 +150,22 @@ public class UpdateInfluenceInRoom {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param agtCameraDrone
+	 */
 	public static void UpdateCameraDroneInfluence(AgtCameraDronePLSInRoom agtCameraDrone){
 		agtCameraDrone.setInfluence(
-				agtCameraDrone.getInfluence().x, /*(parameters.roomBounds.getWidth()/2 + 400*Math.cos((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().x)/400*/
-				agtCameraDrone.getInfluence().y, /* + (parameters.roomBounds.getHeight()/2 + 400*Math.sin((double)super.getLastConsistentState().getTime().getIdentifier()/400) - agtCameraDrone.getLocation().y)/400*/
+				agtCameraDrone.getInfluence().x, 
+				agtCameraDrone.getInfluence().y,
 				agtCameraDrone.getInfluence().z
 				);
 	}
 	
-	
+	/**
+	 * 
+	 * @param agtCommunicatorDrone
+	 */
 	public static void UpdateCommunicatorDroneInfluence(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone){
 		agtCommunicatorDrone.setInfluence(
 				agtCommunicatorDrone.getInfluence().x,
@@ -149,7 +174,10 @@ public class UpdateInfluenceInRoom {
 				);
 	}
 	
-	
+	/**
+	 * 
+	 * @param agtMicrophoneDrone
+	 */
 	public static void UpdateMicrophoneDroneInfluence(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone){
 		agtMicrophoneDrone.setInfluence(
 				agtMicrophoneDrone.getInfluence().x, 
@@ -158,6 +186,10 @@ public class UpdateInfluenceInRoom {
 				);
 	}
 	
+	/**
+	 * 
+	 * @param agtmeasurementDrone
+	 */
 	public static void UpdateMeasurementDroneInfluence(AgtMeasurementDronePLSInRoom agtmeasurementDrone){
 		agtmeasurementDrone.setInfluence(
 				agtmeasurementDrone.getInfluence().x, 
