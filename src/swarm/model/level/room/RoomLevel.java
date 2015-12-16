@@ -294,7 +294,6 @@ public class RoomLevel extends AbstractLevel {
 			
 			i += UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters); //Count the number of dead drones and update energy levels
 			
-			
 		}
 		if (i == (parameters.nbOfCameraDroneAgents 
 				+ parameters.nbOfCommunicatorDroneAgents

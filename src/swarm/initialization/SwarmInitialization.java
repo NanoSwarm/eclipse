@@ -95,7 +95,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 		// Set the local state of the environment for each level.
 		environment.includeNewLevel(
 				SwarmLevelList.ROOM, 
-				new EnvPLSInRoom( this.parameters.roomBounds ),
+				new EnvPLSInRoom( this.parameters ),
 				new EmptyLocalStateOfEnvironment( SwarmLevelList.ROOM )
 		);
 		

@@ -13,7 +13,6 @@ import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.probes.ProbeJFrame3D;
-import swarm.probes.ProbePrintingParticleLocationOverTime;
 
 public class SwarmMain {
 	
@@ -53,10 +52,6 @@ public class SwarmMain {
 		engine.addProbe(
 				"Trace printer", 
 				new ProbeExecutionTracker( System.err, false )
-		);
-		engine.addProbe(
-				"Drone location",
-				new ProbePrintingParticleLocationOverTime( System.out )
 		);
 		engine.addProbe(
 				"Chamber level Swing viewer3d",

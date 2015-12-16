@@ -153,6 +153,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 * objectiveType = 2 -> the drones have to measure certain characteristic everywhere in space (in order to create a 2D or 3D map) 
 	 */
 	public int objectiveType;
+	
+	/**
+	 * In case of a type 1 objective, the position of the point to find
+	 */
+	public Vector3d objectivePosition;
 
 	
 	/**
@@ -213,6 +218,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.securityDistance = 100;
 		this.simulationTime = 5000;
 		this.objectiveType = 1;
+		this.objectivePosition = new  Vector3d(999,999,999);
 	}
 
 }

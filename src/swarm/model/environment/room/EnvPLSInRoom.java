@@ -3,6 +3,7 @@ package swarm.model.environment.room;
 import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfEnvironment;
+import swarm.model.SwarmParameters;
 import swarm.model.level.SwarmLevelList;
 
 /**
@@ -18,17 +19,18 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	 * or if its dimensions are lower or equal to 0.
 	 */
 	public EnvPLSInRoom(
-			Vector3d bounds
+			SwarmParameters parameters
 	) {
 		super(
 			SwarmLevelList.ROOM
 		);
-		if( bounds == null ){
+		if( parameters.roomBounds == null ){
 			throw new IllegalArgumentException( "The argument cannot be null." );
-		} else if( bounds.x <=0 || bounds.y <= 0 || bounds.z <= 0 ){
+		} else if( parameters.roomBounds.x <=0 || parameters.roomBounds.y <= 0 || parameters.roomBounds.z <= 0 ){
 			throw new IllegalArgumentException( "The dimensions cannot be lower or equal to 0." );
 		} else {
-			this.bounds = new Vector3d (bounds.x, bounds.y, bounds.z);
+			this.bounds = parameters.roomBounds;
+			this.objectivePosition = parameters.objectivePosition;
 		}
 	}
 	
@@ -42,7 +44,12 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	 * The bounds of the room.
 	 */	
 	private Vector3d bounds;
-
+	
+	/**
+	 * 
+	 */
+	private Vector3d objectivePosition;
+	
 	/**
 	 * 
 	 * @return the bounds of the room
@@ -65,7 +72,10 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 		switch(ObjectiveType){
 		
 		case 1: 
-			res = Math.sqrt( (x-100)*(x-100) + (y-100)*(y-100) + (z-100)*(z-100));
+			res = Math.sqrt( Math.pow(x-objectivePosition.x , 2) 
+							+Math.pow(y-objectivePosition.y , 2) 
+							+Math.pow(z-objectivePosition.z , 2)
+						   );
 			break;
 			
 		case 2:
