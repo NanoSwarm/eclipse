@@ -213,7 +213,6 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.nbOfMicrophoneDroneAgents = 30;
 		this.nbOfMeasurementDroneAgents = 10;
 		
-		
 		this.roomBounds = new Vector3d(1000, 1000, 1000);
 		this.securityDistance = 100;
 		this.simulationTime = 5000;
