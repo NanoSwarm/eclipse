@@ -110,19 +110,19 @@ public class UpdateInfluenceInRoom {
 			
 			
 			attractionAcc.set(
-					parameters.maxAcc * (attractionAcc.x) / acc ,
-					parameters.maxAcc * (attractionAcc.y) / acc,
-					parameters.maxAcc * (attractionAcc.z) / acc
+					parameters.maxAcc * ( parameters.attractionCoeff * attractionAcc.x) / acc ,
+					parameters.maxAcc * ( parameters.attractionCoeff * attractionAcc.y) / acc,
+					parameters.maxAcc * ( parameters.attractionCoeff * attractionAcc.z) / acc
 					);
 			orientationAcc.set(
-					parameters.maxAcc * (orientationAcc.x) / acc ,
-					parameters.maxAcc * (orientationAcc.y) / acc,
-					parameters.maxAcc * (orientationAcc.z) / acc
+					parameters.maxAcc * (parameters.orientationCoeff * orientationAcc.x) / acc ,
+					parameters.maxAcc * (parameters.orientationCoeff * orientationAcc.y) / acc,
+					parameters.maxAcc * (parameters.orientationCoeff * orientationAcc.z) / acc
 					);
 			repulsionAcc.set(
-					parameters.maxAcc * (repulsionAcc.x) / acc ,
-					parameters.maxAcc * (repulsionAcc.y) / acc,
-					parameters.maxAcc * (repulsionAcc.z) / acc
+					parameters.maxAcc * (parameters.repulsionCoeff * repulsionAcc.x) / acc ,
+					parameters.maxAcc * (parameters.repulsionCoeff * repulsionAcc.y) / acc,
+					parameters.maxAcc * (parameters.repulsionCoeff * repulsionAcc.z) / acc
 					);
 		}
 		

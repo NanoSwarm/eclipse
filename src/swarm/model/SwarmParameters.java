@@ -186,11 +186,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.microphoneDroneColor = new Color3f(Color.orange);
 		this.measurementDroneColor = new Color3f(Color.cyan);
 		
-		this.repulsionDistance = 40;
+		this.repulsionDistance = 80;
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
-		this.repulsionCoeff = 100;
-		this.orientationCoeff = 2200;
+		this.repulsionCoeff = 1;
+		this.orientationCoeff = 2500;
 		this.attractionCoeff = 1;
 		
 		
@@ -204,16 +204,16 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 10;
+		this.initialEnergy = 1000;
 		this.basicDroneMass= 0.04;
 		
 		this.nbOfCameraDroneAgents = 30;
-		this.nbOfCommunicatorDroneAgents = 30;
-		this.nbOfDroneAgents = 30;
-		this.nbOfMicrophoneDroneAgents = 30;
+		this.nbOfCommunicatorDroneAgents = 100;
+		this.nbOfDroneAgents = 300;
+		this.nbOfMicrophoneDroneAgents = 100;
 		this.nbOfMeasurementDroneAgents = 10;
 		
-		this.roomBounds = new Vector3d(1000, 1000, 1000);
+		this.roomBounds = new Vector3d(5000, 3000, 1000);
 		this.securityDistance = 100;
 		this.simulationTime = 5000;
 		this.objectiveType = 1;
