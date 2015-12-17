@@ -72,6 +72,7 @@ public class ProbeInterface 	extends Frame
 	JRadioButton totalCommunicator;
 	JRadioButton totalMeasurement;
 	JButton reset;
+	public int numberOfGraph=0;
 	public ProbeInterface(SwarmParameters param)
 	{
 		parameters=param;
@@ -148,9 +149,20 @@ public class ProbeInterface 	extends Frame
         add(BorderLayout.CENTER,chartPanel);
         total=new JRadioButton("Total");
         totalCamera=new JRadioButton("Total Camera Drone");
+        
         totalMicrophone=new JRadioButton("Total Microphone Drone");
         totalCommunicator=new JRadioButton("Total Communicator Drone");
         totalMeasurement=new JRadioButton("Total Measurement Drone");
+        totalCamera.setActionCommand("total camera");
+        totalCamera.addActionListener(this);
+        totalMicrophone.setActionCommand("total microphone");
+        totalMicrophone.addActionListener(this);
+        totalCommunicator.setActionCommand("total communicator");
+        totalCommunicator.addActionListener(this);
+        totalMeasurement.setActionCommand("total measurement");
+        totalMeasurement.addActionListener(this);
+        total.setActionCommand("total");
+        total.addActionListener(this);
         
     	Container content1=new Container();
 		BoxLayout ligne2=new BoxLayout(content1, BoxLayout.Y_AXIS);
@@ -161,6 +173,8 @@ public class ProbeInterface 	extends Frame
 		content1.add(total);
 		content1.add(totalCamera);
 		content1.add(totalMicrophone);
+		content1.add(totalCommunicator);
+		content1.add(totalMeasurement);
 		content1.add(reset);
         add(BorderLayout.EAST,content1);
 		addWindowListener(this);
@@ -227,6 +241,7 @@ public class ProbeInterface 	extends Frame
 	public void windowIconified(WindowEvent e){}
 	public void windowDeiconified(WindowEvent e){}
 	public void windowOpened(WindowEvent e){}
+	public boolean bloc=false;
 	public void actionPerformed(ActionEvent e)
 	{
 		
@@ -235,7 +250,7 @@ public class ProbeInterface 	extends Frame
 			{
 				typeSelection();
 			}
-			else if(com.equals("num"))
+			else if((com.equals("num"))&&bloc)
 			{
 				numSelection();
 			}
@@ -243,7 +258,14 @@ public class ProbeInterface 	extends Frame
 			{
 				clearGraph();
 			}
-			
+			else if (com.equals("total camera"))
+			{
+				displayGraph();
+			}
+			else if (com.equals("total camera"))
+			{
+				displayGraph();
+			}
 	}
 
 	public void typeSelection()
@@ -252,21 +274,26 @@ public class ProbeInterface 	extends Frame
 		int index;
 		index=typeDroneList.getSelectedIndex();
 		currentType=typeDroneList.getSelectedItem().toString();	
+		
 		if (currentType!="")
 		{
+			bloc=false;
 		switch (index)
 		{
+		
 			case 0:
 				numDroneList.removeAllItems();	
 				for(int k=0;k<listDrone.length;k++)
 				//numDroneList.addItem(listDrone[k].substring(47,listDrone[k].length()));	
-				numDroneList.addItem(listDrone[k]);
+				numDroneList.addItem(listDrone[k]);			
+				
 				break;
 			case 1:
 				numDroneList.removeAllItems();	
-				for(int k=0;k<listCameraDrone.length;k++)
+			for(int k=0;k<listCameraDrone.length;k++)
 				//numDroneList.addItem(listCameraDrone[k].substring(59,listCameraDrone[k].length()));	
-					numDroneList.addItem(listCameraDrone[k]);
+				numDroneList.addItem(listCameraDrone[k]);
+			
 				break;
 			case 2:
 				numDroneList.removeAllItems();	
@@ -286,25 +313,21 @@ public class ProbeInterface 	extends Frame
 			default:
 				break;
 		}
-				
-			}
-		
-		
+		}
 		numDroneList.setEnabled(true);
+		numDroneList.setSelectedIndex(-1);
+
+	bloc=true;
 	}
 	@SuppressWarnings("unchecked")
-	public int numberOfGraph=0;
 	public void numSelection()
 	{
 		int index;
 		index=typeDroneList.getSelectedIndex();
 		int index2;
-		index2=numDroneList.getSelectedIndex();
-		
-		String currentType =new String();
-	currentType=typeDroneList.getSelectedItem().toString();	
+		index2=numDroneList.getSelectedIndex();	
 	XYDataset dataset1=createDataset(listCameraDroneEnergy[0]);
-	if ((currentType!="")&&(index2>=0))
+	if ((index2>=0))
 	{
 	switch (index)
 	{
@@ -328,9 +351,29 @@ public class ProbeInterface 	extends Frame
 	}	
           this.plot.setDataset(numberOfGraph,dataset1) ;             
           this.plot.setRenderer(numberOfGraph, new StandardXYItemRenderer());
-          plot.getRenderer().setSeriesPaint(0, Color.RED);
+        //  plot.getRenderer().setSeriesPaint(0, Color.RED);
           numberOfGraph++;
 	}
+
+	}	
+	public int positionTotalCamera;
+	public void displayGraph()
+	{
+		if (totalCamera.isSelected())
+		{
+		  positionTotalCamera=numberOfGraph;
+		  this.plot.setDataset(positionTotalCamera,createDataset(listCameraDroneEnergy[listCameraDroneEnergy.length-1])) ;             
+          this.plot.setRenderer(positionTotalCamera, new StandardXYItemRenderer());
+          plot.getRenderer().setSeriesPaint(positionTotalCamera, Color.RED);
+         
+          numberOfGraph++;
+          
+		}
+		else
+		{
+		this.plot.setDataset(positionTotalCamera,null);
+		this.plot.setRenderer(positionTotalCamera, new StandardXYItemRenderer());
+		}
 	}
 	public void clearGraph()
 	{
