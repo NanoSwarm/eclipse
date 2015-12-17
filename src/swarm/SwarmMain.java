@@ -20,6 +20,7 @@ public class SwarmMain {
 	
 	private static ISimulationEngine engine;
 	private static ProbeInterface resultInterface;
+	private static SwarmParameters parameters;
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
@@ -34,7 +35,7 @@ public class SwarmMain {
 	public static void main(String[] Args)
 	{
 		// Create the parameters used in this simulation.
-		SwarmParameters parameters = new SwarmParameters();
+		parameters = new SwarmParameters();
 		// Register the parameters to the agent factories.
 				AgtCameraDroneFactory.setParameters( parameters );
 				AgtCommunicatorDroneFactory.setParameters( parameters );
@@ -81,6 +82,10 @@ public class SwarmMain {
 			
 		
 			
+	}
+	
+	public static SwarmParameters getParameters(){
+		return parameters;
 	}
 	
 	public static void abordSimulation(){
