@@ -9,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
@@ -41,16 +43,18 @@ import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
+@SuppressWarnings("serial")
 public class ProbeInterface 	extends Frame 
 								implements 	WindowListener,
 											ActionListener,
 											IProbe
 {
-	public String[][]listDroneEnergy;
-	public String[][]listCameraDroneEnergy;
-	public String[][]listMicrophoneDroneEnergy;
-	public String[][]listCommunicatorDroneEnergy;
-	public String[][]listMeasurementDroneEnergy;
+	public ArrayList[] listDroneEnergy;
+	public ArrayList[] listCameraDroneEnergy;
+	public ArrayList[] listCommunicatorDroneEnergy;
+	public ArrayList[] listMeasurementDroneEnergy;
+	public ArrayList[] listMicrophoneDroneEnergy;
+
 	public String[]listDrone;
 	public String[]listCameraDrone;
 	public String[]listMicrophoneDrone;
@@ -67,14 +71,36 @@ public class ProbeInterface 	extends Frame
 	JRadioButton totalMicrophone;
 	JRadioButton totalCommunicator;
 	JRadioButton totalMeasurement;
+	JButton reset;
+	public int numberOfGraph=0;
 	public ProbeInterface(SwarmParameters param)
 	{
 		parameters=param;
-		listCameraDroneEnergy=new String[parameters.nbOfCameraDroneAgents][parameters.simulationTime+1];
-		listDroneEnergy=new String[parameters.nbOfDroneAgents][parameters.simulationTime+1];
-		listMicrophoneDroneEnergy=new String[parameters.nbOfMicrophoneDroneAgents][parameters.simulationTime+1];
-		listCommunicatorDroneEnergy=new String[parameters.nbOfCommunicatorDroneAgents][parameters.simulationTime+1];
-		listMeasurementDroneEnergy=new String[parameters.nbOfMeasurementDroneAgents][parameters.simulationTime+1];		
+		listDroneEnergy=new ArrayList[parameters.nbOfDroneAgents+1];
+		listCameraDroneEnergy=new ArrayList[parameters.nbOfCameraDroneAgents+1];
+		listMicrophoneDroneEnergy=new ArrayList[parameters.nbOfMicrophoneDroneAgents+1];
+		listCommunicatorDroneEnergy=new ArrayList[parameters.nbOfCommunicatorDroneAgents+1];
+		listMeasurementDroneEnergy=new ArrayList[parameters.nbOfMeasurementDroneAgents+1];
+		for (int k=0;k<parameters.nbOfDroneAgents+1;k++)
+		{
+			listDroneEnergy[k]=new ArrayList<Double>();
+		}
+		for (int k=0;k<parameters.nbOfCameraDroneAgents+1;k++)
+		{
+			listCameraDroneEnergy[k]=new ArrayList<Double>();
+		}
+		for (int k=0;k<parameters.nbOfCommunicatorDroneAgents+1;k++)
+		{
+			listCommunicatorDroneEnergy[k]=new ArrayList<Double>();
+		}
+		for (int k=0;k<parameters.nbOfMeasurementDroneAgents+1;k++)
+		{
+			listMeasurementDroneEnergy[k]=new ArrayList<Double>();
+		}
+		for (int k=0;k<parameters.nbOfMicrophoneDroneAgents+1;k++)
+		{
+			listMicrophoneDroneEnergy[k]=new ArrayList<Double>();
+		}
 		listCameraDrone=new String[parameters.nbOfCameraDroneAgents];
 		listDrone=new String[parameters.nbOfDroneAgents];
 		listMicrophoneDrone=new String[parameters.nbOfMicrophoneDroneAgents];
@@ -114,35 +140,53 @@ public class ProbeInterface 	extends Frame
 		numDroneList.addActionListener(this);
 		numDroneList.setActionCommand("num");
 		content.add(numDroneList);
-		String[] test={"0","0","0","0","0","0","0"};
+		ArrayList<Double> test=new ArrayList<Double>();
+		test.add(0.0);
 		XYDataset dataset = createDataset(test);
 		chart = createChart(dataset); 
         chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(500, 270));
-        chartPanel.setVisible(false);
         add(BorderLayout.CENTER,chartPanel);
         total=new JRadioButton("Total");
         totalCamera=new JRadioButton("Total Camera Drone");
+        
         totalMicrophone=new JRadioButton("Total Microphone Drone");
         totalCommunicator=new JRadioButton("Total Communicator Drone");
         totalMeasurement=new JRadioButton("Total Measurement Drone");
+        totalCamera.setActionCommand("total camera");
+        totalCamera.addActionListener(this);
+        totalMicrophone.setActionCommand("total microphone");
+        totalMicrophone.addActionListener(this);
+        totalCommunicator.setActionCommand("total communicator");
+        totalCommunicator.addActionListener(this);
+        totalMeasurement.setActionCommand("total measurement");
+        totalMeasurement.addActionListener(this);
+        total.setActionCommand("total");
+        total.addActionListener(this);
+        
     	Container content1=new Container();
 		BoxLayout ligne2=new BoxLayout(content1, BoxLayout.Y_AXIS);
+		reset=new JButton("Clear");
+		reset.addActionListener(this);
+		reset.setActionCommand("clear");
 		content1.setLayout(ligne2);
 		content1.add(total);
 		content1.add(totalCamera);
 		content1.add(totalMicrophone);
+		content1.add(totalCommunicator);
+		content1.add(totalMeasurement);
+		content1.add(reset);
         add(BorderLayout.EAST,content1);
 		addWindowListener(this);
 		pack();
 		setVisible(false);
 	}
-	private XYDataset createDataset(String[] s) 
+	private XYDataset createDataset(ArrayList<Double> s) 
 	{      
-	        final XYSeries series = new XYSeries("Energy line");
-	        for (int k=0;k<s.length;k++)
+	        final XYSeries series = new XYSeries("");
+	        for (int k=0;k<s.size();k++)
 	        {
-	        	series.add(k,Double.parseDouble(s[k]));
+	        	series.add(k,s.get(k));
 	        }
       
 	        final XYSeriesCollection dataset = new XYSeriesCollection();
@@ -168,7 +212,7 @@ public class ProbeInterface 	extends Frame
             "Energy",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
-            true,                     // include legend
+            false,                     // include legend
             true,                     // tooltips
             false                     // urls
         );
@@ -185,7 +229,9 @@ public class ProbeInterface 	extends Frame
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         plot.getRenderer().setSeriesPaint(0, Color.RED);
-                
+
+		plot.setDataset(0,null);
+		plot.setRenderer(0,null);       
         return chart;
     }
 	public void windowActivated(WindowEvent e){}
@@ -195,74 +241,93 @@ public class ProbeInterface 	extends Frame
 	public void windowIconified(WindowEvent e){}
 	public void windowDeiconified(WindowEvent e){}
 	public void windowOpened(WindowEvent e){}
+	public boolean bloc=false;
 	public void actionPerformed(ActionEvent e)
 	{
 		
 			String com=e.getActionCommand();
 			if(com.equals("type"))
 			{
-				typeselection();
+				typeSelection();
 			}
-			else if(com.equals("num"));
-				numselection();
-			
+			else if((com.equals("num"))&&bloc)
+			{
+				numSelection();
+			}
+			else if(com.equals("clear"))
+			{
+				clearGraph();
+			}
+			else if (com.equals("total camera"))
+			{
+				displayGraph();
+			}
+			else if (com.equals("total camera"))
+			{
+				displayGraph();
+			}
 	}
 
-	public void typeselection()
+	public void typeSelection()
 	{
-		numDroneList.setEnabled(true);
 		String currentType=new String();
 		int index;
 		index=typeDroneList.getSelectedIndex();
 		currentType=typeDroneList.getSelectedItem().toString();	
+		
 		if (currentType!="")
 		{
+			bloc=false;
 		switch (index)
 		{
+		
 			case 0:
 				numDroneList.removeAllItems();	
 				for(int k=0;k<listDrone.length;k++)
-				numDroneList.addItem(listDrone[k].substring(47,listDrone[k].length()));				
+				//numDroneList.addItem(listDrone[k].substring(47,listDrone[k].length()));	
+				numDroneList.addItem(listDrone[k]);			
+				
 				break;
 			case 1:
 				numDroneList.removeAllItems();	
-				for(int k=0;k<listCameraDrone.length;k++)
-				numDroneList.addItem(listCameraDrone[k].substring(59,listCameraDrone[k].length()));		
+			for(int k=0;k<listCameraDrone.length;k++)
+				//numDroneList.addItem(listCameraDrone[k].substring(59,listCameraDrone[k].length()));	
+				numDroneList.addItem(listCameraDrone[k]);
+			
 				break;
 			case 2:
 				numDroneList.removeAllItems();	
-				for(int k=0;k<listMeasurementDrone.length;k++)
-				numDroneList.addItem(listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length()));
+				for(int k=0;k<listCommunicatorDrone.length;k++)
+				numDroneList.addItem(listCommunicatorDrone[k]);//.substring(71,listCommunicatorDrone[k].length()));
 				break;
 			case 3:
 				numDroneList.removeAllItems();	
-				for(int k=0;k<listCommunicatorDrone.length;k++)
-				numDroneList.addItem(listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length()));
+				for(int k=0;k<listMeasurementDrone.length;k++)
+				numDroneList.addItem(listMeasurementDrone[k]);//.substring(67,listMeasurementDrone[k].length()));
 				break;
 			case 4 :
 				numDroneList.removeAllItems();	
 				for(int k=0;k<listMicrophoneDrone.length;k++)
-				numDroneList.addItem(listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length()));
+				numDroneList.addItem(listMicrophoneDrone[k]);//.substring(67,listMicrophoneDrone[k].length()));
 				break;
 			default:
 				break;
 		}
-				
-			}
-		
-		
+		}
+		numDroneList.setEnabled(true);
+		numDroneList.setSelectedIndex(-1);
+
+	bloc=true;
 	}
-	public void numselection()
+	@SuppressWarnings("unchecked")
+	public void numSelection()
 	{
 		int index;
 		index=typeDroneList.getSelectedIndex();
 		int index2;
-		index2=numDroneList.getSelectedIndex();
-		
-		String currentType =new String();
-	currentType=typeDroneList.getSelectedItem().toString();	
+		index2=numDroneList.getSelectedIndex();	
 	XYDataset dataset1=createDataset(listCameraDroneEnergy[0]);
-	if ((currentType!="")&&(index2>=0))
+	if ((index2>=0))
 	{
 	switch (index)
 	{
@@ -273,25 +338,51 @@ public class ProbeInterface 	extends Frame
 			dataset1=createDataset(listCameraDroneEnergy[index2]);
 			break;
 		case 2:
-			dataset1=createDataset(listMeasurementDroneEnergy[index2]);
+			dataset1=createDataset(listCommunicatorDroneEnergy[index2]);
 			break;
 		case 3:
-			dataset1=createDataset(listCommunicatorDroneEnergy[index2]);
+			dataset1=createDataset(listMeasurementDroneEnergy[index2]);
 			break;
 		case 4 :
 			dataset1=createDataset(listMicrophoneDroneEnergy[index2]);
 			break;
 		default:
 			break;
+	}	
+          this.plot.setDataset(numberOfGraph,dataset1) ;             
+          this.plot.setRenderer(numberOfGraph, new StandardXYItemRenderer());
+        //  plot.getRenderer().setSeriesPaint(0, Color.RED);
+          numberOfGraph++;
 	}
-	chartPanel.setVisible(true);
-          this.plot.setDataset(0, null);
-          this.plot.setRenderer(0, null);
-          this.plot.setDataset(0,dataset1) ;             
-          this.plot.setRenderer(0, new StandardXYItemRenderer());
-          plot.getRenderer().setSeriesPaint(0, Color.RED);
-               
+
+	}	
+	public int positionTotalCamera;
+	public void displayGraph()
+	{
+		if (totalCamera.isSelected())
+		{
+		  positionTotalCamera=numberOfGraph;
+		  this.plot.setDataset(positionTotalCamera,createDataset(listCameraDroneEnergy[listCameraDroneEnergy.length-1])) ;             
+          this.plot.setRenderer(positionTotalCamera, new StandardXYItemRenderer());
+          plot.getRenderer().setSeriesPaint(positionTotalCamera, Color.RED);
+         
+          numberOfGraph++;
+          
+		}
+		else
+		{
+		this.plot.setDataset(positionTotalCamera,null);
+		this.plot.setRenderer(positionTotalCamera, new StandardXYItemRenderer());
+		}
 	}
+	public void clearGraph()
+	{
+		for (int k=0;k<numberOfGraph;k++)
+		{
+			plot.setDataset(k,null);
+			plot.setRenderer(k,null);
+		}
+		numberOfGraph=0;
 	}
 	/**
 	 * {@inheritDoc}
@@ -326,35 +417,35 @@ public class ProbeInterface 	extends Frame
 				{
 					AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
 					listCameraDrone[indexCamera]=castedAgtState.toString();
-					listCameraDroneEnergy[indexCamera][0]=castedAgtState.getEnergy()+"";	
+					//listCameraDroneEnergy.get(indexCamera).add(castedAgtState.getEnergy());	
 					indexCamera++;
 				}
 				else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) )
 				{
 					AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
 					listDrone[indexDrone]=castedAgtState.toString();
-					listDroneEnergy[indexDrone][0]=castedAgtState.getEnergy()+"";																			
+					//listDroneEnergy.get(indexDrone).add(castedAgtState.getEnergy());																			
 					indexDrone++;
 				}
 				else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) )
 				{
 					AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
 					listCommunicatorDrone[indexCommunicator]=castedAgtState.toString();
-					listCommunicatorDroneEnergy[indexCommunicator][0]=castedAgtState.getEnergy()+"";																			
+					//listCommunicatorDroneEnergy.get(indexCommunicator).add(castedAgtState.getEnergy());																			
 					indexCommunicator++;
 				}
 				else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) )
 				{
 					AgtMeasurementDronePLSInRoom castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;
 					listMeasurementDrone[indexMeasurement]=castedAgtState.toString();
-					listMeasurementDroneEnergy[indexMeasurement][0]=castedAgtState.getEnergy()+"";																			
+					//listMeasurementDroneEnergy.get(indexMeasurement).add(castedAgtState.getEnergy());																			
 					indexMeasurement++;
 				}							
 				else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) )
 				{
 					AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
 					listMicrophoneDrone[indexMicrophone]=castedAgtState.toString();
-					listMicrophoneDroneEnergy[indexMicrophone][0]=castedAgtState.getEnergy()+"";	
+					//listMicrophoneDroneEnergy.get(indexMicrophone).add(castedAgtState.getEnergy());	
 					indexMicrophone++;
 				}
 					
@@ -374,6 +465,7 @@ public class ProbeInterface 	extends Frame
 	) {
 		this.updateenergylist( timestamp, simulationEngine );
 	}
+	@SuppressWarnings("unchecked")
 	private void updateenergylist(
 			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine
@@ -390,31 +482,31 @@ public class ProbeInterface 	extends Frame
 			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) )
 			{
 				AgtCameraDronePLSInRoom castedAgtState = (AgtCameraDronePLSInRoom) agtState;
-				listCameraDroneEnergy[indexCamera][(int)timestamp.getIdentifier()]=castedAgtState.getEnergy()+"";	
+				listCameraDroneEnergy[indexCamera].add(castedAgtState.getEnergy());	
 				indexCamera++;
 			}
 			else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) )
 			{
 				AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-				listDroneEnergy[indexDrone][(int)timestamp.getIdentifier()]=castedAgtState.getEnergy()+"";																			
+				listDroneEnergy[indexDrone].add(castedAgtState.getEnergy());																			
 				indexDrone++;
 			}
 			else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) )
 			{
 				AgtCommunicatorDronePLSInRoom castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
-				listCommunicatorDroneEnergy[indexCommunicator][(int)timestamp.getIdentifier()]=castedAgtState.getEnergy()+"";																			
+				listCommunicatorDroneEnergy[indexCommunicator].add(castedAgtState.getEnergy());																			
 				indexCommunicator++;
 			}
 			else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) )
 			{
 				AgtMeasurementDronePLSInRoom castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;
-				listMeasurementDroneEnergy[indexMeasurement][(int)timestamp.getIdentifier()]=castedAgtState.getEnergy()+"";																			
+				listMeasurementDroneEnergy[indexMeasurement].add(castedAgtState.getEnergy());																			
 				indexMeasurement++;
 			}							
 			else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) )
 			{
 				AgtMicrophoneDronePLSInRoom castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-				listMicrophoneDroneEnergy[indexMicrophone][(int)timestamp.getIdentifier()]=castedAgtState.getEnergy()+"";	
+				listMicrophoneDroneEnergy[indexMicrophone].add(castedAgtState.getEnergy());	
 				indexMicrophone++;
 			}
 				
@@ -422,10 +514,6 @@ public class ProbeInterface 	extends Frame
 			}
 	}
 					
-				
-
-		
-
 	
 	/**
 	 * Displays the location of the particles on the print stream.
@@ -444,13 +532,67 @@ public class ProbeInterface 	extends Frame
 	{
 		this.setVisible(true);
 	}
+	@SuppressWarnings("unchecked")
+	public void calculateTotals()
+	{
+		
+		for (int i=0;i<listDroneEnergy[0].size();i++)
+		{
+			double somme=0;	
+			for (int k=0;k<listDrone.length-2;k++)
+			{
+				somme+=(double) listDroneEnergy[k].get(i);
+			}
 
+			listDroneEnergy[listDroneEnergy.length-1].add(somme);
+		}
+		for (int i=0;i<listCameraDroneEnergy[0].size();i++)
+		{
+			double somme=0;	
+			for (int k=0;k<listCameraDrone.length-2;k++)
+			{
+				somme+=(double) listCameraDroneEnergy[k].get(i);
+			}
+			listCameraDroneEnergy[listCameraDroneEnergy.length-1].add(somme);
+	
+		}
+		for (int i=0;i<listCommunicatorDroneEnergy[0].size();i++)
+			{
+			 double somme=0;	
+			for (int k=0;k<listCommunicatorDrone.length-2;k++)
+			{
+				somme+=(double) listCommunicatorDroneEnergy[k].get(i);
+			}
+			listCommunicatorDroneEnergy[listCommunicatorDroneEnergy.length-1].add(somme);
+	
+		}
+		for (int i=0;i<listMicrophoneDroneEnergy[0].size();i++)
+			{
+			 double somme=0;	
+			for (int k=0;k<listMicrophoneDrone.length-2;k++)
+			{
+				somme+=(double) listMicrophoneDroneEnergy[k].get(i);
+			}
+	
+			listMicrophoneDroneEnergy[listMicrophoneDroneEnergy.length-1].add(somme);
+		}
+		for (int i=0;i<listMeasurementDroneEnergy[0].size();i++)
+			{
+			 double somme=0;	
+			for (int k=0;k<listMeasurementDrone.length-2;k++)
+			{
+				somme+=(double) listMeasurementDroneEnergy[k].get(i);
+			}
+	
+			listMeasurementDroneEnergy[listMeasurementDroneEnergy.length-1].add(somme);
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void endObservation() {
-		
+		calculateTotals();
 	}
 
 	/**
