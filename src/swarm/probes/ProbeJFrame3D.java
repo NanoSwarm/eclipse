@@ -19,10 +19,7 @@ import javax.media.j3d.Material;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-<<<<<<< HEAD
 import javax.media.j3d.TransparencyAttributes;
-=======
->>>>>>> refs/heads/swarm_list
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
@@ -34,12 +31,8 @@ import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
-<<<<<<< HEAD
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.Primitive;
-=======
-import com.sun.j3d.utils.geometry.Sphere;
->>>>>>> refs/heads/swarm_list
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -237,11 +230,8 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			somme++;
 	}		
 	// Set the position of the camera
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> refs/heads/swarm_list
+
 	TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
 	
 	Transform3D transs=new Transform3D();
