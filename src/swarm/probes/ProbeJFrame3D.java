@@ -14,11 +14,15 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.LineArray;
 import javax.media.j3d.Material;
+import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.TransparencyAttributes;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
@@ -36,7 +40,6 @@ import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
-import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
@@ -280,40 +283,12 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	
 	public void createUniverse(){
 		
-		Vector3d position = new Vector3d(0,0,0);
-		Vector3d size = new Vector3d(0,0,0);
-		size = (Vector3d) parameters.roomBounds.clone();
-		
-		size.z = 0;		
-		position =new Vector3d(parameters.roomBounds.x/2000,-parameters.roomBounds.y/2000,0);
-		createWall(position, size);
-		
-		size.z = parameters.roomBounds.z;
-		size.y = 0;
-		position = new Vector3d(parameters.roomBounds.x/2000, 0, parameters.roomBounds.z/2000);
-		createWall(position,size);
-		
-		size.y = parameters.roomBounds.y;
-		size.x = 0;
-		position = new Vector3d(0, -parameters.roomBounds.y/2000, parameters.roomBounds.z/2000);
-		createWall(position,size);
-		
-	}
-	
-	
-	/**
-	 * create a box (potentially a wall when one dimension in reduced to 0)
-	 * @param x the x coordinate of the center of the box
-	 * @param y the y coordinate of the center of the box
-	 * @param z the z coordinate of the center of the box
-	 * @param sizeX the size of the box along the x axis
-	 * @param sizeY the size of the box along the y axis
-	 * @param sizeZ the size of the box along the z axis
-	 */
-	public void createWall(Vector3d pos, Vector3d size){
-		
 		Transform3D translate=new Transform3D();
- 		translate.setTranslation(pos);
+ 		translate.setTranslation(new Vector3d(
+ 				parameters.roomBounds.x/2000,
+ 				-parameters.roomBounds.y/2000,
+ 				parameters.roomBounds.z/2000
+ 				));
 		TransformGroup transformGroup = new TransformGroup();
 		transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
@@ -328,16 +303,54 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		app.setCapability(Appearance.ALLOW_MATERIAL_READ);
 		app.setCapability(Appearance.ALLOW_MATERIAL_WRITE);
 		app.setMaterial(material);
+		app.setTransparencyAttributes(new TransparencyAttributes(TransparencyAttributes.BLENDED,0.7f));
 		
 		Primitive forme = new Box(
-				(float)size.x/2000,
-				(float)size.y/2000,
-				(float)size.z/2000,
+				(float)parameters.roomBounds.x/2000,
+				(float)parameters.roomBounds.y/2000,
+				(float)parameters.roomBounds.z/2000,
 				app
 				);
+		forme.getShape(Box.FRONT).getAppearance();
 		transformGroup.addChild(forme);
+		
+		createVertices(new Vector3d(0,0,0),new Vector3d(parameters.roomBounds.x,0,0));
+		createVertices(new Vector3d(0,0,0),new Vector3d(0,parameters.roomBounds.y,0));
+		createVertices(new Vector3d(0,0,0),new Vector3d(0,0,parameters.roomBounds.z));
+		
+		createVertices(parameters.roomBounds,new Vector3d(parameters.roomBounds.x,parameters.roomBounds.y,0));
+		createVertices(parameters.roomBounds,new Vector3d(0,parameters.roomBounds.y,parameters.roomBounds.z));
+		createVertices(parameters.roomBounds,new Vector3d(parameters.roomBounds.x,0,parameters.roomBounds.z));
+		
+		createVertices(new Vector3d(0,0,parameters.roomBounds.z),
+				   new Vector3d(0,parameters.roomBounds.y,parameters.roomBounds.z));
+		
+		createVertices(new Vector3d(0,0,parameters.roomBounds.z),
+				   new Vector3d(parameters.roomBounds.x,0,parameters.roomBounds.z));
+		
+		createVertices(new Vector3d(parameters.roomBounds.x,parameters.roomBounds.y,0),
+				   new Vector3d(0,parameters.roomBounds.y,0));
+		
+		createVertices(new Vector3d(parameters.roomBounds.x,parameters.roomBounds.y,0),
+				   new Vector3d(parameters.roomBounds.x,0,0));
+		
+		createVertices(new Vector3d(parameters.roomBounds.x,0,0),
+				   new Vector3d(parameters.roomBounds.x,0,parameters.roomBounds.z));
+		
+		createVertices(new Vector3d(0,parameters.roomBounds.y,0),
+				   new Vector3d(0,parameters.roomBounds.y,parameters.roomBounds.z));
+		
 		this.branchGroup.addChild(transformGroup);
-
+		
+	}
+	
+	public void createVertices(Vector3d v1, Vector3d v2){
+		LineArray lineArr=new LineArray(2,LineArray.COORDINATES);
+		lineArr.setCoordinate(0,new Point3f((float)v1.x/1000,-(float)v1.y/1000,(float)v1.z/1000));
+		lineArr.setCoordinate(1, new Point3f((float)v2.x/1000,-(float)v2.y/1000,(float)v2.z/1000));
+		Shape3D shape = new Shape3D(lineArr);
+		shape.setAppearance(new Appearance());
+		this.branchGroup.addChild(shape);
 	}
 	
 	
