@@ -7,12 +7,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.media.j3d.AmbientLight;
+import javax.media.j3d.Appearance;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingBox;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Material;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
@@ -25,6 +27,8 @@ import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -32,6 +36,8 @@ import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
+import swarm.SwarmMain;
+import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
@@ -59,9 +65,16 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	public BranchGroup branchGroup;
 	
 	/**
-	* 
-	*/
-	public ProbeJFrame3D (){
+	 * 
+	 */
+	public SwarmParameters parameters;
+	
+	/**
+	 * 
+	 * @param parameters
+	 */
+	public ProbeJFrame3D (SwarmParameters parameters){
+		this.parameters = parameters;
 		System.setProperty("sun.awt.noerasebackground", "true");
 		Canvas3D canvas3D=new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		add(BorderLayout.CENTER,canvas3D);
@@ -108,7 +121,9 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			SimulationTimeStamp initialTimestamp,
 			ISimulationEngine simulationEngine
 	) {
-		this.createagents(initialTimestamp,simulationEngine);
+		this.createAgents(initialTimestamp,simulationEngine);
+		this.createUniverse();
+		branchGroup.compile();
 		this.simpleUniverse.addBranchGraph(this.branchGroup);
 	}
 
@@ -164,7 +179,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	 * @param timestamp The time stamp when the observation is made.
 	 * @param simulationEngine The engine where the simulation is running.
 	 */
-	public void createagents(
+	public void createAgents(
 		SimulationTimeStamp timestamp,
 		ISimulationEngine simulationEngine
 ){
@@ -210,9 +225,9 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			centre.y+=castedAgtState.getLocation().y;
 
 			somme++;
-}		
+	}		
 	// Set the position of the camera
-	
+
 	TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
 	
 	Transform3D transs=new Transform3D();
@@ -239,7 +254,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    // Area of the translation X
 	    BoundingBox box= new BoundingBox(new Point3d (0,0,0),new Point3d(0.0001,0,0));
 	    //   mouseTranslate.setSchedulingBounds(new BoundingSphere(new Point3d(10,10,10), 0.2));
-	   mouseTranslate.setSchedulingBounds(box);
+	    mouseTranslate.setSchedulingBounds(box);
 	    this.branchGroup.addChild(mouseTranslate);
 
 	    // Creation of the zoom (hold alt+left click) 
@@ -260,9 +275,72 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
 	    key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
 	    this.branchGroup.addChild(key);
-		branchGroup.compile();
 	
 	}
+	
+	public void createUniverse(){
+		
+		Vector3d position = new Vector3d(0,0,0);
+		Vector3d size = new Vector3d(0,0,0);
+		size = (Vector3d) parameters.roomBounds.clone();
+		
+		size.z = 0;		
+		position =new Vector3d(parameters.roomBounds.x/2000,-parameters.roomBounds.y/2000,0);
+		createWall(position, size);
+		
+		size.z = parameters.roomBounds.z;
+		size.y = 0;
+		position = new Vector3d(parameters.roomBounds.x/2000, 0, parameters.roomBounds.z/2000);
+		createWall(position,size);
+		
+		size.y = parameters.roomBounds.y;
+		size.x = 0;
+		position = new Vector3d(0, -parameters.roomBounds.y/2000, parameters.roomBounds.z/2000);
+		createWall(position,size);
+		
+	}
+	
+	
+	/**
+	 * create a box (potentially a wall when one dimension in reduced to 0)
+	 * @param x the x coordinate of the center of the box
+	 * @param y the y coordinate of the center of the box
+	 * @param z the z coordinate of the center of the box
+	 * @param sizeX the size of the box along the x axis
+	 * @param sizeY the size of the box along the y axis
+	 * @param sizeZ the size of the box along the z axis
+	 */
+	public void createWall(Vector3d pos, Vector3d size){
+		
+		Transform3D translate=new Transform3D();
+ 		translate.setTranslation(pos);
+		TransformGroup transformGroup = new TransformGroup();
+		transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);	
+		transformGroup.setTransform(translate);
+		
+		Appearance app = new Appearance();
+		Color3f white=new Color3f(1.0f,1.0f,1.0f);
+		Color3f black = new Color3f(0.0f,0.0f,0.0f);
+		Color3f color = new Color3f(0.0f,0.0f,0.3f);
+		Material material = new Material(color, white, color, white, 64);
+		material.setLightingEnable(true);
+		app.setCapability(Appearance.ALLOW_MATERIAL_READ);
+		app.setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+		app.setMaterial(material);
+		
+		Primitive forme = new Box(
+				(float)size.x/2000,
+				(float)size.y/2000,
+				(float)size.z/2000,
+				app
+				);
+		transformGroup.addChild(forme);
+		this.branchGroup.addChild(transformGroup);
+
+	}
+	
+	
 /**
  * Update the position of each agent at each stamptime.
  * @param timestamptimestamp The time stamp when the observation is made.

@@ -57,7 +57,7 @@ public class SwarmMain {
 		);
 		engine.addProbe(
 				"Chamber level Swing viewer3d",
-				new ProbeJFrame3D()															// The frame is resized automatically
+				new ProbeJFrame3D(parameters)															// The frame is resized automatically
 				
 		);
 		
@@ -82,10 +82,6 @@ public class SwarmMain {
 			
 		
 			
-	}
-	
-	public static SwarmParameters getParameters(){
-		return parameters;
 	}
 	
 	public static void abordSimulation(){
