@@ -27,6 +27,8 @@ import swarm.model.level.SwarmLevelList;
 
 public class RoomLevel extends AbstractLevel {
 	
+	private SwarmParameters parameters;
+	
 	/**
 	 * Builds an uninitialized instance of this level.
 	 * <p>
@@ -36,8 +38,6 @@ public class RoomLevel extends AbstractLevel {
 	 * @param initialTime The initial time of the simulation.
 	 * @param parameters the different parameters of the simulation
 	 */
-	private SwarmParameters parameters;
-	
 	public RoomLevel( 
 		SimulationTimeStamp initialTime,
 		SwarmParameters parameters
@@ -115,22 +115,22 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
-			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone);
+			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone, parameters);
 		}
 		
 		//Influences on "communicator drone" agents
 		for(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone: communicatorUpdateList){
-			UpdateInfluenceInRoom.UpdateCommunicatorDroneInfluence(agtCommunicatorDrone);
+			UpdateInfluenceInRoom.UpdateCommunicatorDroneInfluence(agtCommunicatorDrone, parameters);
 		}
 		
 		//Influences on "microphone drones" agents
 		for(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone : microphoneUpdateList){
-			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone);
+			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone, parameters);
 		}
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone);
+			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone, parameters);
 		}
 		
 		//Influences on "drone" (all) agents, this one is calculated last.
@@ -300,6 +300,7 @@ public class RoomLevel extends AbstractLevel {
 				+ parameters.nbOfDroneAgents 
 				+ parameters.nbOfMeasurementDroneAgents 
 				+ parameters.nbOfMicrophoneDroneAgents)){
+			System.out.println("Objective not found, energy depleted. ");
 			SwarmMain.abordSimulation();
 		}
 		

@@ -85,7 +85,6 @@ public class SwarmMain {
 	
 	public static void abordSimulation(){
 		engine.requestSimulationAbortion();
-		
 		resultInterface.setVisible(true);
 	}
 	

@@ -30,7 +30,6 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 			throw new IllegalArgumentException( "The dimensions cannot be lower or equal to 0." );
 		} else {
 			this.bounds = parameters.roomBounds;
-			this.objectivePosition = parameters.objectivePosition;
 		}
 	}
 	
@@ -45,10 +44,6 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	 */	
 	private Vector3d bounds;
 	
-	/**
-	 * 
-	 */
-	private Vector3d objectivePosition;
 	
 	/**
 	 * 
@@ -57,37 +52,6 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	public Vector3d getBounds( ) {
 		return this.bounds;
 	}
-	
-	
-	/**
-	 * 
-	 * @param x the position of the drone
-	 * @param y the position of the drone
-	 * @param z the position of the drone
-	 * @return the value of the measured characteristic
-	 */
-	public Double getObjective(Double x, Double y, Double z, int ObjectiveType){
-		
-		Double res;
-		switch(ObjectiveType){
-		
-		case 1: 
-			res = Math.sqrt( Math.pow(x-objectivePosition.x , 2) 
-							+Math.pow(y-objectivePosition.y , 2) 
-							+Math.pow(z-objectivePosition.z , 2)
-						   );
-			break;
-			
-		case 2:
-			res = 100 - Math.sqrt(x*x + y*y + z*z);
-			break;
-			
-			default : 
-			throw new IllegalArgumentException( "Wrong Objective number" );
-		}
-		return res;
-	}
-	
 
 	
 }

@@ -107,9 +107,19 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public int nbOfCameraDroneAgents;
 	
 	/**
+	 * The maximum detection range (when searching a point)
+	 */
+	public int cameraDroneDetectionRange;
+	
+	/**
 	 * The number of "Communicator Drone" agents in the simulation.
 	 */
 	public int nbOfCommunicatorDroneAgents;
+	
+	/**
+	 * The maximum detection range (when searching a point)
+	 */
+	public int communicatorDroneDetectionRange;
 	
 	/**
 	 * The number of "Drone" agents in the simulation.
@@ -117,14 +127,29 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public int nbOfDroneAgents;
 	
 	/**
+	 * The maximum detection range (when searching a point)
+	 */
+	public int droneDetectionRange;
+	
+	/**
 	 * The number of "Microphone Drone" agents in the simulation.
 	 */
 	public int nbOfMicrophoneDroneAgents;
 	
 	/**
+	 * The maximum detection range (when searching a point)
+	 */
+	public int microphoneDroneDetectionRange;
+	
+	/**
 	 * The number of "Measurement Drone" agents in the simulation.
 	 */
 	public int nbOfMeasurementDroneAgents;
+	
+	/**
+	 * The maximum detection range (when searching a point)
+	 */
+	public int measurementDroneDetectionRange;
 	/**
 	 * The Mass of a drone with the tools to fly
 	 */
@@ -204,20 +229,28 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-		this.initialEnergy = 10;
+		this.initialEnergy = 100;
 		this.basicDroneMass= 0.04;
 		
 		this.nbOfCameraDroneAgents = 30;
 		this.nbOfCommunicatorDroneAgents = 30;
 		this.nbOfDroneAgents = 300;
-		this.nbOfMicrophoneDroneAgents = 300;
+		this.nbOfMicrophoneDroneAgents = 100;
 		this.nbOfMeasurementDroneAgents = 10;
+		this.cameraDroneDetectionRange = 100;
+		this.communicatorDroneDetectionRange = 10;
+		this.droneDetectionRange = 10;
+		this.microphoneDroneDetectionRange = 100;
+		this.measurementDroneDetectionRange = 200;
+
+
+		this.cameraDroneDetectionRange = 10;
 		
-		this.roomBounds = new Vector3d(5000, 3000, 1000);
+		this.roomBounds = new Vector3d(15000, 2000,1000);
 		this.securityDistance = 100;
-		this.simulationTime = 500;
+		this.simulationTime = 5000;
 		this.objectiveType = 1;
-		this.objectivePosition = new  Vector3d(999,999,999);
+		this.objectivePosition = new  Vector3d(10000,900,900);
 	}
 
 }

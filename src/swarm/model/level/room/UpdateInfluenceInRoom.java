@@ -4,12 +4,15 @@ import java.util.Set;
 
 import javax.vecmath.Vector3d;
 
+import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
+import swarm.model.environment.Objective;
+import swarm.model.environment.room.EnvPLSInRoom;
 
 public class UpdateInfluenceInRoom {
 	
@@ -148,53 +151,76 @@ public class UpdateInfluenceInRoom {
 					agtDrone.getInfluence().z + orientationAcc.z/nbOfDronesInOrientationArea
 					);
 		}
+		
+		if (Objective.getObjective(agtDrone.getLocation()) < parameters.droneDetectionRange ){
+			System.out.println("Objective found by " + agtDrone.hashCode() + " as Drone agent.\n");
+			SwarmMain.abordSimulation();
+		}
+		
 	}
 	
 	/**
 	 * 
 	 * @param agtCameraDrone
 	 */
-	public static void UpdateCameraDroneInfluence(AgtCameraDronePLSInRoom agtCameraDrone){
+	public static void UpdateCameraDroneInfluence(AgtCameraDronePLSInRoom agtCameraDrone, SwarmParameters parameters){
 		agtCameraDrone.setInfluence(
 				agtCameraDrone.getInfluence().x, 
 				agtCameraDrone.getInfluence().y,
 				agtCameraDrone.getInfluence().z
 				);
+		if (Objective.getObjective(agtCameraDrone.getLocation()) < parameters.cameraDroneDetectionRange ){
+			System.out.println("Objective found by " + agtCameraDrone.hashCode() + "as cameraDrone agent.\n");
+			SwarmMain.abordSimulation();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param agtCommunicatorDrone
 	 */
-	public static void UpdateCommunicatorDroneInfluence(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone){
+	public static void UpdateCommunicatorDroneInfluence(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone, SwarmParameters parameters){
 		agtCommunicatorDrone.setInfluence(
 				agtCommunicatorDrone.getInfluence().x,
 				agtCommunicatorDrone.getInfluence().y,
 				agtCommunicatorDrone.getInfluence().z
 				);
+		
+		if (Objective.getObjective(agtCommunicatorDrone.getLocation()) < parameters.communicatorDroneDetectionRange ){
+			System.out.println("Objective found by " + agtCommunicatorDrone.hashCode() + "as communicatorDrone agent.\n");
+			SwarmMain.abordSimulation();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param agtMicrophoneDrone
 	 */
-	public static void UpdateMicrophoneDroneInfluence(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone){
+	public static void UpdateMicrophoneDroneInfluence(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone, SwarmParameters parameters){
 		agtMicrophoneDrone.setInfluence(
 				agtMicrophoneDrone.getInfluence().x, 
 				agtMicrophoneDrone.getInfluence().y, 
 				agtMicrophoneDrone.getInfluence().z
 				);
+		if (Objective.getObjective(agtMicrophoneDrone.getLocation()) < parameters.microphoneDroneDetectionRange ){
+			System.out.println("Objective found by " + agtMicrophoneDrone.hashCode() + "as microphoneDrone agent.\n");
+			SwarmMain.abordSimulation();
+		}
 	}
 	
 	/**
 	 * 
 	 * @param agtmeasurementDrone
 	 */
-	public static void UpdateMeasurementDroneInfluence(AgtMeasurementDronePLSInRoom agtmeasurementDrone){
-		agtmeasurementDrone.setInfluence(
-				agtmeasurementDrone.getInfluence().x, 
-				agtmeasurementDrone.getInfluence().y, 
-				agtmeasurementDrone.getInfluence().z
+	public static void UpdateMeasurementDroneInfluence(AgtMeasurementDronePLSInRoom agtMeasurementDrone, SwarmParameters parameters){
+		agtMeasurementDrone.setInfluence(
+				agtMeasurementDrone.getInfluence().x, 
+				agtMeasurementDrone.getInfluence().y, 
+				agtMeasurementDrone.getInfluence().z
 				);
+		if (Objective.getObjective(agtMeasurementDrone.getLocation()) < parameters.measurementDroneDetectionRange ){
+			System.out.println("Objective found by " + agtMeasurementDrone.hashCode() + "as measurementDrone agent.\n");
+			SwarmMain.abordSimulation();
+		}
 	}
 }

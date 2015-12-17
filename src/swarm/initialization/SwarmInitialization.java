@@ -17,6 +17,7 @@ import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
+import swarm.model.environment.Objective;
 import swarm.model.environment.SwarmEnvironment;
 import swarm.model.environment.room.EnvPLSInRoom;
 import swarm.model.level.SwarmLevelList;
@@ -98,7 +99,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 				new EnvPLSInRoom( this.parameters ),
 				new EmptyLocalStateOfEnvironment( SwarmLevelList.ROOM )
 		);
-		
+		Objective.setObjective(parameters.objectivePosition, parameters.objectiveType);		
 		return new EnvironmentInitializationData( environment );
 	}
 
