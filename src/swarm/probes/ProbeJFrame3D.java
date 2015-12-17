@@ -15,7 +15,6 @@ import javax.media.j3d.Canvas3D;
 import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.swing.JButton;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -26,6 +25,7 @@ import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -213,7 +213,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 			somme++;
 }		
 	// Set the position of the camera
-	
+		
 	TransformGroup tg = this.simpleUniverse.getViewingPlatform().getViewPlatformTransform();
 	
 	Transform3D transs=new Transform3D();
