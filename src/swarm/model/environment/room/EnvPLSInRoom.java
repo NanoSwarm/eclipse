@@ -11,6 +11,8 @@ import swarm.model.level.SwarmLevelList;
  */
 public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 
+	
+	
 	/**
 	 * Builds an initialized instance of this public local state.
 	 * @param owner The agent owning this public local state.
@@ -30,6 +32,25 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 			throw new IllegalArgumentException( "The dimensions cannot be lower or equal to 0." );
 		} else {
 			this.bounds = parameters.roomBounds;
+			int length;
+			if (parameters.objectiveType.equals("point")){
+				length = (int)Math.floor(
+						Math.min(
+							Math.min(
+								Math.min(parameters.cameraDroneDetectionRange, parameters.communicatorDroneDetectionRange),
+								Math.min(parameters.droneDetectionRange, parameters.measurementDroneDetectionRange)),
+							parameters.microphoneDroneDetectionRange));
+
+			}else if (parameters.objectiveType.equals("measure")){
+				length = (int) Math.floor(parameters.measurementDroneDetectionRange);
+				
+			}else throw new IllegalArgumentException( "Objective type unknown" );
+			
+			spaceGraph = new int
+					[(int) Math.ceil(parameters.roomBounds.x/length)]
+					[(int) Math.ceil(parameters.roomBounds.y/length)]
+					[(int) Math.ceil(parameters.roomBounds.z/length)]
+					[1];
 		}
 	}
 	
@@ -52,6 +73,16 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	public Vector3d getBounds( ) {
 		return this.bounds;
 	}
-
+	
+	/**
+	 * The table containing informations about the different sub-volume of our environment. Used for full coverage search
+	 */
+	private int[][][][] spaceGraph;
+	
+	public Vector3d getFrontier(double x, double y, double z){
+		
+		
+		return new Vector3d(x,y,z);
+	}
 	
 }
