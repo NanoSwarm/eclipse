@@ -50,7 +50,7 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 					[(int) Math.ceil(parameters.roomBounds.x/length)]
 					[(int) Math.ceil(parameters.roomBounds.y/length)]
 					[(int) Math.ceil(parameters.roomBounds.z/length)]
-					[1];
+					[0];
 		}
 	}
 	

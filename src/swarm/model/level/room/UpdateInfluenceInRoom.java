@@ -12,7 +12,6 @@ import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.Objective;
-import swarm.model.environment.room.EnvPLSInRoom;
 
 public class UpdateInfluenceInRoom {
 	

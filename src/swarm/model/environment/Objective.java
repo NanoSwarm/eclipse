@@ -13,9 +13,9 @@ public class Objective {
 	/**
 	 * 
 	 */
-	private static int ObjectiveType;
+	private static String ObjectiveType;
 	
-	public static void setObjective(Vector3d obj, int objType){
+	public static void setObjective(Vector3d obj, String objType){
 		objectivePosition = obj;
 		ObjectiveType = objType;
 	}
@@ -30,21 +30,16 @@ public class Objective {
 	public static Double getObjective(Vector3d pos){
 		
 		Double res;
-		switch(ObjectiveType){
-		
-		case 1: 
+		if (ObjectiveType.equals("point")){
 			res = Math.sqrt( Math.pow(pos.x-objectivePosition.x , 2) 
 							+Math.pow(pos.y-objectivePosition.y , 2) 
 							+Math.pow(pos.z-objectivePosition.z , 2)
 						   );
-			break;
-			
-		case 2:
+		}else if (ObjectiveType.equals("measure")){
+
 			res = 100 - Math.sqrt(pos.x*pos.x + pos.y*pos.y + pos.z*pos.z);
-			break;
-			
-			default : 
-			throw new IllegalArgumentException( "Wrong Objective number" );
+		}else{ 
+			throw new IllegalArgumentException( "Wrong Objective argument" );
 		}
 		return res;
 	}
