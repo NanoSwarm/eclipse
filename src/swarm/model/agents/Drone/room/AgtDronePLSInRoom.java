@@ -164,15 +164,35 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		this.acceleration.set( dx2, dy2, dz2 );
 	}
 	
+	/**
+	 * The point attracting the drone.
+	 */
+	private Vector3d destination;
+	
+	/**
+	 * Change the destination of the drone.
+	 * @param dest the new destination.
+	 */
+	public void setDestination(Vector3d dest){
+		destination = dest;
+	}
 	
 	/**
 	 * 
+	 * @return the destination of the drone.
+	 */
+	public Vector3d getDestination(){
+		return this.destination;
+	}
+	
+	/**
+	 * The energy stored by the drone.
 	 */
 	private double energy;
 	
 	/**
 	 * 
-	 * @return the energy level of the drone
+	 * @return the energy level of the drone.
 	 */
 	public double getEnergy(){
 		return this.energy;
