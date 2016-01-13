@@ -23,7 +23,7 @@ public class UpdateInfluenceInRoom {
 	 */
 	public static void UpdateDroneInfluence(AgtDronePLSInRoom agtDrone, Set<AgtDronePLSInRoom> droneUpdateList, SwarmParameters parameters){
 		
-		if (parameters.objectiveType.equals("point")) {
+		if (parameters.objectiveType == 1) {
 			//Calculation of different influences
 			Vector3d repulsionAcc = new Vector3d();
 			Vector3d orientationAcc = new Vector3d();
@@ -140,7 +140,7 @@ public class UpdateInfluenceInRoom {
 				System.out.println("Objective found by " + agtDrone.hashCode() + " as Drone agent.\n");
 				SwarmMain.abordSimulation();
 			} 
-		}else if(parameters.objectiveType.equals("measure")){
+		}else if(parameters.objectiveType == 2){
 			
 		}
 		
@@ -156,12 +156,12 @@ public class UpdateInfluenceInRoom {
 				agtCameraDrone.getInfluence().y,
 				agtCameraDrone.getInfluence().z
 				);
-		if (parameters.objectiveType.equals("point")) {
+		if (parameters.objectiveType == 1) {
 			if (Objective.getObjective(agtCameraDrone.getLocation()) < parameters.cameraDroneDetectionRange) {
 				System.out.println("Objective found by " + agtCameraDrone.hashCode() + "as cameraDrone agent.\n");
 				SwarmMain.abordSimulation();
 			} 
-		}else if(parameters.objectiveType.equals("measure")){
+		}else if(parameters.objectiveType == 2){
 			
 		}
 	}
@@ -176,12 +176,12 @@ public class UpdateInfluenceInRoom {
 				agtCommunicatorDrone.getInfluence().y,
 				agtCommunicatorDrone.getInfluence().z
 				);
-		if (parameters.objectiveType.equals("point")) {
+		if (parameters.objectiveType == 1) {
 			if (Objective.getObjective(agtCommunicatorDrone.getLocation()) < parameters.communicatorDroneDetectionRange ){
 				System.out.println("Objective found by " + agtCommunicatorDrone.hashCode() + "as communicatorDrone agent.\n");
 				SwarmMain.abordSimulation();
 			}
-		}else if(parameters.objectiveType.equals("measure")){
+		}else if(parameters.objectiveType == 2){
 			
 		}
 	}
@@ -196,12 +196,12 @@ public class UpdateInfluenceInRoom {
 				agtMicrophoneDrone.getInfluence().y, 
 				agtMicrophoneDrone.getInfluence().z
 				);
-		if (parameters.objectiveType.equals("point")) {
+		if (parameters.objectiveType == 1) {
 			if (Objective.getObjective(agtMicrophoneDrone.getLocation()) < parameters.microphoneDroneDetectionRange ){
 				System.out.println("Objective found by " + agtMicrophoneDrone.hashCode() + "as microphoneDrone agent.\n");
 				SwarmMain.abordSimulation();
 			}
-		}else if(parameters.objectiveType.equals("measure")){
+		}else if(parameters.objectiveType == 2){
 			
 		}
 	}
@@ -216,12 +216,12 @@ public class UpdateInfluenceInRoom {
 				agtMeasurementDrone.getInfluence().y, 
 				agtMeasurementDrone.getInfluence().z
 				);
-		if (parameters.objectiveType.equals("point")) {
+		if (parameters.objectiveType == 1) {
 			if (Objective.getObjective(agtMeasurementDrone.getLocation()) < parameters.measurementDroneDetectionRange ){
 				System.out.println("Objective found by " + agtMeasurementDrone.hashCode() + "as measurementDrone agent.\n");
 				SwarmMain.abordSimulation();
 			}
-		}else if(parameters.objectiveType.equals("measure")){
+		}else if(parameters.objectiveType == 2){
 			
 		}
 	}

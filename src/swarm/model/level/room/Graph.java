@@ -24,7 +24,7 @@ public class Graph {
 	public Graph(SwarmParameters param){
 		this.parameters = param;
 		
-		if (parameters.objectiveType.equals("point")){
+		if (parameters.objectiveType == 1){
 			length = (int)Math.floor(
 					Math.min(
 						Math.min(
@@ -32,7 +32,7 @@ public class Graph {
 							Math.min(parameters.droneDetectionRange, parameters.measurementDroneDetectionRange)),
 						parameters.microphoneDroneDetectionRange));
 
-		}else if (parameters.objectiveType.equals("measure")){
+		}else if (parameters.objectiveType == 2){
 			length = (int) Math.floor(parameters.measurementDroneDetectionRange / Math.sqrt(3));
 			
 		}else throw new IllegalArgumentException( "Objective type unknown" );
@@ -145,7 +145,6 @@ public class Graph {
 		int n = 0;
 		for (Cube cube : frontier){
 			closerDrones[n] = 0;
-			for()
 		}
 	}
 	
