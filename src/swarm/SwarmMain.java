@@ -12,6 +12,7 @@ import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
+import swarm.probes.MapInterface;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
 
@@ -60,6 +61,11 @@ public class SwarmMain {
 				new ProbeJFrame3D(parameters)															// The frame is resized automatically
 				
 		);
+		/*engine.addProbe(
+				"ddd",
+				new MapInterface("zz")															// The frame is resized automatically
+				
+		);*/
 		
 		engine.addProbe(
 				"Energy consumption results",
@@ -68,7 +74,6 @@ public class SwarmMain {
 		);
 	
 	
-		
 			
 			// Create the simulation model being used.
 			SwarmInitialization simulationModel = new SwarmInitialization(
@@ -76,6 +81,7 @@ public class SwarmMain {
 				new SimulationTimeStamp( parameters.simulationTime ), 
 				parameters
 			);
+		
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
 			

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.vecmath.Vector3d;
+
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.dynamicstate.ConsistentPublicLocalDynamicState;
 import fr.lgi2a.similar.microkernel.influences.IInfluence;
@@ -27,6 +29,8 @@ import swarm.model.level.SwarmLevelList;
 
 public class RoomLevel extends AbstractLevel {
 	
+	public static double bestAllFitness=0;
+	public static Vector3d bestAllPos=new Vector3d(0,0,0);
 	private SwarmParameters parameters;
 	
 	/**
@@ -130,7 +134,16 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone, parameters);
+			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness)
+				{
+				bestAllFitness=agtMeasurementDrone.bestOwnFitness;
+				bestAllPos.set(agtMeasurementDrone.getLocation().getX(),agtMeasurementDrone.getLocation().getY(),agtMeasurementDrone.getLocation().getZ());
+				//System.out.println("4511"+bestAllFitness+" "+bestAllPos.getX()+" "+bestAllPos.getY()+" "+bestAllPos.getZ());
+				}
+			
+			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone,droneUpdateList, parameters,bestAllPos);
+		//	System.out.println(bestAllFitness+" "+bestAllPos.getX()+" "+bestAllPos.getY()+" "+bestAllPos.getZ());
+			
 		}
 		
 		//Influences on "drone" (all) agents, this one is calculated last.
@@ -250,7 +263,9 @@ public class RoomLevel extends AbstractLevel {
 			
 			UpdatePositionInRoom.UpdateDronePosition(agtDrone, parameters);
 			
+			
 		}
+
 	}
 	
 	
@@ -323,7 +338,12 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
 		InfluencesMap remainingInfluences
 	){	
-		//Does nothing
+		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : dronesUpdateList){
+			
+			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, parameters);
+			
+			
+		}
 	}
 	
 	

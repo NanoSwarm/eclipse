@@ -40,7 +40,11 @@ public class Objective {
 			break;
 			
 		case 2:
-			res = 100 - Math.sqrt(pos.x*pos.x + pos.y*pos.y + pos.z*pos.z);
+			//if (((pos.x>objectivePosition.x-500)&&(pos.x<objectivePosition.x+500))&&((pos.y>objectivePosition.y-300)&&(pos.y<objectivePosition.y+500)))
+				 res=1/Math.sqrt( Math.pow(pos.x-objectivePosition.x , 2) 
+							+Math.pow(pos.y-objectivePosition.y , 2)
+						   );
+		//	else res=0.0;
 			break;
 			
 			default : 

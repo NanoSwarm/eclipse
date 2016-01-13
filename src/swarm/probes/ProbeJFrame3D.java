@@ -197,8 +197,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
-		}
-	
+		}	
 		else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
 		castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;
 	}

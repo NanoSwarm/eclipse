@@ -1,14 +1,34 @@
 package swarm.model.agents.measurementDrone.room;
 
 import javax.vecmath.Color3f;
+import javax.vecmath.Vector3d;
 
 import com.sun.j3d.utils.geometry.Primitive;
 
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.environment.Objective;
 
 public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
 
+	public double fitness;
+	public Vector3d bestOwnPos;
+	public double bestOwnFitness;
+	public double getFitness(){
+		return fitness;
+	}
+	public void calculateFitness()
+	{
+		fitness=Objective.getObjective(this.getLocation());
+	}
+	public void updateFitness()
+	{
+		if (fitness>bestOwnFitness)
+		{
+			bestOwnFitness=fitness;
+			bestOwnPos.set(this.getLocation().getX(),this.getLocation().getY(),this.getLocation().getZ());
+		}
+	}
 	public Primitive forme;
 	/**
 	 * 
@@ -53,5 +73,8 @@ public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
 				initialEnergy,
 				measurementDroneColor
 		);
+		fitness=Objective.getObjective(this.getLocation());
+		bestOwnFitness=fitness;
+		bestOwnPos=new Vector3d(initialX,initialY,initialZ);
 	}	
 }
