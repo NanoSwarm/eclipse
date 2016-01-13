@@ -109,7 +109,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The maximum detection range (when searching a point)
 	 */
-	public int cameraDroneDetectionRange;
+	public double cameraDroneDetectionRange;
 	
 	/**
 	 * The number of "Communicator Drone" agents in the simulation.
@@ -119,7 +119,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The maximum detection range (when searching a point)
 	 */
-	public int communicatorDroneDetectionRange;
+	public double communicatorDroneDetectionRange;
 	
 	/**
 	 * The number of "Drone" agents in the simulation.
@@ -129,7 +129,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The maximum detection range (when searching a point)
 	 */
-	public int droneDetectionRange;
+	public double droneDetectionRange;
 	
 	/**
 	 * The number of "Microphone Drone" agents in the simulation.
@@ -139,7 +139,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The maximum detection range (when searching a point)
 	 */
-	public int microphoneDroneDetectionRange;
+	public double microphoneDroneDetectionRange;
 	
 	/**
 	 * The number of "Measurement Drone" agents in the simulation.
@@ -149,7 +149,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	/**
 	 * The maximum detection range (when searching a point)
 	 */
-	public int measurementDroneDetectionRange;
+	public double measurementDroneDetectionRange;
 	/**
 	 * The Mass of a drone with the tools to fly
 	 */
@@ -252,9 +252,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 		
 		this.roomBounds = new Vector3d(3000, 5000,1000);
 		this.securityDistance = 100;
-		this.simulationTime = 2000;
+
+		this.simulationTime = 5000;
 		this.objectiveType = 2;
-		this.objectivePosition = new  Vector3d(500,4500,500);
+		this.objectivePosition = new  Vector3d(2800,4900,500);
 		
 	}
 

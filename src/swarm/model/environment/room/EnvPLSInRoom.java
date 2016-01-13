@@ -11,6 +11,8 @@ import swarm.model.level.SwarmLevelList;
  */
 public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 
+	
+	
 	/**
 	 * Builds an initialized instance of this public local state.
 	 * @param owner The agent owning this public local state.
@@ -52,6 +54,8 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	public Vector3d getBounds( ) {
 		return this.bounds;
 	}
-
+	
+	
+	
 	
 }
