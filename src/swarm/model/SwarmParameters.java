@@ -231,11 +231,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneMassFactor = 0.9;
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
-<<<<<<< HEAD
+
 		this.initialEnergy = 5000;
-=======
-		this.initialEnergy = 20;
->>>>>>> branch 'swarm_3D_multi' of https://github.com/NanoSwarm/eclipse.git
+
 		this.basicDroneMass= 0.04;
 		
 		this.nbOfCameraDroneAgents = 30;
