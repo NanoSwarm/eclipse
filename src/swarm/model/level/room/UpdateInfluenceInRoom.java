@@ -226,7 +226,7 @@ public class UpdateInfluenceInRoom {
 				agtMeasurementDrone.getInfluence().z
 				);*/
 		Vector3d repulsionAcc = new Vector3d(); 
-		int nbOfDronesInRepulsionArea = 0;
+		int nbOfDronesInRepulsionArea;
 		//Calculation of different influences	
 		repulsionAcc.set(0, 0,0);
 		nbOfDronesInRepulsionArea = 0;
@@ -254,8 +254,36 @@ public class UpdateInfluenceInRoom {
 		}else if(parameters.objectiveType == 2){
 			
 		}
-		
-		
+		for (AgtDronePLSInRoom agtOtherDrone : droneUpdateList) {
+			if (agtMeasurementDrone != agtOtherDrone) {
+				double distance = Math.sqrt(Math.pow(agtMeasurementDrone.getLocation().x - agtOtherDrone.getLocation().x, 2)
+						+ Math.pow(agtMeasurementDrone.getLocation().y - agtOtherDrone.getLocation().y, 2)
+						+ Math.pow(agtMeasurementDrone.getLocation().z - agtOtherDrone.getLocation().z, 2));
+		if (distance < parameters.repulsionDistance) {
+			nbOfDronesInRepulsionArea++;
+			if (distance > 0.001) {
+				repulsionAcc.set(
+						repulsionAcc.x
+								- (agtOtherDrone.getLocation().x - agtMeasurementDrone.getLocation().x) / distance,
+						repulsionAcc.y
+								- (agtOtherDrone.getLocation().y - agtMeasurementDrone.getLocation().y) / distance,
+						repulsionAcc.z
+								- (agtOtherDrone.getLocation().z - agtMeasurementDrone.getLocation().z) / distance);
+
+			} else {
+				repulsionAcc.set(
+						repulsionAcc.x - 1000 * (agtOtherDrone.getLocation().x - agtMeasurementDrone.getLocation().x),
+						repulsionAcc.y - 1000 * (agtOtherDrone.getLocation().y - agtMeasurementDrone.getLocation().y),
+						repulsionAcc.z - 1000 * (agtOtherDrone.getLocation().z - agtMeasurementDrone.getLocation().z));
+			}
+		}
+		if (nbOfDronesInRepulsionArea != 0) {
+			agtMeasurementDrone.setInfluence(agtMeasurementDrone.getInfluence().x + repulsionAcc.x / nbOfDronesInRepulsionArea,
+					agtMeasurementDrone.getInfluence().y + repulsionAcc.y / nbOfDronesInRepulsionArea,
+					agtMeasurementDrone.getInfluence().z + repulsionAcc.z / nbOfDronesInRepulsionArea);
+		}
+			}
+		}
 		if (agtMeasurementDrone.getLocation().x < parameters.securityDistance ){
 			agtMeasurementDrone.setInfluence(5*parameters.maxAcc,0,0);
 		}else if (agtMeasurementDrone.getLocation().x > parameters.roomBounds.x - parameters.securityDistance){

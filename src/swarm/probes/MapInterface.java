@@ -15,20 +15,20 @@ import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.environment.Objective;
 import swarm.model.level.SwarmLevelList;
+import swarm.model.level.room.Graph;
 
 
 	public class MapInterface extends JFrame implements IProbe{
 		private MapDrawer pan;  
-	    public MapInterface(String str)
+	    public MapInterface(String str,Graph graph)
 	    {
-	    	pan=new MapDrawer();
+	    	pan=new MapDrawer(graph);
 	    	this.setTitle(str);
 	        this.setSize(600, 1000);
 	        this.setBackground(Color.LIGHT_GRAY);
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        this.getContentPane().add(pan);
-	        //this.pack();
-	        this.setVisible(true);
+	        this.setVisible(false);
 	    }
 
 		@Override
@@ -52,7 +52,7 @@ import swarm.model.level.SwarmLevelList;
 		public void observeAtPartialConsistentTime(
 				SimulationTimeStamp timestamp,
 				ISimulationEngine simulationEngine){
-			this.updateDraw( timestamp, simulationEngine );
+			//this.updateDraw( timestamp, simulationEngine );
 		
 		}
 
@@ -103,7 +103,7 @@ import swarm.model.level.SwarmLevelList;
 				if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
 				 castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
 				 AgtMeasurementDronePLSInRoom Agt=(AgtMeasurementDronePLSInRoom)  castedAgtState;
-				 pan.add(Agt.getLocation().getX(),Agt.getLocation().getY(),Objective.getObjective(Agt.getLocation()));
+				// pan.add(Agt.getLocation().getX(),Agt.getLocation().getY(),Objective.getObjective(Agt.getLocation()));
 				}
 			}
 }

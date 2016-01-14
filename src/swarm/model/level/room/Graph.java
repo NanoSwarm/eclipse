@@ -41,7 +41,7 @@ public class Graph {
 		imax = (int) Math.ceil(parameters.roomBounds.y/length);
 		jmax = (int) Math.ceil(parameters.roomBounds.z/length);
 		
-		this.spaceGraph = new Cube[kmax][imax][jmax];
+		this.spaceGraph = new Cube[imax][jmax][kmax];
 		
 		for (int i = 0 ; i < imax ; i++){
 			for (int j = 0 ; j < jmax ; j++){
@@ -60,6 +60,9 @@ public class Graph {
 	 */
 	private Cube[][][] spaceGraph;
 	
+	public Cube[][][] getSpaceGraph(){
+		return spaceGraph;
+	}
 	/**
 	 * The set of frontier cube: non explored cube adjacent to an explored cube
 	 */

@@ -8,9 +8,7 @@ public class Cube {
 	
 	public Cube(int x, int y, int z){
 		isVisited = false;
-		this.position.x = x;
-		this.position.y = y;
-		this.position.z = z;
+		position=new Vector3d(x,y,z);
 	}
 	
 	public Vector3d getPosition(){

@@ -1,6 +1,7 @@
 package swarm.model.level.room;
 
 import swarm.model.SwarmParameters;
+import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
 public class UpdatePositionInRoom {
@@ -64,6 +65,14 @@ public class UpdatePositionInRoom {
 					agtDrone.getVelocity().y + agtDrone.getAcceleration().y,
 					agtDrone.getVelocity().z + agtDrone.getAcceleration().z
 			);
-		
+		if (parameters.objectiveType == 1) {
+		}
+		else if (parameters.objectiveType == 2) {
+			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
+			{
+				
+			}
+			
+		}
 	}
 }
