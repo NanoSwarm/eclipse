@@ -85,6 +85,9 @@ public class Graph {
 	 */
 	private Cube[][][] spaceGraph;
 	
+	public Cube[][][] getSpaceGraph(){
+		return spaceGraph;
+	}
 	/**
 	 * The set of frontier cube: non explored cube adjacent to an explored cube
 	 */
