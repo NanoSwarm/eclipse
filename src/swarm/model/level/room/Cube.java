@@ -6,6 +6,12 @@ public class Cube {
 	
 	private Vector3d position;
 	
+	/**
+	 * A cube, portion of our room.
+	 * @param x the position of our cube (the corner closest to the origin)
+	 * @param y
+	 * @param z
+	 */
 	public Cube(double x, double y, double z){
 		isVisited = false;
 		position = new Vector3d(x,y,z);

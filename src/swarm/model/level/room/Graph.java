@@ -242,13 +242,16 @@ public class Graph {
 		
 		/*
 		 * then we search the frontier with the fewer number of drones closer to it than our drone.
-		 * If the is multiple frontier in this situation we choose the one with a minimal cost for our drone
 		 */
 		int minPosition = 0;
 		int minValue = 0;
+		
 		for (int n = 0 ; n< frontier.size() ; n++){
 			if (closerDrones[n] <= minValue){
 				if (closerDrones[n] == minValue){
+					/*
+					 * If two frontiers have the same number of drones closer to them than our drone we choose the one with a minimal cost.
+					 */
 					if ( cost.costLowMatrix[n] < cost.costLowMatrix[minPosition]){
 						minValue = closerDrones[n];
 						minPosition = n; 
@@ -261,6 +264,9 @@ public class Graph {
 			}
 		}
 		
+		/*
+		 * the chosen frontier is now send as a new destination for the drone.
+		 */
 		int n =0;
 		for (Cube cube : frontier){
 			if (n == minPosition){
@@ -273,10 +279,20 @@ public class Graph {
 		
 	}
 	
-	
+	/**
+	 * The cost matrix for each drone.
+	 *
+	 */
 	private class CostLowMatrix{
 		
+		/**
+		 * the hashCode of the drone which own this matrix
+		 */
 		int hashCode;
+		
+		/**
+		 * the cost needed to go to each frontier relative to this drone.
+		 */
 		double[] costLowMatrix;
 		
 		public CostLowMatrix(int size, int hash){
