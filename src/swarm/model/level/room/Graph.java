@@ -46,7 +46,7 @@ public class Graph {
 		for (int i = 0 ; i < imax ; i++){
 			for (int j = 0 ; j < jmax ; j++){
 				for (int k = 0 ; k < kmax ; k++){
-					spaceGraph[i][j][k] = new Cube(i,j,k);
+					spaceGraph[i][j][k] = new Cube(i*length,j*length,k*length);
 				}
 			}
 		}
@@ -98,22 +98,22 @@ public class Graph {
 		frontier.remove(spaceGraph[k][i][j]);
 		spaceGraph[k][i][j].setVisited();
 		
-		if (k < kmax-1 && !spaceGraph[k+1][i][j].isVisited){
+		if (k < kmax-1 && !spaceGraph[k+1][i][j].cubeIsVisited()){
 			frontier.add(spaceGraph[k+1][i][j]);
 		}
-		if (i < imax-1 && !spaceGraph[k][i+1][j].isVisited){
+		if (i < imax-1 && !spaceGraph[k][i+1][j].cubeIsVisited()){
 			frontier.add(spaceGraph[k][i+1][j]);
 		}
-		if (j < jmax-1 && !spaceGraph[k][i][j+1].isVisited){
+		if (j < jmax-1 && !spaceGraph[k][i][j+1].cubeIsVisited()){
 			frontier.add(spaceGraph[k][i][j+1]);
 		}
-		if (k > 0 && !spaceGraph[k-1][i][j].isVisited){
+		if (k > 0 && !spaceGraph[k-1][i][j].cubeIsVisited()){
 			frontier.add(spaceGraph[k-1][i][j]);
 		}
-		if (i > 0 && !spaceGraph[k][i-1][j].isVisited){
+		if (i > 0 && !spaceGraph[k][i-1][j].cubeIsVisited()){
 			frontier.add(spaceGraph[k][i-1][j]);
 		}
-		if (j > 0 && !spaceGraph[k][i][j-1].isVisited){
+		if (j > 0 && !spaceGraph[k][i][j-1].cubeIsVisited()){
 			frontier.add(spaceGraph[k][i][j-1]);
 		}
 		
@@ -130,9 +130,9 @@ public class Graph {
 			int m = 0;
 			for(Cube cube : frontier){
 				costMatrix[l].costLowMatrix[m] = Math.sqrt(
-													Math.pow((cube.x - drone.getLocation().x),2) +
-													Math.pow((cube.y - drone.getLocation().y),2) +
-													Math.pow((cube.z - drone.getLocation().z),2));
+													Math.pow((cube.getPosition().x - drone.getLocation().x),2) +
+													Math.pow((cube.getPosition().y - drone.getLocation().y),2) +
+													Math.pow((cube.getPosition().z - drone.getLocation().z),2));
 				m++;
 			}
 			l++;
@@ -143,8 +143,22 @@ public class Graph {
 	public void assignedDrone(AgtDronePLSInRoom drone){
 		int[] closerDrones = new int[frontier.size()];
 		int n = 0;
+		CostLowMatrix cost;
+		for(int m = 0 ; m < costMatrix.length ; m++){
+			if (costMatrix[m].hashCode == drone.hashCode()){
+				cost = costMatrix[m];
+			}
+		}
+		
 		for (Cube cube : frontier){
 			closerDrones[n] = 0;
+			
+			for(int m = 0 ; m < costMatrix.length ; m++){
+				if (costMatrix[m].hashCode != drone.hashCode()){
+					
+				}
+			}
+			n++;
 		}
 	}
 	
@@ -159,30 +173,6 @@ public class Graph {
 			this.costLowMatrix = new double[size];
 		}		
 		
-	}
-	
-	private class Cube{
-		
-		public int x,y,z;
-		
-		public Cube(int x, int y, int z){
-			isVisited = false;
-			this.x = x;
-			this.y = y;
-			this.z = z;
-		}
-		
-		/**
-		 * True if the cube has already been "visited", meaning that a drone has fully checked this volume.
-		 */
-		boolean isVisited;
-		
-		/**
-		 * Set to true the value of isVisited, since it's not reversible we don't need to do the reverse operation.
-		 */
-		public void setVisited(){
-			isVisited = true;
-		}
 	}
 }
 

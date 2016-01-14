@@ -219,8 +219,6 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.attractionCoeff = 1;
 		
 		
-		//this.maxInitialSpeed = 0.02;
-		//this.minInitialSpeed = 0.01;
 		this.maxInitialSpeed=0.00001;
 		this.minInitialSpeed=0.0;
 		this.maxSpeed = 8;
