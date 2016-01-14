@@ -194,7 +194,7 @@ public class Graph {
 			
 			
 			/*
-			 * 
+			 * The cost are calculated as a distance between the drone and the frontier cube.
 			 */
 			int m = 0;
 			for(Cube cube : frontier){
@@ -209,9 +209,15 @@ public class Graph {
 		
 	}
 	
+	/**
+	 * Change the destination of the drone to the frontier defined by the algorithm.
+	 * @param drone the drone looking for a new destination.
+	 */
 	public void assignedDrone(AgtDronePLSInRoom drone){
-		int[] closerDrones = new int[frontier.size()];
-
+		
+		/*
+		 * we first need to identified the cost matrix for our drone (cost relative to each frontier).
+		 */
 		CostLowMatrix cost = null;
 		for(int m = 0 ; m < costMatrix.length ; m++){
 			if (costMatrix[m].hashCode == drone.hashCode()){
@@ -219,6 +225,10 @@ public class Graph {
 			}
 		}
 		
+		/*
+		 * For each frontier we calculate the number of drones closer to the frontier than our drone.
+		 */
+		int[] closerDrones = new int[frontier.size()];
 		for (int n = 0; n < frontier.size(); n++){
 			
 			for(int m = 0 ; m < costMatrix.length ; m++){
@@ -230,18 +240,30 @@ public class Graph {
 			}
 		}
 		
-		int maxPosition = 0;
-		int maxValue = 0;
+		/*
+		 * then we search the frontier with the fewer number of drones closer to it than our drone.
+		 * If the is multiple frontier in this situation we choose the one with a minimal cost for our drone
+		 */
+		int minPosition = 0;
+		int minValue = 0;
 		for (int n = 0 ; n< frontier.size() ; n++){
-			if (closerDrones[n] > maxValue){
-				maxValue = closerDrones[n];
-				maxPosition = n; 
+			if (closerDrones[n] <= minValue){
+				if (closerDrones[n] == minValue){
+					if ( cost.costLowMatrix[n] < cost.costLowMatrix[minPosition]){
+						minValue = closerDrones[n];
+						minPosition = n; 
+					}					
+				}else{
+					minValue = closerDrones[n];
+					minPosition = n; 
+				}
+				
 			}
 		}
 		
 		int n =0;
 		for (Cube cube : frontier){
-			if (n == maxPosition){
+			if (n == minPosition){
 				drone.setDestination(cube.getPosition());
 				break;
 			}else{
