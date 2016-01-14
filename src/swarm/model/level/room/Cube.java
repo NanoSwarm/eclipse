@@ -6,13 +6,15 @@ public class Cube {
 	
 	private Vector3d position;
 	
-	public Cube(int x, int y, int z){
+	public Cube(double x, double y, double z){
 		isVisited = false;
-		this.position.x = x;
-		this.position.y = y;
-		this.position.z = z;
+		position = new Vector3d(x,y,z);
 	}
 	
+	/**
+	 * 
+	 * @return position, the position of the corner closest to the origin
+	 */
 	public Vector3d getPosition(){
 		return position;
 	}
@@ -29,16 +31,31 @@ public class Cube {
 		isVisited = true;
 	}
 	
+	/**
+	 * 
+	 * @return isVisited, 1 if the cube was visited, 0 otherwise.
+	 */
 	public boolean cubeIsVisited(){
 		return isVisited;
 	}
 	
+	/**
+	 * the last measured value in this cube.
+	 */
 	private double measuredValue = 0;
 	
+	/**
+	 * 
+	 * @param measure the new value measured in this cube.
+	 */
 	public void setMeasuredValue(double measure){
-		
+		measuredValue = measure;
 	}
 	
+	/**
+	 * 
+	 * @return measuredValue the last measured value in this cube.
+	 */
 	public double getMeasuredValue(){
 		
 			return this.measuredValue;
