@@ -1,5 +1,6 @@
 package swarm.model.level.room;
 
+import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
@@ -65,12 +66,28 @@ public class UpdatePositionInRoom {
 					agtDrone.getVelocity().y + agtDrone.getAcceleration().y,
 					agtDrone.getVelocity().z + agtDrone.getAcceleration().z
 			);
-		if (parameters.objectiveType == 1) {
-		}
-		else if (parameters.objectiveType == 2) {
+		
+		if (parameters.objectiveType == 1){
+			
+			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE)){
+				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.measurementDroneDetectionRange);				
+			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.CAMERADRONE)){
+				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.cameraDroneDetectionRange);				
+			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.COMMUNICATORDRONE)){
+				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.communicatorDroneDetectionRange);				
+			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.DRONE)){
+				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.droneDetectionRange);
+			}
+			
+		}else if (parameters.objectiveType == 2) {
+			
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
-				
+				if(parameters.resolutionType == "pso"){
+					
+				}else if (parameters.resolutionType == "position minimum"){
+					SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
+				}
 			}
 			
 		}

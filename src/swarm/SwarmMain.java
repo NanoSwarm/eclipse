@@ -17,9 +17,11 @@ import swarm.probes.MapInterface;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
 
+
+
 public class SwarmMain {
 	
-	
+	public static SwarmInitialization simulationModel;
 	private static ISimulationEngine engine;
 	private static ProbeInterface resultInterface;
 	private static SwarmParameters parameters;
@@ -72,7 +74,7 @@ public class SwarmMain {
 	
 			
 			// Create the simulation model being used.
-			SwarmInitialization simulationModel = new SwarmInitialization(
+			simulationModel = new SwarmInitialization(
 				new SimulationTimeStamp( 0 ), 
 				new SimulationTimeStamp( parameters.simulationTime ), 
 				parameters
@@ -93,6 +95,10 @@ public class SwarmMain {
 	public static void abordSimulation(){
 		engine.requestSimulationAbortion();
 		resultInterface.setVisible(true);
+	}
+	
+	public static SwarmInitialization getSimulationModel(){
+		return simulationModel;
 	}
 	
 

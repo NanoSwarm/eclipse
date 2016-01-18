@@ -3,6 +3,8 @@ package swarm.model.level.room;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.vecmath.Vector3d;
+
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
@@ -100,15 +102,15 @@ public class Graph {
 	 * @param z the position of the drone
 	 * @param detectionRange the maximum distance of detection for this drone
 	 */
-	public void updateFrontier(double x, double y, double z, double detectionRange){
+	public void updateFrontier(Vector3d pos, double detectionRange){
 		int k,i,j,l;
 		
 		/*
 		 * we search in which cube is the drone;
 		 */
-		k = Math.floorDiv((int)x, length);
-		i = Math.floorDiv((int)y, length);
-		j = Math.floorDiv((int)z, length);
+		k = Math.floorDiv((int)pos.x, length);
+		i = Math.floorDiv((int)pos.y, length);
+		j = Math.floorDiv((int)pos.z, length);
 
 		/*
 		 * the cube where the drone stands is counted as visited.

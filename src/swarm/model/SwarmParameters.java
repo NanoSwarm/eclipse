@@ -25,11 +25,6 @@ public class SwarmParameters extends LogoSimulationParameters{
 	public double orientationDistance;
 	
 	/**
-	 * 
-	 * test
-	 */
-	
-	/**
 	 * the repulsion distance.
 	 */
 	public double repulsionCoeff;
@@ -174,16 +169,23 @@ public class SwarmParameters extends LogoSimulationParameters{
 
 	/**
 	 * The objective of the mission
-	 * objectiveType = 1 -> the drones have to find a point in space (a drone find the point when he is close enough to detect it)
-	 * objectiveType = 2 -> the drones have to measure certain characteristic everywhere in space (in order to create a 2D or 3D map) 
+	 * objectiveType = 1 -> the drones have to find a point in space (a drone find the point when he is close enough to detect it).
+	 * objectiveType = 2 -> the drones have to measure certain characteristic everywhere in space (in order to create a 2D or 3D map).
+	 * objectiveType = 3 -> just a demonstration of swarm movement using boids algorithm. 
 	 */
 	public int objectiveType;
 	
 	/**
-	 * In case of a type 1 objective, the position of the point to find
+	 * In case of a type 1 objective, the position of the point to find.
 	 */
 	public Vector3d objectivePosition;
 
+	/**
+	 * The method chosen to find the objective.
+	 * resolutionType = "position minimum" -> the drones use a graph searching algorithm to do a full space search.
+	 * resolutionType = "pso" -> the drones use pso algorithm to find a local maximum.
+	 */
+	public String resolutionType;
 	
 	/**
 	 * The color of the different drones
@@ -253,6 +255,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 
 		this.simulationTime = 5;
 		this.objectiveType = 2;
+		this.resolutionType = "position minimum";
 		this.objectivePosition = new  Vector3d(2800,4900,500);
 		
 	}

@@ -117,6 +117,10 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
+		if (parameters.resolutionType == "position minimum"){
+			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);;
+		}
+		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
 			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone, parameters);
@@ -134,7 +138,7 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness)
+			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && parameters.resolutionType == "pso")
 				{
 				bestAllFitness=agtMeasurementDrone.bestOwnFitness;
 				bestAllPos.set(agtMeasurementDrone.getLocation().getX(),agtMeasurementDrone.getLocation().getY(),agtMeasurementDrone.getLocation().getZ());
