@@ -71,14 +71,13 @@ public class Graph {
 		 * each cube position is initialized.
 		 */
 		for (int i = 0 ; i < imax ; i++){
-			for (int j = 0 ; j < jmax ; j++){
+			for (int j = 0 ; j <  jmax ; j++){
 				for (int k = 0 ; k < kmax ; k++){
 					spaceGraph[i][j][k] = new Cube(i*length,j*length,k*length);
 				}
 			}
 		}
 		frontier = new ArrayList();
-		frontier.add(spaceGraph[0][0][0]);
 	}
 	
 	
@@ -108,14 +107,21 @@ public class Graph {
 		/*
 		 * we search in which cube is the drone;
 		 */
-		k = Math.floorDiv((int)pos.x, length);
-		i = Math.floorDiv((int)pos.y, length);
-		j = Math.floorDiv((int)pos.z, length);
+		i = Math.floorDiv((int)pos.x, length);
+		j = Math.floorDiv((int)pos.y, length);
+		k = Math.floorDiv((int)pos.z, length);
 
+		if(i > imax-1) i = imax-1;
+		if(j > jmax-1) j = jmax-1;
+		if(k > kmax-1) k = kmax-1;
+		if(i < 0) i = 0;
+		if(j < 0) j = 0;
+		if(k < 0) k = 0;
+		
 		/*
 		 * the cube where the drone stands is counted as visited.
 		 */
-		removeFrontier(k,i,j);
+		removeFrontier(i,j,k);
 		
 		/*
 		 * we check if the drone have extra range to check other cubes in addition to the one where he is flying.
@@ -125,11 +131,17 @@ public class Graph {
 		/*
 		 * every other cubes in range are counted as visited.
 		 */
-		for (int in = -l ; in <= l ;in++){
+		for (int in = -l ; in <= l ; in++ ){
 			for (int jn = -l ; jn <= l ; jn++ ){
-				for(int kn = -l; kn <= l ; kn++){
+				for(int kn = -l ; kn <= l ; kn++ ){
 					
-					if (Math.abs(in) + Math.abs(jn) + Math.abs(kn) < l ){
+					if (Math.abs(in) + Math.abs(jn) + Math.abs(kn) < l && 
+							i+in < imax-1 && 
+							j+jn < jmax -1 && 
+							k+kn < kmax -1 &&
+							i+in >= 0 &&
+							j+jn >= 0 &&
+							k+kn >= 0){
 						removeFrontier(i+in,j+jn,k+kn);
 					}				
 					
@@ -146,36 +158,53 @@ public class Graph {
 	 * @param i 
 	 * @param j 
 	 */
-	private void removeFrontier(int k, int i, int j){
+	private void removeFrontier(int i, int j, int k){
 		
 		/*
 		 * First the visited cube is removed from the list
 		 */
-		if (frontier.contains(spaceGraph[k][i][j])){
-			frontier.remove(spaceGraph[k][i][j]);
+		if (frontier.contains(spaceGraph[i][j][k])){
+			frontier.remove(spaceGraph[i][j][k]);
 		}
-		spaceGraph[k][i][j].setVisited();
+		spaceGraph[i][j][k].setVisited();
 		
 		/*
 		 * we check for adjacent non visited cube
 		 */
-		if (k < kmax-1 && !spaceGraph[k+1][i][j].cubeIsVisited()){
-			frontier.add(spaceGraph[k+1][i][j]);
+		if (i < imax-1 ){
+			if(!spaceGraph[i+1][j][k].cubeIsVisited()){
+				frontier.add(spaceGraph[i+1][j][k]);
+			}
 		}
-		if (i < imax-1 && !spaceGraph[k][i+1][j].cubeIsVisited()){
-			frontier.add(spaceGraph[k][i+1][j]);
+		
+		if (j < jmax-1 ){
+			if(!spaceGraph[i][j+1][k].cubeIsVisited()){
+				frontier.add(spaceGraph[i][j+1][k]);
+			}
 		}
-		if (j < jmax-1 && !spaceGraph[k][i][j+1].cubeIsVisited()){
-			frontier.add(spaceGraph[k][i][j+1]);
+		
+		if (k < kmax-1 ){
+			if(!spaceGraph[i][j][k+1].cubeIsVisited()){
+				frontier.add(spaceGraph[i][j][k+1]);
+			}
 		}
-		if (k > 0 && !spaceGraph[k-1][i][j].cubeIsVisited()){
-			frontier.add(spaceGraph[k-1][i][j]);
+		
+		if (i > 0 ){
+			if(!spaceGraph[i-1][j][k].cubeIsVisited()){
+				frontier.add(spaceGraph[i-1][j][k]);
+			}
 		}
-		if (i > 0 && !spaceGraph[k][i-1][j].cubeIsVisited()){
-			frontier.add(spaceGraph[k][i-1][j]);
+		
+		if (j > 0 ){
+			if(!spaceGraph[i][j-1][k].cubeIsVisited()){
+				frontier.add(spaceGraph[i][j-1][k]);
+			}
 		}
-		if (j > 0 && !spaceGraph[k][i][j-1].cubeIsVisited()){
-			frontier.add(spaceGraph[k][i][j-1]);
+		
+		if (k > 0 ){
+			if(!spaceGraph[i][j][k-1].cubeIsVisited()){
+				frontier.add(spaceGraph[i][j][k-1]);
+			}
 		}
 		
 	}
