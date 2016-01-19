@@ -37,6 +37,7 @@ public class AgtCameraDronePLSInRoom extends AgtDronePLSInRoom {
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
 			double initialEnergy,
+			double detectionRange,
 			Color3f cameraDroneColor
 	) {
 		super(
@@ -51,6 +52,7 @@ public class AgtCameraDronePLSInRoom extends AgtDronePLSInRoom {
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ,
 				initialEnergy,
+				detectionRange,
 				cameraDroneColor
 		);
 

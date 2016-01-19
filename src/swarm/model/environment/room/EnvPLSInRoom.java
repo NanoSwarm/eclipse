@@ -3,7 +3,7 @@ package swarm.model.environment.room;
 import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfEnvironment;
-import swarm.model.SwarmParameters;
+import swarm.SwarmMain;
 import swarm.model.level.SwarmLevelList;
 
 /**
@@ -20,18 +20,16 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	 * @throws IllegalArgumentException If the <code>bounds</code> are null
 	 * or if its dimensions are lower or equal to 0.
 	 */
-	public EnvPLSInRoom(
-			SwarmParameters parameters
-	) {
+	public EnvPLSInRoom( ) {
 		super(
 			SwarmLevelList.ROOM
 		);
-		if( parameters.roomBounds == null ){
+		if( SwarmMain.getSimulationModel().getParameters().roomBounds == null ){
 			throw new IllegalArgumentException( "The argument cannot be null." );
-		} else if( parameters.roomBounds.x <=0 || parameters.roomBounds.y <= 0 || parameters.roomBounds.z <= 0 ){
+		} else if( SwarmMain.getSimulationModel().getParameters().roomBounds.x <=0 || SwarmMain.getSimulationModel().getParameters().roomBounds.y <= 0 || SwarmMain.getSimulationModel().getParameters().roomBounds.z <= 0 ){
 			throw new IllegalArgumentException( "The dimensions cannot be lower or equal to 0." );
 		} else {
-			this.bounds = parameters.roomBounds;
+			this.bounds = SwarmMain.getSimulationModel().getParameters().roomBounds;
 		}
 	}
 	

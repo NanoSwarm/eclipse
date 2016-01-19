@@ -12,7 +12,6 @@ import fr.lgi2a.similar.microkernel.influences.IInfluence;
 import fr.lgi2a.similar.microkernel.influences.InfluencesMap;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLevel;
 import swarm.SwarmMain;
-import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
@@ -31,7 +30,6 @@ public class RoomLevel extends AbstractLevel {
 	
 	public static double bestAllFitness=0;
 	public static Vector3d bestAllPos=new Vector3d(0,0,0);
-	private SwarmParameters parameters;
 	
 	/**
 	 * Builds an uninitialized instance of this level.
@@ -40,17 +38,13 @@ public class RoomLevel extends AbstractLevel {
 	 * 	to be set during the initialization phase of the simulation.
 	 * </p>
 	 * @param initialTime The initial time of the simulation.
-	 * @param parameters the different parameters of the simulation
+	 * @param SwarmMain.getSimulationModel().getParameters() the different SwarmMain.getSimulationModel().getParameters() of the simulation
 	 */
-	public RoomLevel( 
-		SimulationTimeStamp initialTime,
-		SwarmParameters parameters
-	) {
+	public RoomLevel( SimulationTimeStamp initialTime) {
 		super(
 			initialTime,
 			SwarmLevelList.ROOM
 		);
-		this.parameters = parameters;
 	}
 
 	/**
@@ -117,42 +111,42 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		if (parameters.resolutionType == "position minimum"){
-			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);;
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum"){
+			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);
 		}
 		
 		//Influences on "camera drone" agents
 		for(AgtCameraDronePLSInRoom agtCameraDrone: cameraUpdateList){
-			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone, parameters);
+			UpdateInfluenceInRoom.UpdateCameraDroneInfluence(agtCameraDrone, SwarmMain.getSimulationModel().getParameters());
 		}
 		
 		//Influences on "communicator drone" agents
 		for(AgtCommunicatorDronePLSInRoom agtCommunicatorDrone: communicatorUpdateList){
-			UpdateInfluenceInRoom.UpdateCommunicatorDroneInfluence(agtCommunicatorDrone, parameters);
+			UpdateInfluenceInRoom.UpdateCommunicatorDroneInfluence(agtCommunicatorDrone, SwarmMain.getSimulationModel().getParameters());
 		}
 		
 		//Influences on "microphone drones" agents
 		for(AgtMicrophoneDronePLSInRoom agtMicrophoneDrone : microphoneUpdateList){
-			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone, parameters);
+			UpdateInfluenceInRoom.UpdateMicrophoneDroneInfluence(agtMicrophoneDrone, SwarmMain.getSimulationModel().getParameters());
 		}
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && parameters.resolutionType == "pso")
+			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && SwarmMain.getSimulationModel().getParameters().resolutionType == "pso")
 				{
 				bestAllFitness=agtMeasurementDrone.bestOwnFitness;
 				bestAllPos.set(agtMeasurementDrone.getLocation().getX(),agtMeasurementDrone.getLocation().getY(),agtMeasurementDrone.getLocation().getZ());
 				//System.out.println("4511"+bestAllFitness+" "+bestAllPos.getX()+" "+bestAllPos.getY()+" "+bestAllPos.getZ());
 				}
 			
-			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone,droneUpdateList, parameters,bestAllPos);
+			UpdateInfluenceInRoom.UpdateMeasurementDroneInfluence(agtMeasurementDrone,droneUpdateList, SwarmMain.getSimulationModel().getParameters(),bestAllPos);
 		//	System.out.println(bestAllFitness+" "+bestAllPos.getX()+" "+bestAllPos.getY()+" "+bestAllPos.getZ());
 			
 		}
 		
 		//Influences on "drone" (all) agents, this one is calculated last.
 		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
-			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, parameters);
+			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, SwarmMain.getSimulationModel().getParameters());
 		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
@@ -265,7 +259,7 @@ public class RoomLevel extends AbstractLevel {
 		
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			UpdatePositionInRoom.UpdateDronePosition(agtDrone, parameters);
+			UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
 			
 			
 		}
@@ -311,14 +305,14 @@ public class RoomLevel extends AbstractLevel {
 		int i = 0;
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			i += UpdateEnergyLevelInRoom.updateEnergy(agtDrone, parameters); //Count the number of dead drones and update energy levels
+			i += UpdateEnergyLevelInRoom.updateEnergy(agtDrone, SwarmMain.getSimulationModel().getParameters()); //Count the number of dead drones and update energy levels
 			
 		}
-		if (i == (parameters.nbOfCameraDroneAgents 
-				+ parameters.nbOfCommunicatorDroneAgents
-				+ parameters.nbOfDroneAgents 
-				+ parameters.nbOfMeasurementDroneAgents 
-				+ parameters.nbOfMicrophoneDroneAgents)){
+		if (i == (SwarmMain.getSimulationModel().getParameters().nbOfCameraDroneAgents 
+				+ SwarmMain.getSimulationModel().getParameters().nbOfCommunicatorDroneAgents
+				+ SwarmMain.getSimulationModel().getParameters().nbOfDroneAgents 
+				+ SwarmMain.getSimulationModel().getParameters().nbOfMeasurementDroneAgents 
+				+ SwarmMain.getSimulationModel().getParameters().nbOfMicrophoneDroneAgents)){
 			System.out.println("Objective not found, energy depleted. ");
 			SwarmMain.abordSimulation();
 		}
@@ -344,7 +338,7 @@ public class RoomLevel extends AbstractLevel {
 	){	
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : dronesUpdateList){
 			
-			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, parameters);
+			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, SwarmMain.getSimulationModel().getParameters());
 			
 			
 		}

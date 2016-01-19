@@ -117,7 +117,7 @@ public class SwarmEnvironment extends AbstractEnvironment {
 			
 			//all drones are added to the "RIUpdateEnergyLevelInRoom" influence
 			AgtDronePLSInRoom castedDrone = (AgtDronePLSInRoom) state;
-			energyUpdateInfluence.addParticleToUpdate( castedDrone );			
+			energyUpdateInfluence.addParticleToUpdate( castedDrone );
 
 			//Drones are added to their related influences
 			if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
@@ -125,21 +125,25 @@ public class SwarmEnvironment extends AbstractEnvironment {
 				AgtCameraDronePLSInRoom castedState = (AgtCameraDronePLSInRoom) state;
 				// Add the particle to the particles to update.
 				cameraUpdateInfluence.addParticleToUpdate( castedState );
+				
 			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
 				// Cast the public local state into the appropriate type.
 				AgtCommunicatorDronePLSInRoom castedState = (AgtCommunicatorDronePLSInRoom) state;
 				// Add the particle to the particles to update.
 				communicatorUpdateInfluence.addParticleToUpdate( castedState );
+				
 			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.DRONE ) ){
 				// Cast the public local state into the appropriate type.
 				AgtDronePLSInRoom castedState = (AgtDronePLSInRoom) state;
 				// Add the particle to the particles to update.
 				droneUpdateInfluence.addParticleToUpdate( castedState );
+				
 			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
 				// Cast the public local state into the appropriate type.
 				AgtMicrophoneDronePLSInRoom castedState = (AgtMicrophoneDronePLSInRoom) state;
 				// Add the particle to the particles to update.
 				microphoneUpdateInfluence.addParticleToUpdate( castedState );
+				
 			}else if( state.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE)) {
 				// Cast the public local state into the appropriate type.
 				AgtMeasurementDronePLSInRoom castedState = (AgtMeasurementDronePLSInRoom) state;

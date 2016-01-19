@@ -68,6 +68,7 @@ public class AgtMicrophoneDroneFactory {
 						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
 						RandomValueFactory.getStrategy().randomDouble(-PARAMETERS.maxInitialSpeed, PARAMETERS.maxInitialSpeed),
 						PARAMETERS.initialEnergy,
+						PARAMETERS.microphoneDroneDetectionRange,
 						PARAMETERS.microphoneDroneColor
 				
 						),

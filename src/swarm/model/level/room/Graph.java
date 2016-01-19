@@ -77,8 +77,8 @@ public class Graph {
 				}
 			}
 		}
-		
-		this.frontier = null;
+		frontier = new ArrayList();
+		frontier.add(spaceGraph[0][0][0]);
 	}
 	
 	
@@ -151,7 +151,9 @@ public class Graph {
 		/*
 		 * First the visited cube is removed from the list
 		 */
-		frontier.remove(spaceGraph[k][i][j]);
+		if (frontier.contains(spaceGraph[k][i][j])){
+			frontier.remove(spaceGraph[k][i][j]);
+		}
 		spaceGraph[k][i][j].setVisited();
 		
 		/*
@@ -262,7 +264,6 @@ public class Graph {
 					minValue = closerDrones[n];
 					minPosition = n; 
 				}
-				
 			}
 		}
 		
@@ -278,7 +279,6 @@ public class Graph {
 				n++;
 			}
 		}
-		
 	}
 	
 	/**

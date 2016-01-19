@@ -83,8 +83,21 @@ public class UpdateInfluenceInRoom {
 				}
 
 			}
-
 		}
+		
+		if (parameters.resolutionType == "position minimum"){
+			double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtDrone.getDestination().x, 2)
+					+ Math.pow(agtDrone.getLocation().y - agtDrone.getDestination().y, 2)
+					+ Math.pow(agtDrone.getLocation().z - agtDrone.getDestination().z, 2));
+			
+			SwarmMain.getSimulationModel().getGraph().assignedDrone(agtDrone);
+			attractionAcc.set(
+					(agtDrone.getLocation().x - agtDrone.getDestination().x)/distance,
+					(agtDrone.getLocation().y - agtDrone.getDestination().y)/distance,
+					(agtDrone.getLocation().z - agtDrone.getDestination().z)/distance);
+		}
+		
+		
 		if (agtDrone.getLocation().x < parameters.securityDistance) {
 			agtDrone.setInfluence(5 * parameters.maxAcc, 0, 0);
 		} else if (agtDrone.getLocation().x > parameters.roomBounds.x - parameters.securityDistance) {

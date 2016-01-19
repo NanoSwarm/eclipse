@@ -296,7 +296,6 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		
 		Appearance app = new Appearance();
 		Color3f white=new Color3f(1.0f,1.0f,1.0f);
-		Color3f black = new Color3f(0.0f,0.0f,0.0f);
 		Color3f color = new Color3f(0.0f,0.0f,0.3f);
 		Material material = new Material(color, white, color, white, 64);
 		material.setLightingEnable(true);

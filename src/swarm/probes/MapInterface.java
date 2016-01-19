@@ -13,7 +13,6 @@ import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
-import swarm.model.environment.Objective;
 import swarm.model.level.SwarmLevelList;
 import swarm.model.level.room.Graph;
 

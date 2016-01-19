@@ -57,6 +57,7 @@ public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
 			double initialEnergy,
+			double detectionRange,
 			Color3f measurementDroneColor
 	) {
 		super(
@@ -71,6 +72,7 @@ public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ,
 				initialEnergy,
+				detectionRange,
 				measurementDroneColor
 		);
 		fitness=Objective.getObjective(this.getLocation());

@@ -80,7 +80,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 		List<ILevel> result = new LinkedList<ILevel>();
 		
 		// Create the "room" level of the simulation.
-		RoomLevel chamber = new RoomLevel( initialTime, parameters );
+		RoomLevel chamber = new RoomLevel(initialTime);
 		result.add( chamber );
 		
 		return result;
@@ -99,7 +99,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 		// Set the local state of the environment for each level.
 		environment.includeNewLevel(
 				SwarmLevelList.ROOM, 
-				new EnvPLSInRoom( this.parameters ),
+				new EnvPLSInRoom(),
 				new EmptyLocalStateOfEnvironment( SwarmLevelList.ROOM )
 		);
 		Objective.setObjective(parameters.objectivePosition, parameters.objectiveType);		
@@ -158,12 +158,18 @@ public class SwarmInitialization extends AbstractSimulationModel{
 					);
 			
 			result.getAgents().add( drone );
+			
 		}
+		
 		return result;
 	}
 
 	public Graph getGraph() {
 		return graph;
+	}
+	
+	public SwarmParameters getParameters(){
+		return this.parameters;
 	}
 
 	

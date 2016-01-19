@@ -12,7 +12,6 @@ import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
-import swarm.model.level.room.Graph;
 import swarm.probes.MapInterface;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;

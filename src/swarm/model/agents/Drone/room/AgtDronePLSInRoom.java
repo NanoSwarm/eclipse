@@ -11,6 +11,7 @@ import com.sun.j3d.utils.geometry.Primitive;
 
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfAgent;
+import swarm.SwarmMain;
 import swarm.model.level.SwarmLevelList;
 
 public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
@@ -54,6 +55,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
 			double initialEnergy,
+			double detectionRange,
 			Color3f color2
 
 	) {
@@ -61,20 +63,28 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 			SwarmLevelList.ROOM,
 			owner
 		);
+		SwarmMain.getSimulationModel().getGraph().updateFrontier(
+				new Vector3d(initialX,initialY,initialZ),
+				detectionRange);
+		
 		this.location=new Vector3d(
 				initialX,
 				initialY,
 				initialZ);
+		
 		this.velocity = new Vector3d(
 				initialVelocityAlongX,
 				initialVelocityAlongY,
 				initialVelocityAlongZ);
+		
 		this.acceleration = new Vector3d(
 				initialAccelerationAlongX,
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ);
+		
 		this.influence = new Vector3d(0,0,0);
 		this.energy = initialEnergy;
+		this.destination = new Vector3d(0,0,0);
 		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
 

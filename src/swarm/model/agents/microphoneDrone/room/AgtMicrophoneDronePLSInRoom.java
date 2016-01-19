@@ -37,6 +37,7 @@ public Primitive forme;
 			double initialAccelerationAlongY,
 			double initialAccelerationAlongZ,
 			double initialEnergy,
+			double detectionRange,
 			Color3f microphoneDroneColor
 	) {
 		super(
@@ -51,6 +52,7 @@ public Primitive forme;
 				initialAccelerationAlongY,
 				initialAccelerationAlongZ,
 				initialEnergy,
+				detectionRange,
 				microphoneDroneColor
 		);
 	}
