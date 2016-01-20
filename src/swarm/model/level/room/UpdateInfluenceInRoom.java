@@ -85,7 +85,7 @@ public class UpdateInfluenceInRoom {
 			}
 		}
 		
-		if (parameters.resolutionType == "position minimum"){
+		if (parameters.resolutionType == "position minimum" && (parameters.objectiveType == 1 | parameters.objectiveType == 2) ){
 			double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtDrone.getDestination().x, 2)
 					+ Math.pow(agtDrone.getLocation().y - agtDrone.getDestination().y, 2)
 					+ Math.pow(agtDrone.getLocation().z - agtDrone.getDestination().z, 2));
@@ -216,7 +216,7 @@ public class UpdateInfluenceInRoom {
 				System.out.println("Objective found by " + agtMeasurementDrone.hashCode() + "as measurementDrone agent.\n");
 				SwarmMain.abordSimulation();
 			}
-		}else if(parameters.resolutionType == "pso"){
+		}else if(parameters.resolutionType == "pso" && parameters.objectiveType == 2){
 			
 			agtMeasurementDrone.calculateFitness();
 			agtMeasurementDrone.updateFitness();
@@ -233,7 +233,7 @@ public class UpdateInfluenceInRoom {
 					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(agtMeasurementDrone.bestOwnPos.getZ()-agtMeasurementDrone.getLocation().getZ())
 					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(bestPos.getZ()-agtMeasurementDrone.getLocation().getZ())
 					);
-		}else if (parameters.resolutionType == "position minimum"){
+		}else if (parameters.resolutionType == "position minimum" && (parameters.objectiveType == 1 | parameters.objectiveType == 2)){
 			
 		}
 	}

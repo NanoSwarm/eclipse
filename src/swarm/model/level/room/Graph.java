@@ -45,7 +45,7 @@ public class Graph {
 		 * The length is calculated so that any drones concerned by the mission will be able to see the
 		 * entire cube as long as it is inside it.
 		 */
-		if (parameters.objectiveType == 1){
+		if (parameters.objectiveType == 1 || parameters.objectiveType == 3 ){
 			length = (int)Math.floor(
 					Math.min(
 						Math.min(
