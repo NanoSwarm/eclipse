@@ -83,9 +83,7 @@ public class UpdatePositionInRoom {
 			
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
-				if(parameters.resolutionType == "pso"){
-					
-				}else if (parameters.resolutionType == "position minimum"){
+				if (parameters.resolutionType == "position minimum"){
 					SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
 				}
 			}

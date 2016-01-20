@@ -111,8 +111,12 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum"){
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2 && SwarmMain.getSimulationModel().getParameters().objectiveType == 1){
 			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);
+		}
+		
+		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
+			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, SwarmMain.getSimulationModel().getParameters());
 		}
 		
 		//Influences on "camera drone" agents
@@ -144,12 +148,9 @@ public class RoomLevel extends AbstractLevel {
 			
 		}
 		
-		//Influences on "drone" (all) agents, this one is calculated last.
-		for (AgtDronePLSInRoom agtDrone : droneUpdateList){
-			UpdateInfluenceInRoom.UpdateDroneInfluence(agtDrone, droneUpdateList, SwarmMain.getSimulationModel().getParameters());
-		}
 		
 		// Manage the reaction to the drones that were listed by the influences.
+		
 		this.cameraReactionTo( 
 				transitoryTimeMin,
 				transitoryTimeMax,
@@ -163,14 +164,6 @@ public class RoomLevel extends AbstractLevel {
 				transitoryTimeMax,
 				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
 				communicatorUpdateList,
-				remainingInfluences
-		);
-		
-		this.droneReactionTo( 
-				transitoryTimeMin,
-				transitoryTimeMax,
-				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
-				droneUpdateList,
 				remainingInfluences
 		);
 		
@@ -195,6 +188,14 @@ public class RoomLevel extends AbstractLevel {
 				transitoryTimeMax,
 				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
 				measurementUpdateList,
+				remainingInfluences
+		);
+		
+		this.droneReactionTo( 
+				transitoryTimeMin,
+				transitoryTimeMax,
+				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
+				droneUpdateList,
 				remainingInfluences
 		);
 		
@@ -240,6 +241,32 @@ public class RoomLevel extends AbstractLevel {
 		//Does nothing
 	}
 	
+	
+	/**
+	 * The reaction to the sum of all the {@link RIUpdateMeasurementDroneSpatialStateInRoom} influences
+	 * that were sent to this level.
+	 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
+	 * @param roomEnvState The public local state of the environment in the chamber level.
+	 * @param dronesUpdateList The drones listed in these influences.
+	 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
+	 */
+	private void measurementReactionTo( 
+		SimulationTimeStamp transitoryTimeMin,
+		SimulationTimeStamp transitoryTimeMax,
+		EnvPLSInRoom roomEnvState,
+		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
+		InfluencesMap remainingInfluences
+	){	
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
+			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
+				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
+
+			} 
+		}
+	}
+	
+	
 	/**
 	 * The reaction to the sum of all the {@link RIUpdateDroneSpatialStateInRoom} influences
 	 * that were sent to this level.
@@ -257,11 +284,12 @@ public class RoomLevel extends AbstractLevel {
 		InfluencesMap remainingInfluences
 	){		
 		
-		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
-			
-			UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
-			
-			
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType != "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
+			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
+
+				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
+
+			} 
 		}
 
 	}
@@ -317,32 +345,6 @@ public class RoomLevel extends AbstractLevel {
 			SwarmMain.abordSimulation();
 		}
 		
-	}
-	
-	
-	/**
-	 * The reaction to the sum of all the {@link RIUpdateMeasurementDroneSpatialStateInRoom} influences
-	 * that were sent to this level.
-	 * @param transitoryTimeMin The lower bound of the transitory period of the level for which this reaction is performed.
-	 * @param transitoryTimeMax The lower bound of the transitory period of the level for which this reaction is performed.
-	 * @param roomEnvState The public local state of the environment in the chamber level.
-	 * @param dronesUpdateList The drones listed in these influences.
-	 * @param remainingInfluences The data structure where the influences resulting from this user reaction have to be added.
-	 */
-	private void measurementReactionTo( 
-		SimulationTimeStamp transitoryTimeMin,
-		SimulationTimeStamp transitoryTimeMax,
-		EnvPLSInRoom roomEnvState,
-		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
-		InfluencesMap remainingInfluences
-	){	
-		/*
-		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : dronesUpdateList){
-			
-			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, SwarmMain.getSimulationModel().getParameters());
-			
-			
-		}*/
 	}
 	
 	
