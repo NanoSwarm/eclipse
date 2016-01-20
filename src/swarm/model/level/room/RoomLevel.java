@@ -132,7 +132,7 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && SwarmMain.getSimulationModel().getParameters().resolutionType == "pso")
+			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && SwarmMain.getSimulationModel().getParameters().resolutionType == "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2)
 				{
 				bestAllFitness=agtMeasurementDrone.bestOwnFitness;
 				bestAllPos.set(agtMeasurementDrone.getLocation().getX(),agtMeasurementDrone.getLocation().getY(),agtMeasurementDrone.getLocation().getZ());
@@ -336,12 +336,13 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
 		InfluencesMap remainingInfluences
 	){	
+		/*
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : dronesUpdateList){
 			
 			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, SwarmMain.getSimulationModel().getParameters());
 			
 			
-		}
+		}*/
 	}
 	
 	

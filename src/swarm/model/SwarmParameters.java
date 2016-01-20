@@ -216,9 +216,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.repulsionDistance = 40;
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
-		this.repulsionCoeff = 0;
-		this.orientationCoeff = 0;
-		this.attractionCoeff = 100000;
+		this.repulsionCoeff = 10;
+		this.orientationCoeff = 50000;
+		this.attractionCoeff = 1;
 		
 		
 		this.maxInitialSpeed=0.00001;
