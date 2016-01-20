@@ -217,7 +217,11 @@ public class UpdateInfluenceInRoom {
 				SwarmMain.abordSimulation();
 			}
 		}else if(parameters.resolutionType == "pso" && parameters.objectiveType == 2){
-			
+			Vector3d repulsionAcc = new Vector3d(); 
+			int nbOfDronesInRepulsionArea;
+			//Calculation of different influences	
+			repulsionAcc.set(0, 0,0);
+			nbOfDronesInRepulsionArea = 0;
 			agtMeasurementDrone.calculateFitness();
 			agtMeasurementDrone.updateFitness();
 			double alpha=0.99;

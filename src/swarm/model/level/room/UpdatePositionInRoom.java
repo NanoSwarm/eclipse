@@ -72,13 +72,13 @@ public class UpdatePositionInRoom {
 		if (parameters.objectiveType == 1){
 			
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE)){
-				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.measurementDroneDetectionRange);				
+				roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(),parameters.measurementDroneDetectionRange);				
 			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.CAMERADRONE)){
-				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.cameraDroneDetectionRange);				
+				roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(),parameters.cameraDroneDetectionRange);				
 			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.COMMUNICATORDRONE)){
-				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.communicatorDroneDetectionRange);				
+				roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(),parameters.communicatorDroneDetectionRange);				
 			}else if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.DRONE)){
-				SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(),parameters.droneDetectionRange);
+				roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(),parameters.droneDetectionRange);
 			}
 			
 		}else if (parameters.objectiveType == 2) {
@@ -86,7 +86,7 @@ public class UpdatePositionInRoom {
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
 				if (parameters.resolutionType == "position minimum"){
-					SwarmMain.getSimulationModel().getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
+					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
 				}
 				Graph graph;
 				Cube[][][] spaceGraph;
