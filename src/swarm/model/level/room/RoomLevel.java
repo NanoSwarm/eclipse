@@ -260,7 +260,7 @@ public class RoomLevel extends AbstractLevel {
 	){	
 		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
 			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
-				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
+				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters(), roomEnvState);
 
 			} 
 		}
@@ -283,11 +283,10 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtDronePLSInRoom> dronesUpdateList,
 		InfluencesMap remainingInfluences
 	){		
-		
 		if (SwarmMain.getSimulationModel().getParameters().resolutionType != "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
 			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
 
-				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters());
+				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters(),roomEnvState);
 
 			} 
 		}
@@ -344,7 +343,6 @@ public class RoomLevel extends AbstractLevel {
 			System.out.println("Objective not found, energy depleted. ");
 			SwarmMain.abordSimulation();
 		}
-		
 	}
 	
 	

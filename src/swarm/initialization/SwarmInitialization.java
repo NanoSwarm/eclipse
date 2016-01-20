@@ -99,7 +99,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 		// Set the local state of the environment for each level.
 		environment.includeNewLevel(
 				SwarmLevelList.ROOM, 
-				new EnvPLSInRoom(),
+				new EnvPLSInRoom(graph),
 				new EmptyLocalStateOfEnvironment( SwarmLevelList.ROOM )
 		);
 		Objective.setObjective(parameters.objectivePosition, parameters.objectiveType);		
@@ -162,6 +162,7 @@ public class SwarmInitialization extends AbstractSimulationModel{
 		}
 		
 		return result;
+		
 	}
 
 	public Graph getGraph() {
@@ -170,7 +171,5 @@ public class SwarmInitialization extends AbstractSimulationModel{
 	
 	public SwarmParameters getParameters(){
 		return this.parameters;
-	}
-
-	
+	}	
 }
