@@ -31,6 +31,9 @@ public class Graph {
 	private int kmax; //along x
 	private int imax; //along y
 	private int jmax; //along z
+	public int getImax(){return imax;}
+	public int getKmax(){return kmax;}
+	public int getJmax(){return jmax;}
 	
 	/**
 	 * The builder of this method, is calculate the size of our mesh and initialize the cubes.
@@ -59,9 +62,9 @@ public class Graph {
 		/*
 		 * when the size of our mesh is calculated we can divide it in cubes (the last ones may be partially outside)
 		 */
-		kmax = (int) Math.ceil(parameters.roomBounds.x/length);
-		imax = (int) Math.ceil(parameters.roomBounds.y/length);
-		jmax = (int) Math.ceil(parameters.roomBounds.z/length);
+		imax = (int) Math.ceil(parameters.roomBounds.x/length);
+		jmax = (int) Math.ceil(parameters.roomBounds.y/length);
+		kmax = (int) Math.ceil(parameters.roomBounds.z/length);
 		
 		this.spaceGraph = new Cube[imax][jmax][kmax];
 		
@@ -262,6 +265,9 @@ public class Graph {
 			this.costLowMatrix = new double[size];
 		}		
 		
+	}
+	public int getLength(){
+		return length;
 	}
 }
 

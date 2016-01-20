@@ -261,7 +261,7 @@ public class RoomLevel extends AbstractLevel {
 		
 		for(AgtDronePLSInRoom agtDrone : dronesUpdateList){
 			
-			UpdatePositionInRoom.UpdateDronePosition(agtDrone, parameters);
+			UpdatePositionInRoom.UpdateDronePosition(agtDrone, parameters,roomEnvState);
 			
 			
 		}
@@ -340,7 +340,7 @@ public class RoomLevel extends AbstractLevel {
 	){	
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : dronesUpdateList){
 			
-			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, parameters);
+			UpdatePositionInRoom.UpdateDronePosition(agtMeasurementDrone, parameters,roomEnvState);
 			
 			
 		}

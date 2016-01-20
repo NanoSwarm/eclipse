@@ -27,7 +27,6 @@ import swarm.tools.RandomValueFactory;
 
 public class SwarmInitialization extends AbstractSimulationModel{
 	
-	private Graph graph;
 	/**
 	 * The parameters being used in the simulation.
 	 */
@@ -50,7 +49,6 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			SwarmParameters parameters
 	) {
 		super(initialTime);
-		graph=new Graph(parameters);
 		if( parameters == null || finalTime == null ){
 			throw new IllegalArgumentException( "The arguments cannot be null." );
 		} else {
@@ -160,11 +158,10 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			result.getAgents().add( drone );
 		}
 		return result;
+		
 	}
 
-	public Graph getGraph() {
-		return graph;
-	}
+
 
 	
 }

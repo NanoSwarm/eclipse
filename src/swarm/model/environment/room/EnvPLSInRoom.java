@@ -5,13 +5,14 @@ import javax.vecmath.Vector3d;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfEnvironment;
 import swarm.model.SwarmParameters;
 import swarm.model.level.SwarmLevelList;
+import swarm.model.level.room.Graph;
 
 /**
  * The public local state of the environment in the "Room" level.
  */
 public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 
-	
+	private Graph graph;
 	
 	/**
 	 * Builds an initialized instance of this public local state.
@@ -26,6 +27,7 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 		super(
 			SwarmLevelList.ROOM
 		);
+		graph=new Graph(parameters);
 		if( parameters.roomBounds == null ){
 			throw new IllegalArgumentException( "The argument cannot be null." );
 		} else if( parameters.roomBounds.x <=0 || parameters.roomBounds.y <= 0 || parameters.roomBounds.z <= 0 ){
@@ -54,6 +56,10 @@ public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
 	public Vector3d getBounds( ) {
 		return this.bounds;
 	}
+	public Graph getGraph(){
+			return graph;
+	}
+	
 	
 	
 	

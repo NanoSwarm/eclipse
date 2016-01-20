@@ -251,9 +251,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.roomBounds = new Vector3d(3000, 5000,1000);
 		this.securityDistance = 100;
 
-		this.simulationTime = 5;
+		this.simulationTime = 500;
 		this.objectiveType = 2;
-		this.objectivePosition = new  Vector3d(2800,4900,500);
+		this.objectivePosition = new  Vector3d(1200,2500,500);
 		
 	}
 

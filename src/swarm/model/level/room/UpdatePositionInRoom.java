@@ -3,6 +3,8 @@ package swarm.model.level.room;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
+import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
+import swarm.model.environment.room.EnvPLSInRoom;
 
 public class UpdatePositionInRoom {
 	
@@ -11,7 +13,7 @@ public class UpdatePositionInRoom {
 	 * @param agtDrone drone send by RoomLevel for position update
 	 * @param parameters the parameters of the simulation
 	 */
-	public static void UpdateDronePosition(AgtDronePLSInRoom agtDrone, SwarmParameters parameters){
+	public static void UpdateDronePosition(AgtDronePLSInRoom agtDrone, SwarmParameters parameters,EnvPLSInRoom roomEnvState){
 		if(agtDrone.getEnergy()!=0 && agtDrone.getLocation().z >= 0){
 		agtDrone.setAcceleration(
 				agtDrone.getAcceleration().x + agtDrone.getInfluence().x,
@@ -70,7 +72,23 @@ public class UpdatePositionInRoom {
 		else if (parameters.objectiveType == 2) {
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
-				
+				Graph graph;
+				Cube[][][] spaceGraph;
+				AgtMeasurementDronePLSInRoom castedAgt=(AgtMeasurementDronePLSInRoom) agtDrone;
+				graph=roomEnvState.getGraph();
+				spaceGraph=graph.getSpaceGraph();
+				int i,j,k;
+			
+				i=(int)(Math.floor(castedAgt.getLocation().getX()/graph.getLength()));
+				j=(int)(Math.floor(castedAgt.getLocation().getY()/graph.getLength()));
+				k=(int)(Math.floor(castedAgt.getLocation().getZ()/graph.getLength()));
+				//	System.out.print("lenght="+graph.getLength()+" cas=  "+castedAgt.getLocation().getX()+" i=  "+i+"\n");
+				if (!(spaceGraph[i][j][k].cubeIsVisited()))
+				{
+					spaceGraph[i][j][k].setMeasuredValue(castedAgt.getFitness());
+					spaceGraph[i][j][k].setVisited();
+				}
+		
 			}
 			
 		}

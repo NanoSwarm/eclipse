@@ -79,7 +79,7 @@ public class SwarmMain {
 			);
 				engine.addProbe(
 				"ddd",
-				new MapInterface("zz",simulationModel.getGraph())															// The frame is resized automatically
+				new MapInterface("zz")															// The frame is resized automatically
 				
 		);
 			// Run the simulation.
