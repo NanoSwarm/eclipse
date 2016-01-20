@@ -236,11 +236,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 
 		this.basicDroneMass= 0.04;
 		
-		this.nbOfCameraDroneAgents = 0;
-		this.nbOfCommunicatorDroneAgents = 0;
-		this.nbOfDroneAgents = 0;
-		this.nbOfMicrophoneDroneAgents = 0;
-		this.nbOfMeasurementDroneAgents = 50;
+		this.nbOfCameraDroneAgents = 30;
+		this.nbOfCommunicatorDroneAgents = 30;
+		this.nbOfDroneAgents = 300;
+		this.nbOfMicrophoneDroneAgents = 100;
+		this.nbOfMeasurementDroneAgents = 200;
 		this.cameraDroneDetectionRange = 100;
 		this.communicatorDroneDetectionRange = 100;
 		this.droneDetectionRange = 100;
