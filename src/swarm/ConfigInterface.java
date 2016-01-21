@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.security.Policy.Parameters;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -76,7 +77,6 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroDefaultValueLabel, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesMicroDefaultValueLabel);
-		
 		
 		//3ème ligne
 		JButton launchSimu = new JButton("Launch Simulation");
