@@ -111,7 +111,7 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2 && SwarmMain.getSimulationModel().getParameters().objectiveType == 1){
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum" && (SwarmMain.getSimulationModel().getParameters().objectiveType == 2 || SwarmMain.getSimulationModel().getParameters().objectiveType == 1)){
 			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);
 		}
 		

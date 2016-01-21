@@ -30,12 +30,12 @@ public class Graph {
 	/**
 	 * the number of cube in each direction
 	 */
-	private int kmax; //along x
-	private int imax; //along y
-	private int jmax; //along z
+	private int imax; //along x
+	private int jmax; //along y
+	private int kmax; //along z
 	public int getImax(){return imax;}
-	public int getKmax(){return kmax;}
 	public int getJmax(){return jmax;}
+	public int getKmax(){return kmax;}
 	
 	/**
 	 * The builder of this method, is calculate the size of our mesh and initialize the cubes.
@@ -48,7 +48,7 @@ public class Graph {
 		 * The length is calculated so that any drones concerned by the mission will be able to see the
 		 * entire cube as long as it is inside it.
 		 */
-		if (parameters.objectiveType == 1 || parameters.objectiveType == 3 ){
+		if (parameters.objectiveType == 1 ){
 			length = (int)Math.floor(
 					Math.min(
 						Math.min(
@@ -59,6 +59,8 @@ public class Graph {
 		}else if (parameters.objectiveType == 2){
 			length = (int) Math.floor(parameters.measurementDroneDetectionRange / Math.sqrt(3));
 			
+		}else if (parameters.objectiveType == 3){
+			throw new IllegalArgumentException( "Wrong objective type" );
 		}else throw new IllegalArgumentException( "Objective type unknown" );
 		
 		/*
@@ -80,7 +82,7 @@ public class Graph {
 				}
 			}
 		}
-		frontier = new ArrayList();
+		frontier = new ArrayList<Cube>();
 	}
 	
 	
@@ -105,7 +107,7 @@ public class Graph {
 	 * @param detectionRange the maximum distance of detection for this drone
 	 */
 	public void updateFrontier(Vector3d pos, double detectionRange){
-		int k,i,j,l;
+		int i,j,k,l;
 		
 		/*
 		 * we search in which cube is the drone;
@@ -280,7 +282,7 @@ public class Graph {
 		 * then we search the frontier with the fewer number of drones closer to it than our drone.
 		 */
 		int minPosition = 0;
-		int minValue = 0;
+		int minValue = 1000;
 		
 		for (int n = 0 ; n< frontier.size() ; n++){
 			if (closerDrones[n] <= minValue){
@@ -291,8 +293,10 @@ public class Graph {
 					if ( cost.costLowMatrix[n] < cost.costLowMatrix[minPosition]){
 						minValue = closerDrones[n];
 						minPosition = n; 
-					}					
-				}else{
+					}else{
+						// we keep our values
+					}
+				}else{ //If closerDrones[n] < minValue
 					minValue = closerDrones[n];
 					minPosition = n; 
 				}
@@ -305,7 +309,7 @@ public class Graph {
 		int n =0;
 		for (Cube cube : frontier){
 			if (n == minPosition){
-				drone.setDestination(cube.getPosition());
+				drone.setDestination(cube);
 				break;
 			}else{
 				n++;

@@ -86,15 +86,21 @@ public class UpdateInfluenceInRoom {
 		}
 		
 		if (parameters.resolutionType == "position minimum" && (parameters.objectiveType == 1 || parameters.objectiveType == 2) ){
-			double distance = Math.sqrt(Math.pow(agtDrone.getLocation().x - agtDrone.getDestination().x, 2)
-					+ Math.pow(agtDrone.getLocation().y - agtDrone.getDestination().y, 2)
-					+ Math.pow(agtDrone.getLocation().z - agtDrone.getDestination().z, 2));
 			
-			SwarmMain.getSimulationModel().getGraph().assignedDrone(agtDrone);
+			if (agtDrone.getDestination().cubeIsVisited()){
+				SwarmMain.getSimulationModel().getGraph().assignedDrone(agtDrone);
+			}
+			
+			double distance = Math.sqrt(
+					Math.pow(agtDrone.getLocation().x - agtDrone.getDestination().getPosition().x, 2) +
+					Math.pow(agtDrone.getLocation().y - agtDrone.getDestination().getPosition().y, 2) +
+					Math.pow(agtDrone.getLocation().z - agtDrone.getDestination().getPosition().z, 2));
+			
+
 			attractionAcc.set(
-					(agtDrone.getLocation().x - agtDrone.getDestination().x)/distance,
-					(agtDrone.getLocation().y - agtDrone.getDestination().y)/distance,
-					(agtDrone.getLocation().z - agtDrone.getDestination().z)/distance);
+					(agtDrone.getLocation().x - agtDrone.getDestination().getPosition().x)/distance,
+					(agtDrone.getLocation().y - agtDrone.getDestination().getPosition().y)/distance,
+					(agtDrone.getLocation().z - agtDrone.getDestination().getPosition().z)/distance);
 			nbOfDronesInAttractionArea = 1;
 		}
 		

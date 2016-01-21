@@ -13,6 +13,7 @@ import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfAgent;
 import swarm.SwarmMain;
 import swarm.model.level.SwarmLevelList;
+import swarm.model.level.room.Cube;
 
 public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	/**
@@ -84,7 +85,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		
 		this.influence = new Vector3d(0,0,0);
 		this.energy = initialEnergy;
-		this.destination = new Vector3d(0,0,0);
+		this.destination = SwarmMain.getSimulationModel().getGraph().getSpaceGraph()[0][0][0];
 		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
 
@@ -177,13 +178,13 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	/**
 	 * The point attracting the drone.
 	 */
-	private Vector3d destination;
+	private Cube destination;	
 	
 	/**
 	 * Change the destination of the drone.
 	 * @param dest the new destination.
 	 */
-	public void setDestination(Vector3d dest){
+	public void setDestination(Cube dest){
 		destination = dest;
 	}
 	
@@ -191,7 +192,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 	 * 
 	 * @return the destination of the drone.
 	 */
-	public Vector3d getDestination(){
+	public Cube getDestination(){
 		return this.destination;
 	}
 	
