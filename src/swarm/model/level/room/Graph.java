@@ -30,9 +30,9 @@ public class Graph {
 	/**
 	 * the number of cube in each direction
 	 */
-	private int kmax; //along x
-	private int imax; //along y
-	private int jmax; //along z
+	private int kmax; //along z
+	private int imax; //along x
+	private int jmax; //along y
 	public int getImax(){return imax;}
 	public int getKmax(){return kmax;}
 	public int getJmax(){return jmax;}

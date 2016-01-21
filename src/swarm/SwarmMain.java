@@ -60,17 +60,22 @@ public class SwarmMain {
 		);
 		engine.addProbe(
 				"Chamber level Swing viewer3d",
-				new ProbeJFrame3D(parameters)															// The frame is resized automatically			
+				new ProbeJFrame3D(parameters)														
 		);
 
 		
 		engine.addProbe(
 				"Energy consumption results",
-				 resultInterface=new ProbeInterface(parameters)															// The frame is resized automatically
+				 resultInterface=new ProbeInterface(parameters)										
 				
 		);
-	
-	
+		if (parameters.objectiveType == 2)
+		{
+			engine.addProbe(
+					"Mapping result",
+						new MapInterface("Map of the space")															
+				);
+		}
 			
 			// Create the simulation model being used.
 			simulationModel = new SwarmInitialization(
@@ -78,11 +83,6 @@ public class SwarmMain {
 				new SimulationTimeStamp( parameters.simulationTime ), 
 				parameters
 			);
-				engine.addProbe(
-				"ddd",
-				new MapInterface("zz")															// The frame is resized automatically
-				
-		);
 			// Run the simulation.
 			engine.runNewSimulation( simulationModel );
 			
