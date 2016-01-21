@@ -7,12 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.security.Policy.Parameters;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JSpinner;
 
 import swarm.model.SwarmParameters;
 
@@ -46,7 +47,8 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesLabel, configCons);
 		configInterface.add(configInterNbrDronesLabel);
 		
-		JTextField configInterNbrDronesText = new JTextField(String.valueOf(parameters.nbOfDroneAgents), 4); //A remplacer par le string paramètre
+		JSpinner configInterNbrDronesText = new JSpinner();
+		getTextField(configInterNbrDronesText).setColumns(4);
 		gblConfigInterface.setConstraints(configInterNbrDronesText, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesText);
@@ -65,7 +67,8 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroLabel, configCons);
 		configInterface.add(configInterNbrDronesMicroLabel);
 		
-		JTextField configInterNbrDronesMicroText = new JTextField(String.valueOf(parameters.nbOfMicrophoneDroneAgents), 4); //A remplacer par le string paramètre
+		JSpinner configInterNbrDronesMicroText = new JSpinner(); 
+		getTextField(configInterNbrDronesMicroText).setColumns(4);
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroText, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesMicroText);
@@ -128,6 +131,17 @@ public class ConfigInterface extends JFrame
 	}
 	
 
+	public JFormattedTextField getTextField(JSpinner spinner) {
+	    JComponent editor = spinner.getEditor();
+	    if (editor instanceof JSpinner.DefaultEditor) {
+	        return ((JSpinner.DefaultEditor)editor).getTextField();
+	    } else {
+	        System.err.println("Unexpected editor type: "
+	                           + spinner.getEditor().getClass()
+	                           + " isn't a descendant of DefaultEditor");
+	        return null;
+	    }
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -150,13 +164,11 @@ public class ConfigInterface extends JFrame
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
 		System.exit(0);
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 		System.exit(0);
 	}
 
