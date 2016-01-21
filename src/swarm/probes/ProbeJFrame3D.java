@@ -2,7 +2,10 @@ package swarm.probes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -185,8 +188,11 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    light1.setInfluencingBounds(bounds);
 	    branchGroup.addChild(light1);
 	    //parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
 		setTitle("3D BOIDS");		
-		setBounds(0,0,1000,1000);
+		setSize((int)maximumWindowBounds.getWidth(),(int)maximumWindowBounds.getHeight());
 		setVisible(true);
 	}
 	

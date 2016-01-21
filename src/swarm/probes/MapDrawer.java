@@ -22,6 +22,8 @@ public class MapDrawer extends JPanel
 	/**
 	 * the Z of the level
 	 */
+	int IFACTOR;
+	int JFACTOR;
 	private int z;
 	MapDrawer(){
 		z = 0;
@@ -31,7 +33,9 @@ public class MapDrawer extends JPanel
 	 */
    public void paint(Graphics g) {
 	  // int z=(int) Math.floor(800/graphique.getLength());	   
-
+		
+		IFACTOR=this.getWidth()/graph.getImax();
+		JFACTOR=this.getHeight()/graph.getJmax();
 	   double val=0 ;			
 	   this.setBackground(Color.LIGHT_GRAY);	
 	 for (int i=0;i< graph.getImax();i++)
@@ -51,7 +55,7 @@ public class MapDrawer extends JPanel
 				   }else {
 					   g.setColor(Color.RED);
 				   }
-				   g.fillRect(i*20, j*20,20, 20);
+				   g.fillRect(i*IFACTOR+IFACTOR, j*JFACTOR+JFACTOR,IFACTOR, JFACTOR);
 			   }
 			}
 	   

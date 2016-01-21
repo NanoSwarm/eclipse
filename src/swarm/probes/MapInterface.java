@@ -3,6 +3,8 @@ package swarm.probes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,12 +15,7 @@ import javax.swing.JPanel;
 import fr.lgi2a.similar.microkernel.IProbe;
 import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
-import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
-import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
-import swarm.model.agents.SwarmAgentCategoriesList;
-import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
-import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
-import swarm.model.level.SwarmLevelList;
+import swarm.model.SwarmParameters;
 
 
 @SuppressWarnings("serial")
@@ -36,7 +33,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 	 * 
 	 * @param str the title of the window
 	 */
-    public MapInterface(String str)
+    public MapInterface(String str,SwarmParameters param)
     {
     	mainPanel = new JPanel();
     	mainPanel.setLayout(new BorderLayout());
@@ -47,8 +44,13 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
     	mainPanel.add(NextButton,BorderLayout.NORTH);
     	drawer=new MapDrawer();
     	mainPanel.add(drawer,BorderLayout.CENTER);	
+	    //parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
     	this.setTitle(str);
-        this.setSize(600, 1000);
+        this.setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
+        this.setLocation((int)maximumWindowBounds.getWidth()/2,0);
         this.setBackground(Color.LIGHT_GRAY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false); 

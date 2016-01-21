@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -132,9 +134,12 @@ public class ProbeInterface 	extends Frame
 	}
 	public void initGUI()
 	{
+	    //parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
 		setTitle("Energy consumption over time");
-		setMinimumSize(new Dimension(400,400));
-		setPreferredSize(new Dimension(800, 400));
+		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
 		setLocation(0,0);
 		setLayout(new BorderLayout());
 		// Container in the north part for the Jcombobox
@@ -171,7 +176,7 @@ public class ProbeInterface 	extends Frame
         chartPanel = new ChartPanel(chart);
     	plot.setDataset(0,null);
 		plot.setRenderer(0,null);  
-        chartPanel.setPreferredSize(new Dimension(500, 270));
+      //  chartPanel.setPreferredSize(new Dimension(500, 270));
         add(BorderLayout.CENTER,chartPanel);
         // Radio Buttons
     	Container radioButtonContent=new Container();

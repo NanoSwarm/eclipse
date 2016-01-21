@@ -73,7 +73,7 @@ public class SwarmMain {
 		{
 			engine.addProbe(
 					"Mapping result",
-						new MapInterface("Map of the space")															
+						new MapInterface("Map of the space",parameters)															
 				);
 		}
 			
