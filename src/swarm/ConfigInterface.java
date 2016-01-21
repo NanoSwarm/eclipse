@@ -14,9 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import fr.lgi2a.similar.microkernel.IProbe;
-import fr.lgi2a.similar.microkernel.ISimulationEngine;
-import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
+import swarm.model.SwarmParameters;
 
 public class ConfigInterface extends JFrame
 							 implements WindowListener, ActionListener
@@ -31,7 +29,7 @@ public class ConfigInterface extends JFrame
 	JFrame configInterface;
 	
 	
-	public ConfigInterface()
+	public ConfigInterface(SwarmParameters parameters)
 	{
 		super("Configuration");
 		
@@ -48,12 +46,12 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesLabel, configCons);
 		configInterface.add(configInterNbrDronesLabel);
 		
-		JTextField configInterNbrDronesText = new JTextField(4); //A remplacer par le string paramètre
+		JTextField configInterNbrDronesText = new JTextField(String.valueOf(parameters.nbOfDroneAgents), 4); //A remplacer par le string paramètre
 		gblConfigInterface.setConstraints(configInterNbrDronesText, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesText);
 				
-		JLabel configInterNbrDronesDefaultValueLabel = new JLabel("Default : 4");
+		JLabel configInterNbrDronesDefaultValueLabel = new JLabel("Default : 100");
 		configCons.gridwidth = GridBagConstraints.REMAINDER;
 		gblConfigInterface.setConstraints(configInterNbrDronesDefaultValueLabel, configCons);
 		configCons.gridwidth = 1;
@@ -67,12 +65,12 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroLabel, configCons);
 		configInterface.add(configInterNbrDronesMicroLabel);
 		
-		JTextField configInterNbrDronesMicroText = new JTextField(4); //A remplacer par le string paramètre
+		JTextField configInterNbrDronesMicroText = new JTextField(String.valueOf(parameters.nbOfMicrophoneDroneAgents), 4); //A remplacer par le string paramètre
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroText, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesMicroText);
 		
-		JLabel configInterNbrDronesMicroDefaultValueLabel = new JLabel("Default : 8");
+		JLabel configInterNbrDronesMicroDefaultValueLabel = new JLabel("Default : 20");
 		configCons.gridwidth = GridBagConstraints.REMAINDER;
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroDefaultValueLabel, configCons);
 		configCons.gridwidth = 1;
@@ -141,7 +139,6 @@ public class ConfigInterface extends JFrame
 		else if (e.getActionCommand().equals("Launch Simulation"))
 		{
 			configurationOK=true;
-			configInterface.setVisible(false);
 		}
 	}
 
