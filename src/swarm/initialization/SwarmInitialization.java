@@ -50,7 +50,10 @@ public class SwarmInitialization extends AbstractSimulationModel{
 			SwarmParameters parameters
 	) {
 		super(initialTime);
-		graph=new Graph(parameters);
+		if(parameters.objectiveType != 3 ){
+			graph=new Graph(parameters);
+		}
+		
 		if( parameters == null || finalTime == null ){
 			throw new IllegalArgumentException( "The arguments cannot be null." );
 		} else {

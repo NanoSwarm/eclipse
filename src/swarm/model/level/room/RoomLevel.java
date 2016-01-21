@@ -175,14 +175,6 @@ public class RoomLevel extends AbstractLevel {
 				remainingInfluences
 		);
 		
-		this.energyReactionTo(
-				transitoryTimeMin,
-				transitoryTimeMax,
-				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
-				energyUpdateList,
-				remainingInfluences
-		);
-		
 		this.measurementReactionTo(
 				transitoryTimeMin,
 				transitoryTimeMax,
@@ -196,6 +188,14 @@ public class RoomLevel extends AbstractLevel {
 				transitoryTimeMax,
 				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
 				droneUpdateList,
+				remainingInfluences
+		);
+		
+		this.energyReactionTo(
+				transitoryTimeMin,
+				transitoryTimeMax,
+				(EnvPLSInRoom) consistentState.getPublicLocalStateOfEnvironment(),
+				energyUpdateList,
 				remainingInfluences
 		);
 		

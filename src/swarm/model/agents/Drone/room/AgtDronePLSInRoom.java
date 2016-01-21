@@ -64,9 +64,14 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 			SwarmLevelList.ROOM,
 			owner
 		);
-		SwarmMain.getSimulationModel().getGraph().updateFrontier(
-				new Vector3d(initialX,initialY,initialZ),
-				detectionRange);
+		
+		if (SwarmMain.getSimulationModel().getParameters().objectiveType != 3){
+			SwarmMain.getSimulationModel().getGraph().updateFrontier(
+					new Vector3d(initialX,initialY,initialZ),
+					detectionRange);
+			this.destination = SwarmMain.getSimulationModel().getGraph().getSpaceGraph()[0][0][0];
+		}
+		
 		
 		this.location=new Vector3d(
 				initialX,
@@ -85,7 +90,6 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		
 		this.influence = new Vector3d(0,0,0);
 		this.energy = initialEnergy;
-		this.destination = SwarmMain.getSimulationModel().getGraph().getSpaceGraph()[0][0][0];
 		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
 

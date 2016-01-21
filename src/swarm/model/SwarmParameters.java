@@ -240,7 +240,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.nbOfCommunicatorDroneAgents = 0;
 		this.nbOfDroneAgents = 0;
 		this.nbOfMicrophoneDroneAgents = 0;
-		this.nbOfMeasurementDroneAgents = 30;
+		this.nbOfMeasurementDroneAgents = 600;
 		this.cameraDroneDetectionRange = 100;
 		this.communicatorDroneDetectionRange = 100;
 		this.droneDetectionRange = 100;
@@ -253,9 +253,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.roomBounds = new Vector3d(3000, 5000,1000);
 		this.securityDistance = 100;
 		this.simulationTime = 2000;
-		this.objectiveType = 2;
-		this.resolutionType = "position minimum"; // "pso" "position minimum"
-		this.objectivePosition = new  Vector3d(2800,4900,500);
+		this.objectiveType = 3;
+		this.resolutionType = "pso"; // "pso" "position minimum"
+		this.objectivePosition = new  Vector3d(1000,1000,500);
 		
 	}
 
