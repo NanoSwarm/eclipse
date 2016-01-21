@@ -19,13 +19,17 @@ public class UpdateEnergyLevelInRoom {
 		 *(ie the forced applied by the drones on the environment).
 		 */
 		
-		double energyDiff = parameters.basicDroneMass*(Math.abs(agtDrone.getAcceleration().x)+Math.abs(agtDrone.getAcceleration().y)+Math.abs(agtDrone.getAcceleration().z)
-		
-		 +3.54465*Math.pow(10,-7)*(Math.pow(agtDrone.getAcceleration().x, 2)+Math.pow(agtDrone.getAcceleration().y, 2)+Math.pow(agtDrone.getAcceleration().z, 2)))*Math.sqrt(	
-									Math.pow(agtDrone.getAcceleration().x, 2) +
-								    Math.pow(agtDrone.getAcceleration().y, 2) +
-								    Math.pow(agtDrone.getAcceleration().z, 2)
-								    );
+		double energyDiff = parameters.basicDroneMass*(Math.abs(agtDrone.getAcceleration().x)+
+													   Math.abs(agtDrone.getAcceleration().y)+
+													   Math.abs(agtDrone.getAcceleration().z)+
+										       3.54465*Math.pow(10,-7)*(Math.pow(agtDrone.getAcceleration().x, 2)+
+												       Math.pow(agtDrone.getAcceleration().y, 2)+
+													   Math.pow(agtDrone.getAcceleration().z, 2)))*
+													   Math.sqrt(	
+															   Math.pow(agtDrone.getAcceleration().x, 2) +
+															   Math.pow(agtDrone.getAcceleration().y, 2) +
+															   Math.pow(agtDrone.getAcceleration().z, 2)
+															   );
 								    
 		
 		//the energy level can't be negative.

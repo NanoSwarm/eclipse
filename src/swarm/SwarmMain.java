@@ -12,88 +12,89 @@ import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
 import swarm.model.agents.communicatorDrone.AgtCommunicatorDroneFactory;
 import swarm.model.agents.measurementDrone.AgtMeasurementDroneFactory;
 import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
-import swarm.model.level.room.Graph;
 import swarm.probes.MapInterface;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
 
-public class SwarmMain {
+public class SwarmMain{
 	
-	
+	public static SwarmInitialization simulationModel;
 	private static ISimulationEngine engine;
 	private static ProbeInterface resultInterface;
 	private static SwarmParameters parameters;
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
-	private SwarmMain() {
+	private SwarmMain() 
+	{
 		
 	}
 	
-	/**
-	 * The main method of the simulation.
-	 * @param args The command line arguments.
-	 */
 	public static void main(String[] Args)
 	{
 		// Create the parameters used in this simulation.
-		parameters = new SwarmParameters();
-		// Register the parameters to the agent factories.
-				AgtCameraDroneFactory.setParameters( parameters );
-				AgtCommunicatorDroneFactory.setParameters( parameters );
-				AgtDroneFactory.setParameters( parameters );
-				AgtMicrophoneDroneFactory.setParameters( parameters );
-				AgtMeasurementDroneFactory.setParameters( parameters );
-		
-		// Create the simulation engine that will run simulations
-		engine = new EngineMonothreadedDefaultdisambiguation( );
-		// Create the probes that will listen to the execution of the simulation.	
-		
-		engine.addProbe( 
-				"Error printer", 
-				new ProbeExceptionPrinter( )
-		);
-		engine.addProbe(
-				"Trace printer", 
-				new ProbeExecutionTracker( System.err, false )
-		);
-		engine.addProbe(
-				"Chamber level Swing viewer3d",
-				new ProbeJFrame3D(parameters)															// The frame is resized automatically			
-		);
-
-		
-		engine.addProbe(
-				"Energy consumption results",
-				 resultInterface=new ProbeInterface(parameters)															// The frame is resized automatically
+				parameters = new SwarmParameters();
+				// Register the parameters to the agent factories.
+						AgtCameraDroneFactory.setParameters( parameters );
+						AgtCommunicatorDroneFactory.setParameters( parameters );
+						AgtDroneFactory.setParameters( parameters );
+						AgtMicrophoneDroneFactory.setParameters( parameters );
+						AgtMeasurementDroneFactory.setParameters( parameters );
 				
-		);
-	
-	
-			
-			// Create the simulation model being used.
-			SwarmInitialization simulationModel = new SwarmInitialization(
-				new SimulationTimeStamp( 0 ), 
-				new SimulationTimeStamp( parameters.simulationTime ), 
-				parameters
-			);
+				// Utilisation de l'interface de configuration avant de lancer la simulation
+				ConfigInterface configInterface = new ConfigInterface();		
+				while (configInterface.configurationOK==false){System.out.println(""); }; //Attente qu'on lance la simulation via la l'interface de configuration
+				
+				// Create the simulation engine that will run simulations
+				engine = new EngineMonothreadedDefaultdisambiguation( );
+				// Create the probes that will listen to the execution of the simulation.	
+						
+				engine.addProbe( 
+						"Error printer", 
+						new ProbeExceptionPrinter( )
+				);
 				engine.addProbe(
-				"ddd",
-				new MapInterface("zz",simulationModel.getGraph())															// The frame is resized automatically
+						"Trace printer", 
+						new ProbeExecutionTracker( System.err, false )
+				);
+				engine.addProbe(
+						"Chamber level Swing viewer3d",
+						new ProbeJFrame3D(parameters)	// The frame is resized automatically			
+				);
+
+						
+				engine.addProbe(
+						"Energy consumption results",
+						 resultInterface=new ProbeInterface(parameters)	// The frame is resized automatically			
+				);
+					
+					
+							
+				// Create the simulation model being used.
+				SwarmInitialization simulationModel = new SwarmInitialization(
+					new SimulationTimeStamp( 0 ), 
+					new SimulationTimeStamp( parameters.simulationTime ), 
+					parameters
+					);
 				
-		);
-			// Run the simulation.
-			engine.runNewSimulation( simulationModel );
-			
-			
-		
-			
+					engine.addProbe(
+					"ddd",
+					new MapInterface("zz",simulationModel.getGraph())	// The frame is resized automatically
+					);
+					
+					// Run the simulation.
+					engine.runNewSimulation( simulationModel );
 	}
+	
+	
+
 	
 	public static void abordSimulation(){
 		engine.requestSimulationAbortion();
 		resultInterface.setVisible(true);
 	}
 	
-
+	public static SwarmInitialization getSimulationModel(){
+		return simulationModel;
+	}
 }
