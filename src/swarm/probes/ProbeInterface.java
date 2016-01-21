@@ -49,80 +49,99 @@ public class ProbeInterface 	extends Frame
 											ActionListener,
 											IProbe
 {
-	public ArrayList[] listDroneEnergy;
-	public ArrayList[] listCameraDroneEnergy;
-	public ArrayList[] listCommunicatorDroneEnergy;
-	public ArrayList[] listMeasurementDroneEnergy;
-	public ArrayList[] listMicrophoneDroneEnergy;
-	public ArrayList<Double> listTotalEnergy=new ArrayList<Double>();
-	public String[]listDrone;
-	public String[]listCameraDrone;
-	public String[]listMicrophoneDrone;
-	public String[]listCommunicatorDrone;
-	public String[]listMeasurementDrone;
-	public JComboBox<String> typeDroneList;
-	public JComboBox<String> numDroneList ;
+	/**
+	 * The list of the energy of each drone
+	 */
+	private ArrayList<Double>[] listDroneEnergy,listCameraDroneEnergy,listCommunicatorDroneEnergy,listMeasurementDroneEnergy,listMicrophoneDroneEnergy;
+	private ArrayList<Double> listTotalEnergy=new ArrayList<Double>();
+	/**
+	 * The list of the drones
+	 */
+	private String[]listDrone,listCameraDrone,listMicrophoneDrone,listCommunicatorDrone,listMeasurementDrone;
+	/**
+	 * The comboboxes for the selection
+	 */
+	private JComboBox<String> typeDroneList,numDroneList;
+	/**
+	 * the parameters of the simulation
+	 */
 	private SwarmParameters parameters;
+	/**
+	 * The chart displaying the level of the energy
+	 */
 	private JFreeChart chart;
+	/**
+	 * the plot of the chart
+	 */
 	private XYPlot plot;
+	/**
+	 * the panel of the chart
+	 */
 	private ChartPanel chartPanel;
-	JRadioButton totalDrone;
-	JRadioButton totalCamera;
-	JRadioButton totalMicrophone;
-	JRadioButton totalCommunicator;
-	JRadioButton totalMeasurement;
-	JRadioButton allDrone;
-	JRadioButton allCameraDrone;
-	JRadioButton allCommunicatorDrone;
-	JRadioButton allMicrophoneDrone;
-	JRadioButton allMeasurementDrone;
-	JRadioButton total;
+	/**
+	 * The RadioButtons for the selection of which drone to display
+	 */
+	JRadioButton totalDrone,totalCamera,total,allMicrophoneDrone,allMeasurementDrone,allCommunicatorDrone,totalMicrophone,totalCommunicator,totalMeasurement,allDrone,allCameraDrone;
+	/**
+	 * The clear button
+	 */
 	JButton reset;
-	public int numberOfGraph;
-	public int positionTotalCamera;
-	public int positionTotalDrone;
-	public int positionTotalMicrophone;
-	public int positionTotalMeasurement;
-	public int positionTotalCommunicator;
-	public int positionAllDrone;
-	public int positionAllCameraDrone;
-	public int positionAllCommunicatorDrone;
-	public int positionAllMicrophoneDrone;
-	public int positionAllMeasurementDrone;
-	public int positionTotal;
-	public boolean bloc=false;
-	
+	/**
+	 * The number of chart being displayed
+	 */
+	private int numberOfGraph;
+	/**
+	 * The position of each different chart
+	 */
+	private int positionTotalCamera,positionTotal,positionAllMeasurementDrone,positionAllMicrophoneDrone,positionAllCommunicatorDrone,positionAllCameraDrone,positionAllDrone,positionTotalCommunicator,positionTotalMeasurement,positionTotalDrone,positionTotalMicrophone;
+	/**
+	 * A condition to block the selection of the number of drone before selecting the type of the drone
+	 */
+	private boolean bloc = false;
 	
 	public ProbeInterface(SwarmParameters param)
 	{
-		parameters=param;
-		numberOfGraph=0;
-		listDroneEnergy=new ArrayList[parameters.nbOfDroneAgents+1];
-		listCameraDroneEnergy=new ArrayList[parameters.nbOfCameraDroneAgents+1];
-		listMicrophoneDroneEnergy=new ArrayList[parameters.nbOfMicrophoneDroneAgents+1];
-		listCommunicatorDroneEnergy=new ArrayList[parameters.nbOfCommunicatorDroneAgents+1];
-		listMeasurementDroneEnergy=new ArrayList[parameters.nbOfMeasurementDroneAgents+1];
+		initParameters(param);
+		initGUI();
+	}
+	/**
+	 * Set up the initial parameters
+	 * @param param of the simulation
+	 */
+	@SuppressWarnings("unchecked")
+	public void initParameters(SwarmParameters param)
+	{
+		this.parameters = param;
+		this.numberOfGraph = 0;
+		this.listDroneEnergy = new ArrayList[parameters.nbOfDroneAgents+1];
+		this.listCameraDroneEnergy = new ArrayList[parameters.nbOfCameraDroneAgents+1];
+		this.listMicrophoneDroneEnergy = new ArrayList[parameters.nbOfMicrophoneDroneAgents+1];
+		this.listCommunicatorDroneEnergy = new ArrayList[parameters.nbOfCommunicatorDroneAgents+1];
+		this.listMeasurementDroneEnergy = new ArrayList[parameters.nbOfMeasurementDroneAgents+1];
 		//Initialize arrays
-		for (int k=0;k<parameters.nbOfDroneAgents+1;k++)listDroneEnergy[k]=new ArrayList<Double>();
-		for (int k=0;k<parameters.nbOfCameraDroneAgents+1;k++)listCameraDroneEnergy[k]=new ArrayList<Double>();
-		for (int k=0;k<parameters.nbOfCommunicatorDroneAgents+1;k++)listCommunicatorDroneEnergy[k]=new ArrayList<Double>();
-		for (int k=0;k<parameters.nbOfMeasurementDroneAgents+1;k++)listMeasurementDroneEnergy[k]=new ArrayList<Double>();
-		for (int k=0;k<parameters.nbOfMicrophoneDroneAgents+1;k++)listMicrophoneDroneEnergy[k]=new ArrayList<Double>();
-		listCameraDrone=new String[parameters.nbOfCameraDroneAgents];
-		listDrone=new String[parameters.nbOfDroneAgents];
-		listMicrophoneDrone=new String[parameters.nbOfMicrophoneDroneAgents];
-		listCommunicatorDrone=new String[parameters.nbOfCommunicatorDroneAgents];
-		listMeasurementDrone=new String[parameters.nbOfMeasurementDroneAgents];
+		for (int k=0;k<parameters.nbOfDroneAgents+1;k++)listDroneEnergy[k] = new ArrayList<Double>();
+		for (int k=0;k<parameters.nbOfCameraDroneAgents+1;k++)listCameraDroneEnergy[k] = new ArrayList<Double>();
+		for (int k=0;k<parameters.nbOfCommunicatorDroneAgents+1;k++)listCommunicatorDroneEnergy[k] = new ArrayList<Double>();
+		for (int k=0;k<parameters.nbOfMeasurementDroneAgents+1;k++)listMeasurementDroneEnergy[k] = new ArrayList<Double>();
+		for (int k=0;k<parameters.nbOfMicrophoneDroneAgents+1;k++)listMicrophoneDroneEnergy[k] = new ArrayList<Double>();
+		this.listCameraDrone = new String[parameters.nbOfCameraDroneAgents];
+		this.listDrone = new String[parameters.nbOfDroneAgents];
+		this.listMicrophoneDrone = new String[parameters.nbOfMicrophoneDroneAgents];
+		this.listCommunicatorDrone = new String[parameters.nbOfCommunicatorDroneAgents];
+		this.listMeasurementDrone = new String[parameters.nbOfMeasurementDroneAgents];
+	}
+	public void initGUI()
+	{
 		setTitle("Energy consumption over time");
 		setMinimumSize(new Dimension(400,400));
 		setPreferredSize(new Dimension(800, 400));
 		setLocation(0,0);
 		setLayout(new BorderLayout());
 		// Container in the north part for the Jcombobox
-		Container content=new Container();
-		BoxLayout ligne1=new BoxLayout(content, BoxLayout.Y_AXIS);
-		content.setLayout(ligne1);
-		add(BorderLayout.NORTH,content);
+		Container comboBoxContent = new Container();
+		BoxLayout comboBoxLayout = new BoxLayout(comboBoxContent, BoxLayout.Y_AXIS);
+		comboBoxContent.setLayout(comboBoxLayout);
+		add(BorderLayout.NORTH,comboBoxContent);
 		String[] typeDrone = {
 				SwarmAgentCategoriesList.DRONE.toString(),
 				SwarmAgentCategoriesList.CAMERADRONE.toString(),
@@ -135,16 +154,17 @@ public class ProbeInterface 	extends Frame
 		typeDroneList.setEditable(false);
 		typeDroneList.addActionListener(this);
 		typeDroneList.setActionCommand("type");		
-		content.add(typeDroneList);
-		String []numDrone = {""};		
+		comboBoxContent.add(typeDroneList);
+		//Set up the list of the number of the drone 
+		String[] numDrone = {""};		
 		numDroneList = new JComboBox<String>(new DefaultComboBoxModel<String>(numDrone));
 		numDroneList.setEnabled(false);
 		numDroneList.setEditable(false);
 		numDroneList.addActionListener(this);
 		numDroneList.setActionCommand("num");
-		content.add(numDroneList);
+		comboBoxContent.add(numDroneList);
 		//Chart
-		ArrayList<Double> temp=new ArrayList<Double>();
+		ArrayList<Double> temp = new ArrayList<Double>();
 		temp.add(0.0);
 		XYDataset dataset = createDataset(temp);
 		chart = createChart(dataset); 
@@ -154,61 +174,58 @@ public class ProbeInterface 	extends Frame
         chartPanel.setPreferredSize(new Dimension(500, 270));
         add(BorderLayout.CENTER,chartPanel);
         // Radio Buttons
-    	Container content1=new Container();
-		BoxLayout ligne2=new BoxLayout(content1, BoxLayout.Y_AXIS);
-		content1.setLayout(ligne2);
-        total=new JRadioButton("All Totals");
+    	Container radioButtonContent=new Container();
+		BoxLayout radioButtonLayout=new BoxLayout(radioButtonContent, BoxLayout.Y_AXIS);
+		radioButtonContent.setLayout(radioButtonLayout);
+        total = new JRadioButton("All Totals");
         total.setActionCommand("total");
-        total.addActionListener(this);
-        
-        totalDrone=new JRadioButton("Total Drone");
+        total.addActionListener(this);  
+        totalDrone = new JRadioButton("Total Drone");
         totalDrone.setActionCommand("total drone");
         totalDrone.addActionListener(this);
-        totalCamera=new JRadioButton("Total Camera Drone");
+        totalCamera = new JRadioButton("Total Camera Drone");
         totalCamera.setActionCommand("total camera");
         totalCamera.addActionListener(this);
-        totalMicrophone=new JRadioButton("Total Microphone Drone");
+        totalMicrophone = new JRadioButton("Total Microphone Drone");
         totalMicrophone.setActionCommand("total microphone");
         totalMicrophone.addActionListener(this);
-        totalCommunicator=new JRadioButton("Total Communicator Drone");
+        totalCommunicator = new JRadioButton("Total Communicator Drone");
         totalCommunicator.setActionCommand("total communicator");
         totalCommunicator.addActionListener(this);
-        totalMeasurement=new JRadioButton("Total Measurement Drone");
+        totalMeasurement = new JRadioButton("Total Measurement Drone");
         totalMeasurement.setActionCommand("total measurement");
-        totalMeasurement.addActionListener(this);
-    
-        allDrone=new JRadioButton("All Drones");
+        totalMeasurement.addActionListener(this);    
+        allDrone = new JRadioButton("All Drones");
         allDrone.setActionCommand("all drone");
         allDrone.addActionListener(this);
-        allCameraDrone=new JRadioButton("All CameraDrones");
+        allCameraDrone = new JRadioButton("All CameraDrones");
         allCameraDrone.setActionCommand("all cameradrone");
         allCameraDrone.addActionListener(this);
-        allCommunicatorDrone=new JRadioButton("All CommunicatorDrones");
+        allCommunicatorDrone = new JRadioButton("All CommunicatorDrones");
         allCommunicatorDrone.setActionCommand("all communicatordrone");
         allCommunicatorDrone.addActionListener(this);
-        allMicrophoneDrone=new JRadioButton("All MicrophoneDrones");
+        allMicrophoneDrone = new JRadioButton("All MicrophoneDrones");
         allMicrophoneDrone.setActionCommand("all microphonedrone");
         allMicrophoneDrone.addActionListener(this);
-        allMeasurementDrone=new JRadioButton("All MeasurementDrones");
+        allMeasurementDrone = new JRadioButton("All MeasurementDrones");
         allMeasurementDrone.setActionCommand("all measurementdrone");
         allMeasurementDrone.addActionListener(this);
-		reset=new JButton("Clear");
+		reset = new JButton("Clear");
 		reset.addActionListener(this);
-		reset.setActionCommand("clear");
-		
-		content1.add(total);
-		content1.add(totalDrone);
-		content1.add(totalCamera);
-		content1.add(totalMicrophone);
-		content1.add(totalCommunicator);
-		content1.add(totalMeasurement);
-		content1.add(allDrone);
-		content1.add(allCameraDrone);
-		content1.add(allCommunicatorDrone);
-		content1.add(allMicrophoneDrone);
-		content1.add(allMeasurementDrone);
-		content1.add(reset);
-        add(BorderLayout.EAST,content1);
+		reset.setActionCommand("clear");	
+		radioButtonContent.add(total);
+		radioButtonContent.add(totalDrone);
+		radioButtonContent.add(totalCamera);
+		radioButtonContent.add(totalMicrophone);
+		radioButtonContent.add(totalCommunicator);
+		radioButtonContent.add(totalMeasurement);
+		radioButtonContent.add(allDrone);
+		radioButtonContent.add(allCameraDrone);
+		radioButtonContent.add(allCommunicatorDrone);
+		radioButtonContent.add(allMicrophoneDrone);
+		radioButtonContent.add(allMeasurementDrone);
+		radioButtonContent.add(reset);
+        add(BorderLayout.EAST,radioButtonContent);
 		addWindowListener(this);
 		pack();
 		setVisible(false);
@@ -219,8 +236,7 @@ public class ProbeInterface 	extends Frame
 	 * @return the dataset corresponding to the values to make the chart
 	 */
 	private XYDataset createDataset(ArrayList<Double> s) 
-	{   	
-		
+	{   			
 		final XYSeries series = new XYSeries("");
 	    for (int k=0;k<s.size();k++)series.add(k,s.get(k));
 	    final XYSeriesCollection dataset = new XYSeriesCollection();
@@ -274,21 +290,21 @@ public class ProbeInterface 	extends Frame
 			if(com.equals("type"))typeSelection();
 			else if((com.equals("num"))&&bloc)numSelection();
 			else if(com.equals("clear"))clearGraph();
-			else if (com.equals("total camera"))positionTotalCamera=displayTotalGraph(totalCamera,positionTotalCamera,parameters.cameraDroneColor.get(),listCameraDroneEnergy);
-			else if (com.equals("total microphone"))positionTotalMicrophone=displayTotalGraph(totalMicrophone,positionTotalMicrophone,parameters.microphoneDroneColor.get(),listMicrophoneDroneEnergy);
-			else if (com.equals("total drone"))positionTotalDrone=displayTotalGraph(totalDrone,positionTotalDrone,parameters.droneColor.get(),listDroneEnergy);
-			else if (com.equals("total communicator"))positionTotalCommunicator=displayTotalGraph(totalCommunicator,positionTotalCommunicator,parameters.communicatorDroneColor.get(),listCommunicatorDroneEnergy);
-			else if (com.equals("total measurement"))positionTotalMeasurement=displayTotalGraph(totalMeasurement,positionTotalMeasurement,parameters.measurementDroneColor.get(),listMeasurementDroneEnergy);
-			else if (com.equals("all drone"))positionAllDrone=displayAllGraph(allDrone,positionAllDrone,listDroneEnergy);
-			else if (com.equals("all cameradrone"))positionAllCameraDrone=displayAllGraph(allCameraDrone,positionAllCameraDrone,listCameraDroneEnergy);
-			else if (com.equals("all communicatordrone"))positionAllCommunicatorDrone=displayAllGraph(allCommunicatorDrone,positionAllCommunicatorDrone,listCommunicatorDroneEnergy);		
-			else if (com.equals("all microphonedrone"))positionAllMicrophoneDrone=displayAllGraph(allMicrophoneDrone,positionAllMicrophoneDrone,listMicrophoneDroneEnergy);	
-			else if (com.equals("all measurementdrone"))positionAllMeasurementDrone=displayAllGraph(allMeasurementDrone,positionAllMeasurementDrone,listMeasurementDroneEnergy);			
+			else if (com.equals("total camera"))positionTotalCamera = displayTotalGraph(totalCamera,positionTotalCamera,parameters.cameraDroneColor.get(),listCameraDroneEnergy);
+			else if (com.equals("total microphone"))positionTotalMicrophone = displayTotalGraph(totalMicrophone,positionTotalMicrophone,parameters.microphoneDroneColor.get(),listMicrophoneDroneEnergy);
+			else if (com.equals("total drone"))positionTotalDrone = displayTotalGraph(totalDrone,positionTotalDrone,parameters.droneColor.get(),listDroneEnergy);
+			else if (com.equals("total communicator"))positionTotalCommunicator = displayTotalGraph(totalCommunicator,positionTotalCommunicator,parameters.communicatorDroneColor.get(),listCommunicatorDroneEnergy);
+			else if (com.equals("total measurement"))positionTotalMeasurement = displayTotalGraph(totalMeasurement,positionTotalMeasurement,parameters.measurementDroneColor.get(),listMeasurementDroneEnergy);
+			else if (com.equals("all drone"))positionAllDrone = displayAllGraph(allDrone,positionAllDrone,listDroneEnergy);
+			else if (com.equals("all cameradrone"))positionAllCameraDrone = displayAllGraph(allCameraDrone,positionAllCameraDrone,listCameraDroneEnergy);
+			else if (com.equals("all communicatordrone"))positionAllCommunicatorDrone = displayAllGraph(allCommunicatorDrone,positionAllCommunicatorDrone,listCommunicatorDroneEnergy);		
+			else if (com.equals("all microphonedrone"))positionAllMicrophoneDrone = displayAllGraph(allMicrophoneDrone,positionAllMicrophoneDrone,listMicrophoneDroneEnergy);	
+			else if (com.equals("all measurementdrone"))positionAllMeasurementDrone = displayAllGraph(allMeasurementDrone,positionAllMeasurementDrone,listMeasurementDroneEnergy);			
 			else if (com.equals("total"))
 			{
 				if (total.isSelected())
 				{		
-					positionTotal=numberOfGraph;
+					positionTotal = numberOfGraph;
 					plot.setDataset(positionTotal,createDataset(listTotalEnergy)) ;             
 					plot.setRenderer(positionTotal, new StandardXYItemRenderer());
 					numberOfGraph++;	          
@@ -304,69 +320,76 @@ public class ProbeInterface 	extends Frame
 				}
 			}
 	}
-
+/**
+ * Selection of the type
+ */
 	public void typeSelection()
 	{
+		//type selected
 		String currentType=new String();
-		int index;
-		index=typeDroneList.getSelectedIndex();
-		currentType=typeDroneList.getSelectedItem().toString();		
+		// index of the type selected
+		int indexType;
+		indexType = typeDroneList.getSelectedIndex();
+		currentType = typeDroneList.getSelectedItem().toString();		
 		if (currentType!="")
 		{
-				bloc=false;
-				numDroneList.removeAllItems();	
-			switch (index)
-			{
-			
+			// unblocking the selection of the drone
+			bloc = false;
+			numDroneList.removeAllItems();	
+			switch (indexType)
+			{		
 				case 0:
-					for(int k=0;k<listDrone.length;k++)numDroneList.addItem(listDrone[k].substring(47,listDrone[k].length()));					
+					for(int k = 0;k<listDrone.length;k++)numDroneList.addItem(listDrone[k].substring(47,listDrone[k].length()));					
 					break;
 				case 1:
-					for(int k=0;k<listCameraDrone.length;k++)numDroneList.addItem(listCameraDrone[k].substring(59,listCameraDrone[k].length()));					
+					for(int k = 0;k<listCameraDrone.length;k++)numDroneList.addItem(listCameraDrone[k].substring(59,listCameraDrone[k].length()));					
 					break;
 				case 2:
-					for(int k=0;k<listCommunicatorDrone.length;k++)numDroneList.addItem(listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length()));
+					for(int k = 0;k<listCommunicatorDrone.length;k++)numDroneList.addItem(listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length()));
 					break;
 				case 3:
-					for(int k=0;k<listMeasurementDrone.length;k++)numDroneList.addItem(listMeasurementDrone[k].substring(67,listMeasurementDrone[k].length()));
+					for(int k = 0;k<listMeasurementDrone.length;k++)numDroneList.addItem(listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length()));
 					break;
 				case 4 :
-					for(int k=0;k<listMicrophoneDrone.length;k++)numDroneList.addItem(listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length()));
+					for(int k = 0;k<listMicrophoneDrone.length;k++)numDroneList.addItem(listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length()));
 					break;
 				default:break;
 			}
 		}
 		numDroneList.setEnabled(true);
 		numDroneList.setSelectedIndex(-1);
-
-		bloc=true;
+		bloc = true;
 	}
-
+/**
+ * Selection of the number of the drone
+ */
 	public void numSelection()
 	{
-		int index;
-		index=typeDroneList.getSelectedIndex();
-		int index2;
-		index2=numDroneList.getSelectedIndex();	
+		// index of the type selected previously
+		int indexType;
+		indexType = typeDroneList.getSelectedIndex();
+		// index of the number of the drone selected
+		int indexNum;
+		indexNum = numDroneList.getSelectedIndex();	
 		XYDataset dataset1=createDataset(listCameraDroneEnergy[0]);
-		if ((index2>=0))
+		if ((indexNum >= 0))
 		{
-			switch (index)
+			switch (indexType)
 			{
 				case 0:
-					dataset1=createDataset(listDroneEnergy[index2]);
+					dataset1 = createDataset(listDroneEnergy[indexNum]);
 					break;
 				case 1:
-					dataset1=createDataset(listCameraDroneEnergy[index2]);
+					dataset1 = createDataset(listCameraDroneEnergy[indexNum]);
 					break;
 				case 2:
-					dataset1=createDataset(listCommunicatorDroneEnergy[index2]);
+					dataset1 = createDataset(listCommunicatorDroneEnergy[indexNum]);
 					break;
 				case 3:
-					dataset1=createDataset(listMeasurementDroneEnergy[index2]);
+					dataset1 = createDataset(listMeasurementDroneEnergy[indexNum]);
 					break;
 				case 4 :
-					dataset1=createDataset(listMicrophoneDroneEnergy[index2]);
+					dataset1 = createDataset(listMicrophoneDroneEnergy[indexNum]);
 					break;
 				default:
 					break;
@@ -378,12 +401,19 @@ public class ProbeInterface 	extends Frame
 
 	}	
 
-
+/**
+ * function to add the total of a type of drone
+ * @param button selected
+ * @param pos position of the chart
+ * @param color color of the chart
+ * @param listEnergy datas of the energy level
+ * @return
+ */
 	public int displayTotalGraph(JRadioButton button, int pos,Color color,ArrayList[] listEnergy)
 	{
 		if (button.isSelected())
 		{			
-		  pos=numberOfGraph;
+		  pos = numberOfGraph;
 		  this.plot.setDataset(pos,createDataset(listEnergy[listEnergy.length-1])) ;             
           this.plot.setRenderer(pos, new StandardXYItemRenderer());
           numberOfGraph++;       
@@ -399,24 +429,31 @@ public class ProbeInterface 	extends Frame
 		}
 		return pos;
 	}
+	/**
+	 * function to add the total of a type of drone
+	 * @param button
+	 * @param pos
+	 * @param listEnergy
+	 * @return
+	 */
 	public int displayAllGraph(JRadioButton button, int pos, ArrayList[] listEnergy)
 	{
 		if (button.isSelected())
 		{
 			 
-		  pos=numberOfGraph;
-		  for (int f=0;f<listEnergy.length-1;f++)
+		  pos = numberOfGraph;
+		  for (int f = 0;f<listEnergy.length-1;f++)
 			{		
 			 this.plot.setDataset(pos+f,createDataset(listEnergy[f])) ;             
 	         this.plot.setRenderer(pos+f, new StandardXYItemRenderer());         
 			}
-          numberOfGraph=pos+listEnergy.length-2;       
+          numberOfGraph = pos+listEnergy.length-2;       
 		}
 		else
 		{
 			if (numberOfGraph>0)
 			{
-				for (int f=0;f<listEnergy.length-1;f++)
+				for (int f = 0;f<listEnergy.length-1;f++)
 				{					
 					plot.setDataset(pos+f,null) ;             
 			        plot.setRenderer(pos+f, null);		         
@@ -425,14 +462,17 @@ public class ProbeInterface 	extends Frame
 		}
 		return pos;
 	}
+	/**
+	 * clear all the graph
+	 */
 	public void clearGraph()
 	{
-		for (int k=0;k<plot.getDatasetCount();k++)
+		for (int k = 0;k<plot.getDatasetCount();k++)
 		{
 			plot.setDataset(k,null);
 			plot.setRenderer(k,null);
 		}
-		numberOfGraph=0;
+		numberOfGraph = 0;
 		totalDrone.setSelected(false);
 		totalCamera.setSelected(false);
 		totalMicrophone.setSelected(false);
@@ -461,15 +501,20 @@ public class ProbeInterface 	extends Frame
 	) {
 		this.initializedatas(initialTimestamp,simulationEngine);
 	}
+	/**
+	 * Initialize the datas
+	 * @param timestamp
+	 * @param simulationEngine
+	 */
 	private void initializedatas(
 			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine
 	){
-		int indexCamera=0;
-		int indexMeasurement=0;
-		int indexMicrophone=0;
-		int indexCommunicator=0;
-		int indexDrone=0;
+		int indexCamera = 0;
+		int indexMeasurement = 0;
+		int indexMicrophone = 0;
+		int indexCommunicator = 0;
+		int indexDrone = 0;
 		IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
 				SwarmLevelList.ROOM
 		);						
@@ -509,7 +554,6 @@ public class ProbeInterface 	extends Frame
 
 		}
 
-	
 
 	/**
 	 * {@inheritDoc}
@@ -521,16 +565,20 @@ public class ProbeInterface 	extends Frame
 	) {
 		this.updateenergylist( timestamp, simulationEngine );
 	}
-
+	/**
+	 * update the list with the energy of each drone a each time
+	 * @param timestamp
+	 * @param simulationEngine
+	 */
 	private void updateenergylist(
 			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine
 	){
-		int indexCamera=0;
-		int indexMeasurement=0;
-		int indexMicrophone=0;
-		int indexCommunicator=0;
-		int indexDrone=0;
+		int indexCamera = 0;
+		int indexMeasurement = 0;
+		int indexMicrophone = 0;
+		int indexCommunicator = 0;
+		int indexDrone = 0;
 		IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
 				SwarmLevelList.ROOM
 		);		
@@ -568,13 +616,6 @@ public class ProbeInterface 	extends Frame
 		}
 	}
 					
-	
-	/**
-	 * Displays the location of the particles on the print stream.
-	 * @param timestamp The time stamp when the observation is made.
-	 * @param simulationEngine The engine where the simulation is running.
-	 */
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -586,38 +627,39 @@ public class ProbeInterface 	extends Frame
 	{
 		setVisible(true);
 	}
+	/**
+	 * calculates the the totals of each type of drone.
+	 */
 	public void calculateTotals()
 	{
-		
+		double somme = 0;
 		for (int i=0;i<listDroneEnergy[0].size();i++)
 		{
-			double somme=0;	
+			somme=0;	
 			for (int k=0;k<listDrone.length-2;k++)somme+=(double) listDroneEnergy[k].get(i);
 			listDroneEnergy[listDroneEnergy.length-1].add(somme);
 		}
 		for (int i=0;i<listCameraDroneEnergy[0].size();i++)
 		{
-			double somme=0;	
+			somme=0;	
 			for (int k=0;k<listCameraDrone.length-2;k++)somme+=(double) listCameraDroneEnergy[k].get(i);
 			listCameraDroneEnergy[listCameraDroneEnergy.length-1].add(somme);
-	
 		}
 		for (int i=0;i<listCommunicatorDroneEnergy[0].size();i++)
 		{
-			double somme=0;	
+			somme=0;	
 			for (int k=0;k<listCommunicatorDrone.length-2;k++)somme+=(double) listCommunicatorDroneEnergy[k].get(i);
-			listCommunicatorDroneEnergy[listCommunicatorDroneEnergy.length-1].add(somme);
-	
+			listCommunicatorDroneEnergy[listCommunicatorDroneEnergy.length-1].add(somme);	
 		}
 		for (int i=0;i<listMicrophoneDroneEnergy[0].size();i++)
-			{
-			 double somme=0;	
+		{
+			somme=0;	
 			for (int k=0;k<listMicrophoneDrone.length-2;k++)somme+=(double) listMicrophoneDroneEnergy[k].get(i);	
 			listMicrophoneDroneEnergy[listMicrophoneDroneEnergy.length-1].add(somme);
 		}
 		for (int i=0;i<listMeasurementDroneEnergy[0].size();i++)
 		{
-			double somme=0;	
+			somme=0;	
 			for (int k=0;k<listMeasurementDrone.length-2;k++)somme+=(double) listMeasurementDroneEnergy[k].get(i);
 			listMeasurementDroneEnergy[listMeasurementDroneEnergy.length-1].add(somme);
 		}
