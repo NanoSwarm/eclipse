@@ -1,4 +1,4 @@
-package swarm;
+package swarm.interfaceSimulation;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

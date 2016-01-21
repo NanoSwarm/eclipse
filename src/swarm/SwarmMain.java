@@ -6,6 +6,7 @@ import fr.lgi2a.similar.microkernel.libs.engines.EngineMonothreadedDefaultdisamb
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExceptionPrinter;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExecutionTracker;
 import swarm.initialization.SwarmInitialization;
+import swarm.interfaceSimulation.ConfigInterface;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.AgtDroneFactory;
 import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
