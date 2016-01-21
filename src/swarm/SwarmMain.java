@@ -27,24 +27,26 @@ public class SwarmMain {
 	/**
 	 * Private Constructor to prevent class instantiation.
 	 */
-	private SwarmMain() {
+	private SwarmMain() 
+	{
 		
 	}
 	
-	/**
-	 * The main method of the simulation.
-	 * @param args The command line arguments.
-	 */
 	public static void main(String[] Args)
 	{
+		
 		// Create the parameters used in this simulation.
 		parameters = new SwarmParameters();
 		// Register the parameters to the agent factories.
-				AgtCameraDroneFactory.setParameters( parameters );
-				AgtCommunicatorDroneFactory.setParameters( parameters );
-				AgtDroneFactory.setParameters( parameters );
-				AgtMicrophoneDroneFactory.setParameters( parameters );
-				AgtMeasurementDroneFactory.setParameters( parameters );
+		AgtCameraDroneFactory.setParameters( parameters );
+		AgtCommunicatorDroneFactory.setParameters( parameters );
+		AgtDroneFactory.setParameters( parameters );
+		AgtMicrophoneDroneFactory.setParameters( parameters );
+		AgtMeasurementDroneFactory.setParameters( parameters );
+		
+		
+		ConfigInterface configInterface = new ConfigInterface();		
+		while (configInterface.configurationOK==false){System.out.println(""); }; //Attente qu'on lance la simulation via la l'interface de configuration
 		
 		// Create the simulation engine that will run simulations
 		engine = new EngineMonothreadedDefaultdisambiguation( );
@@ -66,9 +68,8 @@ public class SwarmMain {
 		
 		engine.addProbe(
 				"Energy consumption results",
-				 resultInterface=new ProbeInterface(parameters)										
-				
-		);
+				 resultInterface=new ProbeInterface(parameters)	);									
+		
 		if (parameters.objectiveType == 2)
 		{
 			engine.addProbe(
@@ -76,19 +77,15 @@ public class SwarmMain {
 						new MapInterface("Map of the space",parameters)															
 				);
 		}
-			
-			// Create the simulation model being used.
-			simulationModel = new SwarmInitialization(
-				new SimulationTimeStamp( 0 ), 
-				new SimulationTimeStamp( parameters.simulationTime ), 
-				parameters
-			);
-			// Run the simulation.
-			engine.runNewSimulation( simulationModel );
-			
-			
 		
-			
+		// Create the simulation model being used.
+		simulationModel = new SwarmInitialization(
+			new SimulationTimeStamp( 0 ), 
+			new SimulationTimeStamp( parameters.simulationTime ), 
+			parameters
+		);
+		// Run the simulation.
+		engine.runNewSimulation( simulationModel );
 	}
 	
 	public static void abordSimulation(){
@@ -99,6 +96,5 @@ public class SwarmMain {
 	public static SwarmInitialization getSimulationModel(){
 		return simulationModel;
 	}
-	
-
 }
+	
