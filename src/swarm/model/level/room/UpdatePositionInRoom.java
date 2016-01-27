@@ -109,7 +109,7 @@ public class UpdatePositionInRoom {
 				
 				if (!(spaceGraph[i][j][k].cubeIsVisited()))
 				{
-					spaceGraph[i][j][k].setMeasuredValue(Objective.getObjective(castedAgt.getLocation()));
+					spaceGraph[i][j][k].setMeasuredValue(castedAgt.getFitness());
 				}
 			}
 			
