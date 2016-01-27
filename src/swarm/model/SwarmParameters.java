@@ -213,12 +213,12 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.microphoneDroneColor = new Color3f(Color.orange);
 		this.measurementDroneColor = new Color3f(Color.green);
 		
-		this.repulsionDistance = 400;
+		this.repulsionDistance = 40;
 		this.orientationDistance = 400;
 		this.attractionDistance = 700;
 		this.repulsionCoeff = 10;
 		this.orientationCoeff = 50000;
-		this.attractionCoeff = 1;
+		this.attractionCoeff = 100;
 		
 		
 		this.maxInitialSpeed=0.00001;
@@ -232,7 +232,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.communicatorDroneMassFactor = 0.9;
 		this.microphoneDroneMassFactor = 0.9;
 
-		this.initialEnergy = 5000;
+		this.initialEnergy = 50000;
 
 		this.basicDroneMass= 0.04;
 		
@@ -240,22 +240,21 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.nbOfCommunicatorDroneAgents = 0;
 		this.nbOfDroneAgents = 0;
 		this.nbOfMicrophoneDroneAgents = 0;
-		this.nbOfMeasurementDroneAgents = 500;
+		this.nbOfMeasurementDroneAgents = 100;
+		
 		this.cameraDroneDetectionRange = 100;
 		this.communicatorDroneDetectionRange = 100;
 		this.droneDetectionRange = 100;
 		this.microphoneDroneDetectionRange = 100;
-		this.measurementDroneDetectionRange = 100;
-
-
+		this.measurementDroneDetectionRange = 200;
 		this.cameraDroneDetectionRange = 100;
 		
 		this.roomBounds = new Vector3d(3000, 5000,1000);
-		this.securityDistance = 100;
-		this.simulationTime = 600;
-		this.objectiveType = 2;
-		this.resolutionType = "pso"; // "pso" "position minimum"
-		this.objectivePosition = new  Vector3d(1000,1000,500);
+		this.securityDistance = 50;
+		this.simulationTime = 600000;
+		this.objectiveType = 1;
+		this.resolutionType = "position minimum"; // "pso" "position minimum"
+		this.objectivePosition = new  Vector3d(10000,10000,50000);
 
 		
 		
