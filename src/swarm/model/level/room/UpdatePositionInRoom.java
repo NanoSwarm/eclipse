@@ -5,6 +5,7 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
+import swarm.model.environment.Objective;
 import swarm.model.environment.room.EnvPLSInRoom;
 
 public class UpdatePositionInRoom {
@@ -85,9 +86,7 @@ public class UpdatePositionInRoom {
 			
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
-				if (parameters.resolutionType == "position minimum"){
-					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
-				}
+				
 				Graph graph;
 				Cube[][][] spaceGraph;
 				AgtMeasurementDronePLSInRoom castedAgt=(AgtMeasurementDronePLSInRoom) agtDrone;
@@ -98,12 +97,23 @@ public class UpdatePositionInRoom {
 				i=(int)(Math.floor(castedAgt.getLocation().getX()/graph.getLength()));
 				j=(int)(Math.floor(castedAgt.getLocation().getY()/graph.getLength()));
 				k=(int)(Math.floor(castedAgt.getLocation().getZ()/graph.getLength()));
-				//	System.out.print("lenght="+graph.getLength()+" cas=  "+castedAgt.getLocation().getX()+" i=  "+i+"\n");
+				
+				if(i > graph.getImax()-1) i = graph.getImax()-1;
+				if(j > graph.getJmax()-1) j = graph.getJmax()-1;
+				if(k > graph.getKmax()-1) k = graph.getKmax()-1;
+				if(i < 0) i = 0;
+				if(j < 0) j = 0;
+				if(k < 0) k = 0;
 				if (!(spaceGraph[i][j][k].cubeIsVisited()))
 				{
-					spaceGraph[i][j][k].setMeasuredValue(castedAgt.getFitness());
-					spaceGraph[i][j][k].setVisited();
+					System.out.println(Objective.getObjective(castedAgt.getLocation()));
+					spaceGraph[i][j][k].setMeasuredValue(Objective.getObjective(castedAgt.getLocation()));
 				}
+				
+				if (parameters.resolutionType == "position minimum"){
+					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
+				}
+				
 			}
 			
 		}

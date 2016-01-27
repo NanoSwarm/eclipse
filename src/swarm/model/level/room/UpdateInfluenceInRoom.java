@@ -98,9 +98,9 @@ public class UpdateInfluenceInRoom {
 			
 
 			attractionAcc.set(
-					(agtDrone.getLocation().x - agtDrone.getDestination().getPosition().x)/distance,
-					(agtDrone.getLocation().y - agtDrone.getDestination().getPosition().y)/distance,
-					(agtDrone.getLocation().z - agtDrone.getDestination().getPosition().z)/distance);
+					attractionAcc.x + (agtDrone.getDestination().getPosition().x - agtDrone.getLocation().x)/distance,
+					attractionAcc.y + (agtDrone.getDestination().getPosition().y - agtDrone.getLocation().y)/distance,
+					attractionAcc.z + (agtDrone.getDestination().getPosition().z - agtDrone.getLocation().z)/distance);
 			nbOfDronesInAttractionArea = 1;
 		}
 		
