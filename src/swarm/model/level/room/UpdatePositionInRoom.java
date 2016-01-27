@@ -86,9 +86,7 @@ public class UpdatePositionInRoom {
 			
 			if (agtDrone.getCategoryOfAgent().isA(SwarmAgentCategoriesList.MEASUREMENTDRONE))
 			{
-				if (parameters.resolutionType == "position minimum"){
-					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
-				}
+				
 				Graph graph;
 				Cube[][][] spaceGraph;
 				AgtMeasurementDronePLSInRoom castedAgt=(AgtMeasurementDronePLSInRoom) agtDrone;
@@ -106,11 +104,16 @@ public class UpdatePositionInRoom {
 				if(i < 0) i = 0;
 				if(j < 0) j = 0;
 				if(k < 0) k = 0;
-				
 				if (!(spaceGraph[i][j][k].cubeIsVisited()))
 				{
-					spaceGraph[i][j][k].setMeasuredValue(castedAgt.getFitness());
+					System.out.println(Objective.getObjective(castedAgt.getLocation()));
+					spaceGraph[i][j][k].setMeasuredValue(Objective.getObjective(castedAgt.getLocation()));
 				}
+				
+				if (parameters.resolutionType == "position minimum"){
+					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
+				}
+				
 			}
 			
 		}
