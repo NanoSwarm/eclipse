@@ -1,6 +1,7 @@
 package swarm.model;
 
 import java.awt.Color;
+import java.util.Properties;
 
 import javax.vecmath.Color3f;
 import javax.vecmath.Vector3d;
@@ -157,6 +158,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public Vector3d roomBounds;
 	
+	public int roomBoundsX;
+	public int roomBoundsY;
+	public int roomBoundsZ;
 	/**
 	 * The minimum distance to maintain between the drones and the limits of the room
 	 */
@@ -179,7 +183,9 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 * In case of a type 1 objective, the position of the point to find.
 	 */
 	public Vector3d objectivePosition;
-
+	public int objectivePositionX;
+	public int objectivePositionY;
+	public int objectivePositionZ;
 	/**
 	 * The method chosen to find the objective.
 	 * resolutionType = "position minimum" -> the drones use a graph searching algorithm to do a full space search.
@@ -206,7 +212,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 */
 	public SwarmParameters () {
 		super();
-		
+	
 		this.cameraDroneColor = new Color3f(Color.blue);
 		this.droneColor = new Color3f(Color.magenta);
 		this.communicatorDroneColor = new Color3f(Color.red);
@@ -236,11 +242,11 @@ public class SwarmParameters extends LogoSimulationParameters{
 
 		this.basicDroneMass= 0.04;
 		
-		this.nbOfCameraDroneAgents = 0;
-		this.nbOfCommunicatorDroneAgents = 0;
-		this.nbOfDroneAgents = 0;
-		this.nbOfMicrophoneDroneAgents = 0;
-		this.nbOfMeasurementDroneAgents = 600;
+		this.nbOfCameraDroneAgents = 100;
+		this.nbOfCommunicatorDroneAgents = 100;
+		this.nbOfDroneAgents = 100;
+		this.nbOfMicrophoneDroneAgents = 100;
+		this.nbOfMeasurementDroneAgents = 100;
 		this.cameraDroneDetectionRange = 100;
 		this.communicatorDroneDetectionRange = 100;
 		this.droneDetectionRange = 100;
@@ -251,14 +257,79 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.cameraDroneDetectionRange = 100;
 		
 		this.roomBounds = new Vector3d(3000, 5000,1000);
+		this.roomBoundsX = 3000;
+		this.roomBoundsY = 5000;
+		this.roomBoundsZ = 1000;
+		this.roomBounds = new Vector3d(roomBoundsX, roomBoundsY,roomBoundsZ);
 		this.securityDistance = 100;
-		this.simulationTime = 2000;
-		this.objectiveType = 3;
+		this.simulationTime = 500;
+		this.objectiveType = 2;
 		this.resolutionType = "pso"; // "pso" "position minimum"
-		this.objectivePosition = new  Vector3d(1000,1000,500);
+		this.objectivePositionX = 1000;
+		this.objectivePositionY = 1000;
+		this.objectivePositionZ = 500;
+		this.objectivePosition = new  Vector3d(objectivePositionX,objectivePositionY,objectivePositionZ);
 
 		
 		
 	}
-
+	public void refreshVect()
+	{
+		this.objectivePosition = new  Vector3d(objectivePositionX,objectivePositionY,objectivePositionZ);
+		this.roomBounds = new Vector3d(roomBoundsX, roomBoundsY,roomBoundsZ);
+	}
+	public void  setProperties(Properties prop)
+	{
+			this.nbOfMeasurementDroneAgents=Integer.parseInt(prop.getProperty("nbOfMeasurementDroneAgents"));
+			this.nbOfCameraDroneAgents=Integer.parseInt(prop.getProperty("nbOfCameraDroneAgents"));
+		  this.nbOfCommunicatorDroneAgents=Integer.parseInt(prop.getProperty("nbOfCommunicatorDroneAgents"));
+		  this.nbOfDroneAgents=Integer.parseInt(prop.getProperty("nbOfDroneAgents"));
+		  this.nbOfMicrophoneDroneAgents=Integer.parseInt(prop.getProperty("nbOfMicrophoneDroneAgents"));
+		  
+		  this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
+		  this.communicatorDroneDetectionRange=Integer.parseInt(prop.getProperty("communicatorDroneDetectionRange"));
+		  this.droneDetectionRange=Integer.parseInt(prop.getProperty("droneDetectionRange"));
+		  this.microphoneDroneDetectionRange=Integer.parseInt(prop.getProperty("microphoneDroneDetectionRange"));
+		  this.measurementDroneDetectionRange=Integer.parseInt(prop.getProperty("measurementDroneDetectionRange"));
+		  this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
+		  
+		  
+		  this.repulsionDistance=Integer.parseInt(prop.getProperty("repulsionDistance"));
+		  this.orientationDistance=Integer.parseInt(prop.getProperty("orientationDistance"));
+		  this.attractionDistance=Integer.parseInt(prop.getProperty("attractionDistance"));
+		  this.repulsionCoeff=Integer.parseInt(prop.getProperty("repulsionCoeff"));
+		  this.orientationCoeff=Integer.parseInt(prop.getProperty("orientationCoeff"));
+		  this.attractionCoeff=Integer.parseInt(prop.getProperty("attractionCoeff"));
+		  
+		  this.maxSpeed=Integer.parseInt(prop.getProperty("maxSpeed"));
+		  this.maxAcc=Integer.parseInt(prop.getProperty("maxAcc"));
+		  this.initialSize=Integer.parseInt(prop.getProperty("initialSize"));
+		  this.initialEnergy=Integer.parseInt(prop.getProperty("initialEnergy"));
+		  
+		  this.securityDistance=Integer.parseInt(prop.getProperty("securityDistance"));
+		  this.simulationTime=Integer.parseInt(prop.getProperty("simulationTime"));
+		  this.objectiveType=Integer.parseInt(prop.getProperty("objectiveType"));
+		  
+		  this.maxInitialSpeed=Double.parseDouble(prop.getProperty("maxInitialSpeed"));
+		  this.minInitialSpeed=Double.parseDouble(prop.getProperty("minInitialSpeed"));
+		  
+		  this.cameraDroneMassFactor=Double.parseDouble(prop.getProperty("cameraDroneMassFactor"));
+		  this.communicatorDroneMassFactor=Double.parseDouble(prop.getProperty("communicatorDroneMassFactor"));
+		  this.microphoneDroneMassFactor=Double.parseDouble(prop.getProperty("microphoneDroneMassFactor"));
+		  this.basicDroneMass=Double.parseDouble(prop.getProperty("basicDroneMass"));
+		  
+		  this.xTorus=Boolean.getBoolean(prop.getProperty("xTorus"));
+		  this.yTorus=Boolean.getBoolean(prop.getProperty("yTorus"));
+		 
+		
+		  
+		  this.roomBoundsX=Integer.parseInt(prop.getProperty("roomBoundsX"));
+		  this.roomBoundsY=Integer.parseInt(prop.getProperty("roomBoundsY"));
+		  this.roomBoundsZ=Integer.parseInt(prop.getProperty("roomBoundsZ"));
+	
+		  this.objectivePositionX=Integer.parseInt(prop.getProperty("objectivePositionX"));
+		  this.objectivePositionY=Integer.parseInt(prop.getProperty("objectivePositionY"));
+		  this.objectivePositionZ=Integer.parseInt(prop.getProperty("objectivePositionZ"));
+		  this.refreshVect();
+	}
 }

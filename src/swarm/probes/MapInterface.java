@@ -3,6 +3,7 @@ package swarm.probes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -24,7 +26,10 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 	 * The main panel 
 	 */
 	public JPanel mainPanel;
+	public JLabel niveauZ;
+	public JPanel actions;
 	public JButton NextButton;
+	public SwarmParameters parameters;
 	/**
 	 * the drawer of the map
 	 */
@@ -35,13 +40,22 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 	 */
     public MapInterface(String str,SwarmParameters param)
     {
+    	parameters=param;
     	mainPanel = new JPanel();
     	mainPanel.setLayout(new BorderLayout());
     	this.setContentPane(mainPanel);
     	NextButton=new JButton("Next level");
     	NextButton.addActionListener(this);
     	NextButton.setActionCommand("suivant");
-    	mainPanel.add(NextButton,BorderLayout.NORTH);
+    	niveauZ=new JLabel("Z = 0"+"("+parameters.roomBoundsZ+")");
+    	niveauZ.setHorizontalAlignment(JLabel.CENTER);
+    	niveauZ.setFont(new Font(niveauZ.getName(), Font.BOLD, 2*niveauZ.getFont().getSize()));
+    	actions=new JPanel();
+    	actions.setLayout(new BorderLayout());
+    	mainPanel.add(actions,BorderLayout.NORTH);
+    	actions.add(niveauZ,BorderLayout.NORTH);
+    	actions.add(NextButton,BorderLayout.SOUTH);
+    	
     	drawer=new MapDrawer();
     	mainPanel.add(drawer,BorderLayout.CENTER);	
 	    //parameters of the window
@@ -63,6 +77,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 		if (command=="suivant") {
 			drawer.setZ(drawer.getZ()+1);
 			if (drawer.getZ() >= drawer.graph.getKmax()) drawer.setZ(0);
+			niveauZ.setText("Z = "+drawer.getZ()*drawer.graph.getLength()+"("+parameters.roomBoundsZ+")");
 			mainPanel.invalidate();     
 			mainPanel.repaint();
 		};

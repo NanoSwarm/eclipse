@@ -7,16 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.security.Policy.Parameters;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import fr.lgi2a.similar.microkernel.IProbe;
-import fr.lgi2a.similar.microkernel.ISimulationEngine;
-import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 
 public class ConfigInterface extends JFrame
 							 implements WindowListener, ActionListener
@@ -136,7 +135,7 @@ public class ConfigInterface extends JFrame
 		// TODO Auto-generated method stub
 		if (e.getActionCommand().equals("Quit"))
 		{
-			System.exit(0);
+			
 		}
 		else if (e.getActionCommand().equals("Launch Simulation"))
 		{
@@ -185,5 +184,22 @@ public class ConfigInterface extends JFrame
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public static Properties load(String filename) throws IOException, FileNotFoundException{
+	      Properties properties = new Properties();
+
+	      FileInputStream input = new FileInputStream(filename); 
+	      try{
+
+	         properties.load(input);
+	         return properties;
+
+	      }
+
+	              finally{
+
+	         input.close();
+
+	      }
 	}
 }

@@ -1,5 +1,7 @@
 package swarm;
 
+import java.util.Properties;
+
 import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.libs.engines.EngineMonothreadedDefaultdisambiguation;
@@ -37,17 +39,24 @@ public class SwarmMain {
 		
 		// Create the parameters used in this simulation.
 		parameters = new SwarmParameters();
+		try{
+	         Properties prop = ConfigInterface.load("SwarmParameters.properties");
+	         parameters.setProperties(prop);    
+			}
+	      catch(Exception f){
+	         f.printStackTrace();
+	      }
 		// Register the parameters to the agent factories.
 		AgtCameraDroneFactory.setParameters( parameters );
 		AgtCommunicatorDroneFactory.setParameters( parameters );
 		AgtDroneFactory.setParameters( parameters );
 		AgtMicrophoneDroneFactory.setParameters( parameters );
 		AgtMeasurementDroneFactory.setParameters( parameters );
-		
+
 		
 		ConfigInterface configInterface = new ConfigInterface();		
-		while (configInterface.configurationOK==false){System.out.println(""); }; //Attente qu'on lance la simulation via la l'interface de configuration
-		
+		while (configInterface.configurationOK==false){try{Thread.sleep(100);} catch(InterruptedException e){}; }; //Attente qu'on lance la simulation via la l'interface de configuration
+	
 		// Create the simulation engine that will run simulations
 		engine = new EngineMonothreadedDefaultdisambiguation( );
 		// Create the probes that will listen to the execution of the simulation.	
@@ -96,5 +105,6 @@ public class SwarmMain {
 	public static SwarmInitialization getSimulationModel(){
 		return simulationModel;
 	}
+	
 }
 	

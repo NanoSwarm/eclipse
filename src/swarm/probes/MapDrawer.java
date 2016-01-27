@@ -45,15 +45,27 @@ public class MapDrawer extends JPanel
 			   if ((graph.getSpaceGraph())[i][j][z].cubeIsVisited())
 			   {
 				   val =10000*(graph.getSpaceGraph()[i][j][z].getMeasuredValue());
-				   if (val<15)
+				   if (val<0)
 				   {		   
-					   g.setColor(Color.BLUE);
+					   g.setColor(new Color(14,14,241));
+				   }else if (val<5){
+					   g.setColor(new Color(10,85,244));
+				   }else if (val<10){
+					   g.setColor(new Color(15,173,244));
+				   }else if (val<15){
+					   g.setColor(new Color(11,243,244));
+				   }else if (val<18){
+					   g.setColor(new Color(10,244,228));
 				   }else if (val<20){
-					   g.setColor(Color.YELLOW);
+					   g.setColor(new Color(236,244,10));
+				   }else if (val<30){
+					   g.setColor(new Color(238,190,16));
+				   }else if (val<35){
+					   g.setColor(new Color(234,92,20));
 				   }else if (val<80){
-					   g.setColor(Color.ORANGE);
+					   g.setColor(new Color(249,45,5));
 				   }else {
-					   g.setColor(Color.RED);
+					   g.setColor(new Color(255,0,0));
 				   }
 				   g.fillRect(i*IFACTOR+IFACTOR, j*JFACTOR+JFACTOR,IFACTOR, JFACTOR);
 			   }
