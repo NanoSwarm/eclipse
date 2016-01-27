@@ -1,12 +1,13 @@
 package swarm;
 
+import java.util.Properties;
+
 import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.libs.engines.EngineMonothreadedDefaultdisambiguation;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExceptionPrinter;
 import fr.lgi2a.similar.microkernel.libs.probes.ProbeExecutionTracker;
 import swarm.initialization.SwarmInitialization;
-import swarm.interfaceSimulation.ConfigInterface;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.AgtDroneFactory;
 import swarm.model.agents.cameraDrone.AgtCameraDroneFactory;
@@ -16,6 +17,7 @@ import swarm.model.agents.microphoneDrone.AgtMicrophoneDroneFactory;
 import swarm.probes.MapInterface;
 import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
+import swarm.ConfigInterface;
 
 
 
@@ -38,15 +40,21 @@ public class SwarmMain {
 		
 		// Create the parameters used in this simulation.
 		parameters = new SwarmParameters();
+		try{
+	         Properties prop = ConfigInterface.load("SwarmParameters.properties");
+	         parameters.setProperties(prop);    
+			}
+	      catch(Exception f){
+	         f.printStackTrace();
+	      }
 		// Register the parameters to the agent factories.
 		AgtCameraDroneFactory.setParameters( parameters );
 		AgtCommunicatorDroneFactory.setParameters( parameters );
 		AgtDroneFactory.setParameters( parameters );
 		AgtMicrophoneDroneFactory.setParameters( parameters );
 		AgtMeasurementDroneFactory.setParameters( parameters );
-		
-		
-		ConfigInterface configInterface = new ConfigInterface(parameters);		
+
+		ConfigInterface configInterface = new ConfigInterface(parameters);	
 		while (configInterface.configurationOK==false){System.out.println(""); }; //Attente qu'on lance la simulation via la l'interface de configuration
 		
 		// Create the simulation engine that will run simulations
@@ -97,5 +105,6 @@ public class SwarmMain {
 	public static SwarmInitialization getSimulationModel(){
 		return simulationModel;
 	}
+	
 }
 	
