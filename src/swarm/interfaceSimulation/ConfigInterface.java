@@ -17,7 +17,11 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import swarm.model.SwarmParameters;
 
@@ -29,6 +33,8 @@ public class ConfigInterface extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private SwarmParameters parameters;
+	private JSlider configInterNbrDroneSlider;
 	
 	public boolean configurationOK=false;
 	JFrame configInterface;
@@ -37,6 +43,7 @@ public class ConfigInterface extends JFrame
 	public ConfigInterface(SwarmParameters parameters)
 	{
 		super("Configuration");
+		this.parameters = parameters;
 		
 		GridBagLayout gblConfigInterface = new GridBagLayout();
 		configInterface = new JFrame();
@@ -47,21 +54,55 @@ public class ConfigInterface extends JFrame
 		//1er ligne
 		JLabel configInterNbrDronesLabel = new JLabel("Nombre de drones :");
 		configCons.anchor = GridBagConstraints.WEST;
-		configCons.insets = new Insets(10,2,2,10);			
+		configCons.insets = new Insets(10,2,2,10);
+		configCons.gridwidth = 1;
 		gblConfigInterface.setConstraints(configInterNbrDronesLabel, configCons);
 		configInterface.add(configInterNbrDronesLabel);
 		
 		JSpinner configInterNbrDronesText = new JSpinner();
 		getTextField(configInterNbrDronesText).setColumns(4);
+		configInterNbrDronesText.addChangeListener(
+				new ChangeListener()
+				{
+					@Override
+					public void stateChanged(ChangeEvent e) {
+						parameters.nbOfDroneAgents = (int)configInterNbrDronesText.getValue();
+						configInterNbrDroneSlider.setValue(parameters.nbOfDroneAgents);
+					}
+				}
+				);
+		
+		configCons.gridwidth = 1;
 		gblConfigInterface.setConstraints(configInterNbrDronesText, configCons);
-		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesText);
+		
 				
-		JLabel configInterNbrDronesDefaultValueLabel = new JLabel("Default : 100");
-		configCons.gridwidth = GridBagConstraints.REMAINDER;
-		gblConfigInterface.setConstraints(configInterNbrDronesDefaultValueLabel, configCons);
+		JLabel configInterNbrDronesDefaultValueLabel = new JLabel("Default : 500");
 		configCons.gridwidth = 1;
+		gblConfigInterface.setConstraints(configInterNbrDronesDefaultValueLabel, configCons);
 		configInterface.add(configInterNbrDronesDefaultValueLabel);
+		
+		configInterNbrDroneSlider = new JSlider();
+		configInterNbrDroneSlider.setMaximum(1500);
+		configInterNbrDroneSlider.setMinimum(0);
+		configInterNbrDroneSlider.setValue(parameters.nbOfDroneAgents);
+		configInterNbrDroneSlider.setPaintTicks(true);
+		//configInterNbrDroneSlider.setPaintLabels(true);
+		configInterNbrDroneSlider.setMinorTickSpacing(100);
+		configInterNbrDroneSlider.setMajorTickSpacing(500);
+		configInterNbrDroneSlider.addChangeListener(
+			new ChangeListener()
+			{
+				public void stateChanged(ChangeEvent event)
+				{
+					configInterNbrDronesText.setValue(((JSlider)event.getSource()).getValue());
+					parameters.nbOfDroneAgents = ((JSlider)event.getSource()).getValue();
+				}
+			}
+		);
+		configCons.gridwidth = GridBagConstraints.REMAINDER;
+		gblConfigInterface.setConstraints(configInterNbrDroneSlider, configCons);
+		configInterface.add(configInterNbrDroneSlider);
 		
 		
 		//2ème ligne
@@ -71,19 +112,19 @@ public class ConfigInterface extends JFrame
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroLabel, configCons);
 		configInterface.add(configInterNbrDronesMicroLabel);
 		
-		JSpinner configInterNbrDronesMicroText = new JSpinner(); 
-		getTextField(configInterNbrDronesMicroText).setColumns(4);
+		JTextField configInterNbrDronesMicroText = new JTextField(4); //A remplacer par le string paramètre
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroText, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesMicroText);
 		
-		JLabel configInterNbrDronesMicroDefaultValueLabel = new JLabel("Default : 20");
+		JLabel configInterNbrDronesMicroDefaultValueLabel = new JLabel("Default : 100");
 		configCons.gridwidth = GridBagConstraints.REMAINDER;
 		gblConfigInterface.setConstraints(configInterNbrDronesMicroDefaultValueLabel, configCons);
 		configCons.gridwidth = 1;
 		configInterface.add(configInterNbrDronesMicroDefaultValueLabel);
 		
-		//3ème ligne
+		
+		//Dernière ligne
 		JButton launchSimu = new JButton("Launch Simulation");
 		configCons.anchor = GridBagConstraints.WEST;
 		gblConfigInterface.setConstraints(launchSimu, configCons);
@@ -128,13 +169,6 @@ public class ConfigInterface extends JFrame
 	}
 
 	
-	
-	public void GriserConfigInterface()
-	{
-		
-	}
-	
-
 	public JFormattedTextField getTextField(JSpinner spinner) {
 	    JComponent editor = spinner.getEditor();
 	    if (editor instanceof JSpinner.DefaultEditor) {
@@ -146,6 +180,13 @@ public class ConfigInterface extends JFrame
 	        return null;
 	    }
 	}
+	
+	
+	public void GriserConfigInterface()
+	{
+		
+	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -157,6 +198,7 @@ public class ConfigInterface extends JFrame
 		else if (e.getActionCommand().equals("Launch Simulation"))
 		{
 			configurationOK=true;
+			//configInterface.setVisible(false);
 		}
 	}
 
