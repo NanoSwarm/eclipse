@@ -66,9 +66,9 @@ public class Graph {
 		/*
 		 * when the size of our mesh is calculated we can divide it in cubes (the last ones may be partially outside)
 		 */
-		imax = (int) Math.ceil(parameters.roomBounds.x/length)-1;
-		jmax = (int) Math.ceil(parameters.roomBounds.y/length)-1;
-		kmax = (int) Math.ceil(parameters.roomBounds.z/length)-1;
+		imax = (int) Math.ceil(parameters.roomBounds.x/length);
+		jmax = (int) Math.ceil(parameters.roomBounds.y/length);
+		kmax = (int) Math.ceil(parameters.roomBounds.z/length);
 		
 		this.spaceGraph = new Cube[imax][jmax][kmax];
 		
@@ -214,6 +214,9 @@ public class Graph {
 		
 		if (frontier.isEmpty()){
 			System.out.println("all space covered");
+			parameters.repulsionDistance = 40;
+			parameters.attractionCoeff = 1;
+			parameters.objectiveType = 3;
 		}
 		
 	}
