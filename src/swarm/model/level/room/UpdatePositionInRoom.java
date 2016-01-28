@@ -110,9 +110,7 @@ public class UpdatePositionInRoom {
 					spaceGraph[i][j][k].setMeasuredValue(Objective.getObjective(castedAgt.getLocation()));
 				}
 				
-				if (parameters.resolutionType == "position minimum"){
-					roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
-				}
+				roomEnvState.getGraph().updateFrontier(agtDrone.getLocation(), parameters.measurementDroneDetectionRange);
 				
 			}
 			

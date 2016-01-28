@@ -260,13 +260,13 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.roomBoundsY = 5000;
 		this.roomBoundsZ = 1000;
 		this.roomBounds = new Vector3d(roomBoundsX, roomBoundsY,roomBoundsZ);
-		this.securityDistance = 100;
+		this.securityDistance = 50;
 
-		this.simulationTime = 600;
+		this.simulationTime = 1000;
 		
 		this.objectiveType = 2;
-
-		this.resolutionType = "pso"; // "pso" "position minimum"
+		this.resolutionType = "position minimum"; // "pso" "position minimum"
+		
 		this.objectivePositionX = 1000;
 		this.objectivePositionY = 1000;
 		this.objectivePositionZ = 500;
