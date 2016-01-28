@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -194,5 +198,22 @@ public class ConfigInterface extends JFrame
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static Properties load(String filename) throws IOException, FileNotFoundException{
+	      Properties properties = new Properties();
+
+	      FileInputStream input = new FileInputStream(filename); 
+	      try{
+
+	         properties.load(input);
+	         return properties;
+	      }
+
+	              finally{
+
+	         input.close();
+
+	      }
 	}
 }
