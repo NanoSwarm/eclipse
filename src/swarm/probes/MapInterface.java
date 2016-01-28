@@ -21,6 +21,12 @@ import swarm.model.SwarmParameters;
 
 
 @SuppressWarnings("serial")
+/**
+ * 
+ * @author Alexandre JIN
+ * The probe displaying the map of the space explored.
+ *
+ */
 public class MapInterface extends JFrame implements IProbe,ActionListener{
 	/** 
 	 * The main panel 
@@ -56,7 +62,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
     	actions.add(niveauZ,BorderLayout.NORTH);
     	actions.add(NextButton,BorderLayout.SOUTH);
     	
-    	drawer=new MapDrawer();
+    	drawer=new MapDrawer(param);
     	mainPanel.add(drawer,BorderLayout.CENTER);	
 	    //parameters of the window
 	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       

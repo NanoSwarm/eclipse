@@ -230,18 +230,19 @@ public class UpdateInfluenceInRoom {
 			nbOfDronesInRepulsionArea = 0;
 			agtMeasurementDrone.calculateFitness();
 			agtMeasurementDrone.updateFitness();
-			double alpha=0.99;
-			double beta=0.5;
+			
+		
+			double randomnumber=0.5;
 			agtMeasurementDrone.setInfluence(
-					alpha*agtMeasurementDrone.getInfluence().getX()
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(agtMeasurementDrone.bestOwnPos.getX()-agtMeasurementDrone.getLocation().getX())
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(bestPos.getX()-agtMeasurementDrone.getLocation().getX()),
-					alpha*agtMeasurementDrone.getInfluence().getY()
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(agtMeasurementDrone.bestOwnPos.getY()-agtMeasurementDrone.getLocation().getY())
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(bestPos.getY()-agtMeasurementDrone.getLocation().getY()),
-					alpha*agtMeasurementDrone.getInfluence().getZ()
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(agtMeasurementDrone.bestOwnPos.getZ()-agtMeasurementDrone.getLocation().getZ())
-					+RandomValueFactory.getStrategy().randomDouble(0,beta)*(bestPos.getZ()-agtMeasurementDrone.getLocation().getZ())
+					parameters.alphaPSO*agtMeasurementDrone.getInfluence().getX()
+					+parameters.betaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(agtMeasurementDrone.bestOwnPos.getX()-agtMeasurementDrone.getLocation().getX())
+					+parameters.gammaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(bestPos.getX()-agtMeasurementDrone.getLocation().getX()),
+					parameters.alphaPSO*agtMeasurementDrone.getInfluence().getY()
+					+parameters.betaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(agtMeasurementDrone.bestOwnPos.getY()-agtMeasurementDrone.getLocation().getY())
+					+parameters.gammaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(bestPos.getY()-agtMeasurementDrone.getLocation().getY()),
+					parameters.alphaPSO*agtMeasurementDrone.getInfluence().getZ()
+					+parameters.betaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(agtMeasurementDrone.bestOwnPos.getZ()-agtMeasurementDrone.getLocation().getZ())
+					+parameters.gammaPSO*RandomValueFactory.getStrategy().randomDouble(0,randomnumber)*(bestPos.getZ()-agtMeasurementDrone.getLocation().getZ())
 					);
 			
 			for (AgtDronePLSInRoom agtOtherDrone : droneUpdateList) {

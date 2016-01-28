@@ -40,6 +40,7 @@ public class Objective {
 
 			res=1/Math.sqrt( Math.pow(pos.x-objectivePosition.x , 2) 
 					+Math.pow(pos.y-objectivePosition.y , 2)
+					+Math.pow(pos.z-objectivePosition.z , 2)
 					   );
 		}else if (ObjectiveType == 3){
 

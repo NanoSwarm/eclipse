@@ -192,7 +192,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 * resolutionType = "pso" -> the drones use pso algorithm to find a local maximum.
 	 */
 	public String resolutionType;
-	
+
+	public double alphaPSO;
+	public double betaPSO;
+	public double gammaPSO;
 	/**
 	 * The color of the different drones
 	 */
@@ -265,12 +268,15 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.simulationTime = 1000;
 		
 		this.objectiveType = 2;
-		this.resolutionType = "position minimum"; // "pso" "position minimum"
+		this.resolutionType = "pso"; // "pso" "position minimum"
 		
-		this.objectivePositionX = 1000;
-		this.objectivePositionY = 1000;
+		this.objectivePositionX = 1500;
+		this.objectivePositionY = 2500;
 		this.objectivePositionZ = 500;
 		this.objectivePosition = new  Vector3d(objectivePositionX,objectivePositionY,objectivePositionZ);
+		this.alphaPSO=0.2;
+		this.betaPSO=0.3;
+		this.gammaPSO=0.5;
 
 		
 		
@@ -332,6 +338,10 @@ public class SwarmParameters extends LogoSimulationParameters{
 		  this.objectivePositionX=Integer.parseInt(prop.getProperty("objectivePositionX"));
 		  this.objectivePositionY=Integer.parseInt(prop.getProperty("objectivePositionY"));
 		  this.objectivePositionZ=Integer.parseInt(prop.getProperty("objectivePositionZ"));
+		  
+		  this.alphaPSO=Double.parseDouble(prop.getProperty("alphaPSO"));
+		  this.betaPSO=Double.parseDouble(prop.getProperty("betaPSO"));
+		  this.gammaPSO=Double.parseDouble(prop.getProperty("gammaPSO"));
 		  this.refreshVect();
 	}
 }
