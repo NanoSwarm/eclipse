@@ -57,7 +57,7 @@ public class Graph {
 						parameters.microphoneDroneDetectionRange));
 
 		}else if (parameters.objectiveType == 2){
-			length = (int) Math.floor(parameters.measurementDroneDetectionRange / Math.sqrt(3));
+			length = (int) Math.floor(parameters.measurementDroneDetectionRange);
 			
 		}else if (parameters.objectiveType == 3){
 			throw new IllegalArgumentException( "Wrong objective type" );

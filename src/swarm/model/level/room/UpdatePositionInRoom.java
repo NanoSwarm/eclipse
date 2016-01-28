@@ -1,6 +1,5 @@
 package swarm.model.level.room;
 
-import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
