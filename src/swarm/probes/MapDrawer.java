@@ -60,7 +60,6 @@ public class MapDrawer extends JPanel
 							+Math.pow(parameters.objectivePosition.z , 2)
 							   ));;
 				   int valInt=(int) Math.floor(6*val);
-				   System.out.println(valInt);
 				   if (valInt>235) valInt=235;
 				   if (valInt<20) valInt=20;
 				   if (val<tempMax/8 ) {		

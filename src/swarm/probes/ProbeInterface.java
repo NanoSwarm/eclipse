@@ -3,7 +3,6 @@ package swarm.probes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -11,7 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -684,8 +690,148 @@ public class ProbeInterface 	extends Frame
 	@Override
 	public void endObservation() {
 		calculateTotals();
+		createfiles();
 	}
-
+	public void createfiles()
+	{	
+		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH-mm-ss");
+		Calendar cal = Calendar.getInstance();
+		String res=new String("Results "+dateFormat.format(cal.getTime()));
+	//	File results=new File("Rkk"+date.toString()+"bggg");
+		//results.mkdir();
+		File measurementDroneFolder=new File(res+"\\MeasurementDrone"); 
+		File microphoneDroneFolder=new File(res+"\\MicrophoneDrone"); 
+		File cameraDroneFolder=new File(res+"\\CameraDrone"); 
+		File communicatorDroneFolder=new File(res+"\\CommunicatorDrone"); 	
+		File droneFolder=new File(res+"\\Drone"); 
+		
+		deleteFolder(measurementDroneFolder);
+		deleteFolder(microphoneDroneFolder);
+		deleteFolder(cameraDroneFolder);
+		deleteFolder(communicatorDroneFolder);
+		deleteFolder(droneFolder);
+		measurementDroneFolder.mkdirs();
+		microphoneDroneFolder.mkdirs();
+		cameraDroneFolder.mkdirs();
+		communicatorDroneFolder.mkdirs();
+		droneFolder.mkdirs();
+		for (int k=0;k<listDrone.length;k++)
+		{
+			String name=listDrone[k].substring(47,listDrone[k].length());
+			File f = new File (res+"\\Drone\\"+name+".txt");
+			try
+			{
+			    FileWriter fw = new FileWriter (f);
+			    fw.write ("Energy List of"+name+"\r\n");
+			    int index=0;
+			    for (double energy:listDroneEnergy[k])
+			    {
+				   	fw.write(index+"\t"+energy+"\r\n");
+				   	index++;
+			   	}
+			    fw.close();
+			}
+			catch (IOException exception)
+			{
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		}
+		for (int k=0;k<listMeasurementDrone.length;k++)
+		{
+			String name=listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length());
+			File f = new File (res+"\\MeasurementDrone\\"+name+".txt");
+			try
+			{
+			    FileWriter fw = new FileWriter (f);
+			    fw.write ("Energy List of"+name+"\r\n");
+			    int index=0;
+			    for (double energy:listMeasurementDroneEnergy[k])
+			    {
+				   	fw.write(index+"\t"+energy+"\r\n");
+				   	index++;
+			   	}
+			    fw.close();
+			}
+			catch (IOException exception)
+			{
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		}
+		for (int k=0;k<listMicrophoneDrone.length;k++)
+		{
+			String name=listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length());
+			File f = new File (res+"\\MicrophoneDrone\\"+name+".txt");
+			try
+			{
+			    FileWriter fw = new FileWriter (f);
+			    fw.write ("Energy List of"+name+"\r\n");
+			    int index=0;
+			    for (double energy:listMicrophoneDroneEnergy[k])
+			    {
+				   	fw.write(index+"\t"+energy+"\r\n");
+				   	index++;
+			   	}
+			    fw.close();
+			}
+			catch (IOException exception)
+			{
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		}
+		for (int k=0;k<listCameraDrone.length;k++)
+		{
+			String name=listCameraDrone[k].substring(59,listCameraDrone[k].length());
+			File f = new File (res+"\\CameraDrone\\"+name+".txt");
+			try
+			{
+			    FileWriter fw = new FileWriter (f);
+			    fw.write ("Energy List of"+name+"\r\n");
+			    int index=0;
+			    for (double energy:listCameraDroneEnergy[k])
+			    {
+				   	fw.write(index+"\t"+energy+"\r\n");
+				   	index++;
+			   	}
+			    fw.close();
+			}
+			catch (IOException exception)
+			{
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		}
+		for (int k=0;k<listCommunicatorDrone.length;k++)
+		{
+			String name=listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length());
+			File f = new File (res+"\\CommunicatorDrone\\"+name+".txt");
+			try
+			{
+			    FileWriter fw = new FileWriter (f);
+			    fw.write ("Energy List of"+name+"\r\n");
+			    int index=0;
+			    for (double energy:listCommunicatorDroneEnergy[k])
+			    {
+				   	fw.write(index+"\t"+energy+"\r\n");
+				   	index++;
+			   	}
+			    fw.close();
+			}
+			catch (IOException exception)
+			{
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		}
+	}
+	public void deleteFolder(File folder)
+	{
+		if (folder.isDirectory())
+		{
+			File[] list=folder.listFiles();
+			for (int k=0;k<list.length;k++)
+			{
+				list[k].delete();
+			}
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
