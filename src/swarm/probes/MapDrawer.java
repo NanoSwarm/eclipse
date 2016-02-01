@@ -55,45 +55,23 @@ public class MapDrawer extends JPanel
 			   if ((graph.getSpaceGraph())[i][j][z].cubeIsVisited())
 			   {
 				  
-				   val =(1/graph.getSpaceGraph()[i][j][z].getMeasuredValue())*tempMax/Math.sqrt( Math.pow(parameters.objectivePosition.x , 2) 
+				   val =((1/graph.getSpaceGraph()[i][j][z].getMeasuredValue())*tempMax/Math.sqrt( Math.pow(parameters.objectivePosition.x , 2) 
 							+Math.pow(parameters.objectivePosition.y , 2)
 							+Math.pow(parameters.objectivePosition.z , 2)
-							   );;
-						
-				   System.out.println(val);
-				/*   if (val<0)
-				   {		   
-					   g.setColor(new Color(14,14,241));
-				   }else if (val<tempMax/8){
-					   g.setColor(new Color(10,85,244));
-				   }else if (val<tempMax/7){
-					   g.setColor(new Color(15,173,244));
-				   }else if (val<tempMax/6){
-					   g.setColor(new Color(11,243,244));
-				   }else if (val<20){
-					   g.setColor(new Color(10,244,228));
-				   }else if (val<30){
-					   g.setColor(new Color(236,244,10));
-				   }else if (val<40){
-					   g.setColor(new Color(238,190,16));
-				   }else if (val<50){
-					   g.setColor(new Color(234,92,20));
-				   }else if (val<80){
-					   g.setColor(new Color(249,45,5));
-				   }else {
-					   g.setColor(new Color(255,0,0));
-				   }*/
-				   int valInt=(int) Math.floor(3*val);
-				   if (val<5 ) {		   
-					   g.setColor(new Color(14,14,241));
-				   }else if (val<24){
-				   g.setColor(new Color(10,255-valInt,255));
-				   }else if (val<tempMax){
-					 g.setColor(new Color(255,255-valInt,10));
-				   }else {
-						 g.setColor(new Color(255,0,0));
-					 
-						 
+							   ));;
+				   int valInt=(int) Math.floor(6*val);
+				   System.out.println(valInt);
+				   if (valInt>235) valInt=235;
+				   if (valInt<20) valInt=20;
+				   if (val<tempMax/8 ) {		
+					   g.setColor(new Color(255-valInt+20,valInt/6,valInt/6));
+				   }else if (val<tempMax/4){
+						 g.setColor(new Color(255,255-valInt,valInt/6));
+				   }else if (val<tempMax/2){
+					   g.setColor(new Color(valInt/6,255-valInt,255));
+
+				   }else if (val>tempMax/2){
+					   g.setColor(new Color(10,10,255-valInt+20));						 
 					 }
 				   g.fillRect(i*IFACTOR+IFACTOR, j*JFACTOR+JFACTOR,IFACTOR, JFACTOR);
 			   }
