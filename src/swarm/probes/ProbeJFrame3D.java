@@ -192,7 +192,8 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		//get maximum window bounds
 		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
 		setTitle("3D BOIDS");		
-		setSize((int)maximumWindowBounds.getWidth(),(int)maximumWindowBounds.getHeight());
+		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
+		setLocation((int)maximumWindowBounds.getWidth()/2,0);
 		setVisible(true);
 	}
 	
