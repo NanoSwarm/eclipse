@@ -41,12 +41,14 @@ public class SwarmMain {
 		// Create the parameters used in this simulation.
 		parameters = new SwarmParameters();
 		try{
-	         Properties prop = ConfigInterface.load("SwarmParameters.properties");
+	         Properties prop = ConfigInterface.load("SwarmParameters.properties"); 
+	        
 	         parameters.setProperties(prop);    
+	       
 			}
 	      catch(Exception f){
 	         f.printStackTrace();
-	      }
+	      } 
 		// Register the parameters to the agent factories.
 		AgtCameraDroneFactory.setParameters( parameters );
 		AgtCommunicatorDroneFactory.setParameters( parameters );

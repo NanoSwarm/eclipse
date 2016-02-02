@@ -17,7 +17,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -690,7 +691,7 @@ public class ProbeInterface 	extends Frame
 	@Override
 	public void endObservation() {
 		calculateTotals();
-		//createfiles();
+		createfiles();
 	}
 	public void createfiles()
 	{	
@@ -817,6 +818,23 @@ public class ProbeInterface 	extends Frame
 			{
 				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 			}
+		}
+		File f = new File (res+"\\Propertiesused.txt");
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		    Properties p = parameters.properties;
+		    Enumeration keys = p.keys();
+		    while (keys.hasMoreElements()) {
+		      String key = (String)keys.nextElement();
+		      String value = (String)p.get(key);
+		      fw.write (key+" = "+ value+"\r\n");
+		    }
+		    fw.close();
+		}
+		catch (IOException exception)
+		{
+			System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		}
 	}
 	public void deleteFolder(File folder)

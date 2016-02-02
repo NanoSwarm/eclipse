@@ -209,7 +209,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	
 	public Color3f measurementDroneColor;
 	
-	
+	public Properties properties;
 	/**
 	 * Builds a parameters set containing default values.
 	 */
@@ -287,6 +287,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	}
 	public void  setProperties(Properties prop)
 	{
+		this.properties=prop;
 		this.nbOfMeasurementDroneAgents=Integer.parseInt(prop.getProperty("nbOfMeasurementDroneAgents"));
 		this.nbOfCameraDroneAgents=Integer.parseInt(prop.getProperty("nbOfCameraDroneAgents"));
 		this.nbOfCommunicatorDroneAgents=Integer.parseInt(prop.getProperty("nbOfCommunicatorDroneAgents"));
