@@ -318,6 +318,12 @@ public class SwarmParameters extends LogoSimulationParameters{
 		  this.simulationTime=Integer.parseInt(prop.getProperty("simulationTime"));
 		  this.objectiveType=Integer.parseInt(prop.getProperty("objectiveType"));
 		  
+		  if (Integer.parseInt(prop.getProperty("resolutionType")) == 1){
+			  this.resolutionType = "position minimum";
+		  }else if (Integer.parseInt(prop.getProperty("resolutionType")) == 2){
+			  this.resolutionType = "pso";
+		  }
+		  
 		  this.maxInitialSpeed=Double.parseDouble(prop.getProperty("maxInitialSpeed"));
 		  this.minInitialSpeed=Double.parseDouble(prop.getProperty("minInitialSpeed"));
 		  
