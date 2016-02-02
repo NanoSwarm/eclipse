@@ -279,7 +279,6 @@ public class SwarmParameters extends LogoSimulationParameters{
 		this.gammaPSO=0.5;
 
 		
-		
 	}
 	public void refreshVect()
 	{
@@ -288,22 +287,22 @@ public class SwarmParameters extends LogoSimulationParameters{
 	}
 	public void  setProperties(Properties prop)
 	{
-			this.nbOfMeasurementDroneAgents=Integer.parseInt(prop.getProperty("nbOfMeasurementDroneAgents"));
-			this.nbOfCameraDroneAgents=Integer.parseInt(prop.getProperty("nbOfCameraDroneAgents"));
-		  this.nbOfCommunicatorDroneAgents=Integer.parseInt(prop.getProperty("nbOfCommunicatorDroneAgents"));
-		  this.nbOfDroneAgents=Integer.parseInt(prop.getProperty("nbOfDroneAgents"));
-		  this.nbOfMicrophoneDroneAgents=Integer.parseInt(prop.getProperty("nbOfMicrophoneDroneAgents"));
+		this.nbOfMeasurementDroneAgents=Integer.parseInt(prop.getProperty("nbOfMeasurementDroneAgents"));
+		this.nbOfCameraDroneAgents=Integer.parseInt(prop.getProperty("nbOfCameraDroneAgents"));
+		this.nbOfCommunicatorDroneAgents=Integer.parseInt(prop.getProperty("nbOfCommunicatorDroneAgents"));
+		this.nbOfDroneAgents=Integer.parseInt(prop.getProperty("nbOfDroneAgents"));
+		this.nbOfMicrophoneDroneAgents=Integer.parseInt(prop.getProperty("nbOfMicrophoneDroneAgents"));
 		  
-		  this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
-		  this.communicatorDroneDetectionRange=Integer.parseInt(prop.getProperty("communicatorDroneDetectionRange"));
-		  this.droneDetectionRange=Integer.parseInt(prop.getProperty("droneDetectionRange"));
-		  this.microphoneDroneDetectionRange=Integer.parseInt(prop.getProperty("microphoneDroneDetectionRange"));
-		  this.measurementDroneDetectionRange=Integer.parseInt(prop.getProperty("measurementDroneDetectionRange"));
-		  this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
+		this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
+		this.communicatorDroneDetectionRange=Integer.parseInt(prop.getProperty("communicatorDroneDetectionRange"));
+		this.droneDetectionRange=Integer.parseInt(prop.getProperty("droneDetectionRange"));
+		this.microphoneDroneDetectionRange=Integer.parseInt(prop.getProperty("microphoneDroneDetectionRange"));
+		this.measurementDroneDetectionRange=Integer.parseInt(prop.getProperty("measurementDroneDetectionRange"));
+		this.cameraDroneDetectionRange=Integer.parseInt(prop.getProperty("cameraDroneDetectionRange"));
 		  
 		  
-		  this.repulsionDistance=Integer.parseInt(prop.getProperty("repulsionDistance"));
-		  this.orientationDistance=Integer.parseInt(prop.getProperty("orientationDistance"));
+		 this.repulsionDistance=Integer.parseInt(prop.getProperty("repulsionDistance"));
+		 this.orientationDistance=Integer.parseInt(prop.getProperty("orientationDistance"));
 		  this.attractionDistance=Integer.parseInt(prop.getProperty("attractionDistance"));
 		  this.repulsionCoeff=Integer.parseInt(prop.getProperty("repulsionCoeff"));
 		  this.orientationCoeff=Integer.parseInt(prop.getProperty("orientationCoeff"));

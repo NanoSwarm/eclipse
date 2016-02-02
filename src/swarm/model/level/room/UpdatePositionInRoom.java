@@ -105,7 +105,6 @@ public class UpdatePositionInRoom {
 				if(k < 0) k = 0;
 				if (!(spaceGraph[i][j][k].cubeIsVisited()))
 				{
-					System.out.println(Objective.getObjective(castedAgt.getLocation()));
 					spaceGraph[i][j][k].setMeasuredValue(Objective.getObjective(castedAgt.getLocation()));
 				}
 				

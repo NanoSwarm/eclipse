@@ -48,7 +48,7 @@ public class Cube {
 	/**
 	 * the last measured value in this cube.
 	 */
-	private double measuredValue = 0;
+	private double measuredValue ;
 	
 	/**
 	 * 

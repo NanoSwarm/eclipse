@@ -690,15 +690,13 @@ public class ProbeInterface 	extends Frame
 	@Override
 	public void endObservation() {
 		calculateTotals();
-		createfiles();
+		//createfiles();
 	}
 	public void createfiles()
 	{	
 		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH-mm-ss");
 		Calendar cal = Calendar.getInstance();
 		String res=new String("Results "+dateFormat.format(cal.getTime()));
-	//	File results=new File("Rkk"+date.toString()+"bggg");
-		//results.mkdir();
 		File measurementDroneFolder=new File(res+"\\MeasurementDrone"); 
 		File microphoneDroneFolder=new File(res+"\\MicrophoneDrone"); 
 		File cameraDroneFolder=new File(res+"\\CameraDrone"); 

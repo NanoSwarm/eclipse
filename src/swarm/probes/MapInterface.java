@@ -63,7 +63,8 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
     	actions.add(NextButton,BorderLayout.SOUTH);
     	
     	drawer=new MapDrawer(param);
-    	mainPanel.add(drawer,BorderLayout.CENTER);	
+    	mainPanel.add(drawer,BorderLayout.CENTER);
+    	
 	    //parameters of the window
 	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
 		//get maximum window bounds
@@ -71,7 +72,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
     	this.setTitle(str);
         this.setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
         this.setLocation((int)maximumWindowBounds.getWidth()/2,0);
-        this.setBackground(Color.LIGHT_GRAY);
+        //this.setBackground(Color.LIGHT_GRAY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false); 
     }
@@ -100,7 +101,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 			SimulationTimeStamp initialTimestamp,
 			ISimulationEngine simulationEngine
 	) {
-	
+		
 	}
 
 	/**
@@ -110,7 +111,6 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 	public void observeAtPartialConsistentTime(
 			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine){
-		drawer.setGraph(simulationEngine);
 	
 	}
 
@@ -147,7 +147,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener{
 			ISimulationEngine simulationEngine
 	) { 
 		drawer.setGraph(simulationEngine);
-        this.setVisible(true);
+		this.setVisible(true);
 	}
 	
 }

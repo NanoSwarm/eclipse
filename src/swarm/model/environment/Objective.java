@@ -42,10 +42,8 @@ public class Objective {
 					+Math.pow(pos.y-objectivePosition.y , 2)
 					+Math.pow(pos.z-objectivePosition.z , 2)
 					   );
-			//System.out.println((1/res)/Math.sqrt( Math.pow(objectivePosition.x , 2) 
-			//		+Math.pow(objectivePosition.y , 2)
-			//		+Math.pow(objectivePosition.z , 2)
-			//		   ));
+			
+		
 		}else if (ObjectiveType == 3){
 
 			res=1.0;

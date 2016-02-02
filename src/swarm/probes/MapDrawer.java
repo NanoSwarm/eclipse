@@ -59,6 +59,8 @@ public class MapDrawer extends JPanel
 							+Math.pow(parameters.objectivePosition.y , 2)
 							+Math.pow(parameters.objectivePosition.z , 2)
 							   ));;
+							   if (val==Double.POSITIVE_INFINITY||val==Double.NEGATIVE_INFINITY) val=tempMax;
+							   System.out.println(val+"j="+j+"i="+i);
 				   int valInt=(int) Math.floor(6*val);
 				   if (valInt>235) valInt=235;
 				   if (valInt<20) valInt=20;
@@ -70,7 +72,8 @@ public class MapDrawer extends JPanel
 					   g.setColor(new Color(valInt/6,255-valInt,255));
 
 				   }else if (val>tempMax/2){
-					   g.setColor(new Color(10,10,255-valInt+20));						 
+					   g.setColor(new Color(valInt/6,valInt/6,255-valInt+20));
+					   
 					 }
 				   g.fillRect(i*IFACTOR+IFACTOR, j*JFACTOR+JFACTOR,IFACTOR, JFACTOR);
 			   }
