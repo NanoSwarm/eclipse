@@ -33,143 +33,320 @@ public class ConfigInterface extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private SwarmParameters parameters;
-	private JSlider configInterNbrDroneSlider;
-	
 	public boolean configurationOK=false;
-	JFrame configInterface;
+	private SpinnerLine nbOfCameraDroneLine = null;
+	private SpinnerLine nbOfCommunicatorDroneLine = null;
+	private SpinnerLine nbOfMeasurementDroneLine = null;
+	private SpinnerLine nbOfMicrophoneDroneLine = null;
+	private SpinnerLine cameraDetectionRangeLine = null;
+	private SpinnerLine measurementDetectionRangeLine = null;
+	private SpinnerLine microphoneDetectionRangeLine = null;
+	private SpinnerLine communicatorDetectionRangeLine = null;
+	
+	private SpinnerLine attractionDistanceLine = null;
+	private SpinnerLine orientationDistanceLine = null;
+	private SpinnerLine repulsionDistanceLine = null;
+	private SpinnerLine attractionCoeffLine = null;
+	private SpinnerLine orientationCoeffLine = null;
+	private SpinnerLine repulsionCoeffLine = null;
+	
 	
 	
 	public ConfigInterface(SwarmParameters parameters)
 	{
 		super("Configuration");
-		this.parameters = parameters;
 		
 		GridBagLayout gblConfigInterface = new GridBagLayout();
-		configInterface = new JFrame();
 		GridBagConstraints configCons = new GridBagConstraints();
+		getContentPane().setLayout(gblConfigInterface);
+		addWindowListener(this);
 		
-		configInterface.setLayout(gblConfigInterface);
 		
-		//1er ligne
-		JLabel configInterNbrDronesLabel = new JLabel("Nombre de drones :");
-		configCons.anchor = GridBagConstraints.WEST;
-		configCons.insets = new Insets(10,2,2,10);
-		configCons.gridwidth = 1;
-		gblConfigInterface.setConstraints(configInterNbrDronesLabel, configCons);
-		configInterface.add(configInterNbrDronesLabel);
-		
-		JSpinner configInterNbrDronesText = new JSpinner();
-		getTextField(configInterNbrDronesText).setColumns(4);
-		configInterNbrDronesText.addChangeListener(
-				new ChangeListener()
-				{
-					@Override
-					public void stateChanged(ChangeEvent e) {
-						parameters.nbOfDroneAgents = (int)configInterNbrDronesText.getValue();
-						configInterNbrDroneSlider.setValue(parameters.nbOfDroneAgents);
-					}
-				}
-				);
-		
-		configCons.gridwidth = 1;
-		gblConfigInterface.setConstraints(configInterNbrDronesText, configCons);
-		configInterface.add(configInterNbrDronesText);
-		
+		ChangeListener changeListener = new ChangeListener()
+		{
+			@Override
+			public void stateChanged(ChangeEvent e) {
 				
-		JLabel configInterNbrDronesDefaultValueLabel = new JLabel("Default : 500");
-		configCons.gridwidth = 1;
-		gblConfigInterface.setConstraints(configInterNbrDronesDefaultValueLabel, configCons);
-		configInterface.add(configInterNbrDronesDefaultValueLabel);
-		
-		configInterNbrDroneSlider = new JSlider();
-		configInterNbrDroneSlider.setMaximum(1500);
-		configInterNbrDroneSlider.setMinimum(0);
-		configInterNbrDroneSlider.setValue(parameters.nbOfDroneAgents);
-		configInterNbrDroneSlider.setPaintTicks(true);
-		//configInterNbrDroneSlider.setPaintLabels(true);
-		configInterNbrDroneSlider.setMinorTickSpacing(100);
-		configInterNbrDroneSlider.setMajorTickSpacing(500);
-		configInterNbrDroneSlider.addChangeListener(
-			new ChangeListener()
-			{
-				public void stateChanged(ChangeEvent event)
-				{
-					configInterNbrDronesText.setValue(((JSlider)event.getSource()).getValue());
-					parameters.nbOfDroneAgents = ((JSlider)event.getSource()).getValue();
+				/*
+				 * camera drone parameters
+				 */
+				if(e.getSource().hashCode() == nbOfCameraDroneLine.getSliderHashcode()){
+					parameters.nbOfCameraDroneAgents = nbOfCameraDroneLine.sliderChanged();
+				}else if (e.getSource().hashCode() == nbOfCameraDroneLine.getSpinnerHashcode()){
+					parameters.nbOfCameraDroneAgents = nbOfCameraDroneLine.spinnerChanged();
+				}
+				
+				if(e.getSource().hashCode() == cameraDetectionRangeLine.getSliderHashcode()){
+					parameters.cameraDroneDetectionRange = cameraDetectionRangeLine.sliderChanged();
+				}else if (e.getSource().hashCode() == cameraDetectionRangeLine.getSpinnerHashcode()){
+					parameters.cameraDroneDetectionRange = cameraDetectionRangeLine.spinnerChanged();
+				}
+				
+				/*
+				 * communicator drone parameters
+				 */
+				else if(e.getSource().hashCode() == nbOfCommunicatorDroneLine.getSliderHashcode()){
+					parameters.nbOfCommunicatorDroneAgents = nbOfCommunicatorDroneLine.sliderChanged();
+				}else if (e.getSource().hashCode() == nbOfCommunicatorDroneLine.getSpinnerHashcode()){
+					parameters.nbOfCommunicatorDroneAgents = nbOfCommunicatorDroneLine.spinnerChanged();
+				}
+				
+				if(e.getSource().hashCode() == communicatorDetectionRangeLine.getSliderHashcode()){
+					parameters.communicatorDroneDetectionRange = communicatorDetectionRangeLine.sliderChanged();
+				}else if (e.getSource().hashCode() == communicatorDetectionRangeLine.getSpinnerHashcode()){
+					parameters.communicatorDroneDetectionRange = communicatorDetectionRangeLine.spinnerChanged();
+				}
+				
+				/*
+				 * measurement drone parameters
+				 */
+				else if(e.getSource().hashCode() == nbOfMeasurementDroneLine.getSliderHashcode()){
+					parameters.nbOfMeasurementDroneAgents = nbOfMeasurementDroneLine.sliderChanged();
+				}else if (e.getSource().hashCode() == nbOfMeasurementDroneLine.getSpinnerHashcode()){
+					parameters.nbOfMeasurementDroneAgents = nbOfMeasurementDroneLine.spinnerChanged();
+				}
+				
+				if(e.getSource().hashCode() == measurementDetectionRangeLine.getSliderHashcode()){
+					parameters.measurementDroneDetectionRange = measurementDetectionRangeLine.sliderChanged();
+				}else if (e.getSource().hashCode() == measurementDetectionRangeLine.getSpinnerHashcode()){
+					parameters.measurementDroneDetectionRange = measurementDetectionRangeLine.spinnerChanged();
+				}
+				
+				/*
+				 * microphone drone parameters
+				 */
+				else if(e.getSource().hashCode() == nbOfMicrophoneDroneLine.getSliderHashcode()){
+					parameters.nbOfMicrophoneDroneAgents = nbOfMicrophoneDroneLine.sliderChanged();
+				}else if (e.getSource().hashCode() == nbOfMicrophoneDroneLine.getSpinnerHashcode()){
+					parameters.nbOfMicrophoneDroneAgents = nbOfMicrophoneDroneLine.spinnerChanged();
+				}
+				
+				if(e.getSource().hashCode() == microphoneDetectionRangeLine.getSliderHashcode()){
+					parameters.microphoneDroneDetectionRange = microphoneDetectionRangeLine.sliderChanged();
+				}else if (e.getSource().hashCode() == microphoneDetectionRangeLine.getSpinnerHashcode()){
+					parameters.microphoneDroneDetectionRange = microphoneDetectionRangeLine.spinnerChanged();
+				}
+				
+				/*
+				 * boids parameters
+				 */				
+				else if(e.getSource().hashCode() == attractionDistanceLine.getSliderHashcode()){
+					parameters.attractionDistance = attractionDistanceLine.sliderChanged();
+				}else if (e.getSource().hashCode() == attractionDistanceLine.getSpinnerHashcode()){
+					parameters.attractionDistance = attractionDistanceLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == orientationDistanceLine.getSliderHashcode()){
+					parameters.orientationDistance = orientationDistanceLine.sliderChanged();
+				}else if (e.getSource().hashCode() == orientationDistanceLine.getSpinnerHashcode()){
+					parameters.orientationDistance = orientationDistanceLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == repulsionDistanceLine.getSliderHashcode()){
+					parameters.repulsionDistance = repulsionDistanceLine.sliderChanged();
+				}else if (e.getSource().hashCode() == repulsionDistanceLine.getSpinnerHashcode()){
+					parameters.repulsionDistance = repulsionDistanceLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == attractionCoeffLine.getSliderHashcode()){
+					parameters.attractionCoeff = attractionCoeffLine.sliderChanged();
+				}else if (e.getSource().hashCode() == attractionCoeffLine.getSpinnerHashcode()){
+					parameters.attractionCoeff = attractionCoeffLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == orientationCoeffLine.getSliderHashcode()){
+					parameters.orientationCoeff = orientationCoeffLine.sliderChanged();
+				}else if (e.getSource().hashCode() == orientationCoeffLine.getSpinnerHashcode()){
+					parameters.orientationCoeff = orientationCoeffLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == repulsionCoeffLine.getSliderHashcode()){
+					parameters.repulsionCoeff = repulsionCoeffLine.sliderChanged();
+				}else if (e.getSource().hashCode() == repulsionCoeffLine.getSpinnerHashcode()){
+					parameters.repulsionCoeff = repulsionCoeffLine.spinnerChanged();
 				}
 			}
-		);
-		configCons.gridwidth = GridBagConstraints.REMAINDER;
-		gblConfigInterface.setConstraints(configInterNbrDroneSlider, configCons);
-		configInterface.add(configInterNbrDroneSlider);
+		};
 		
+		/*
+		 * camera drone parameters
+		 */	
+		new MyLabel("Camera drone parameters",gblConfigInterface,this);
 		
-		//2ème ligne
-		JLabel configInterNbrDronesMicroLabel = new JLabel("Nombre de drones microphones:");
-		configCons.anchor = GridBagConstraints.WEST;
-		configCons.insets = new Insets(10,2,2,10);			
-		gblConfigInterface.setConstraints(configInterNbrDronesMicroLabel, configCons);
-		configInterface.add(configInterNbrDronesMicroLabel);
+		nbOfCameraDroneLine = new SpinnerLine(
+				"Number of \"CameraDrone\" agents :",
+				parameters.nbOfCameraDroneAgents,
+				0,
+				1500,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
 		
-		JTextField configInterNbrDronesMicroText = new JTextField(4); //A remplacer par le string paramètre
-		gblConfigInterface.setConstraints(configInterNbrDronesMicroText, configCons);
-		configCons.gridwidth = 1;
-		configInterface.add(configInterNbrDronesMicroText);
+		cameraDetectionRangeLine = new SpinnerLine(
+				"Camera drone Detection Range :",
+				(int)parameters.cameraDroneDetectionRange,
+				0,
+				1000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
 		
-		JLabel configInterNbrDronesMicroDefaultValueLabel = new JLabel("Default : 100");
-		configCons.gridwidth = GridBagConstraints.REMAINDER;
-		gblConfigInterface.setConstraints(configInterNbrDronesMicroDefaultValueLabel, configCons);
-		configCons.gridwidth = 1;
-		configInterface.add(configInterNbrDronesMicroDefaultValueLabel);
+		/*
+		 * communicator drone parameters
+		 */	
+		new MyLabel("Communicator drone parameters",gblConfigInterface,this);
+		nbOfCommunicatorDroneLine = new SpinnerLine(
+				"Number of \"CommunicatorDrone\" agents :",
+				parameters.nbOfCommunicatorDroneAgents,
+				0,
+				1500, 
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
 		
+		communicatorDetectionRangeLine = new SpinnerLine(
+				"Communicator drone Detection Range :",
+				(int)parameters.communicatorDroneDetectionRange,
+				0,
+				1000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+				
+		/*
+		 * measurement drone parameters
+		 */		
+		new MyLabel("Measurement drone parameters",gblConfigInterface,this);
+		nbOfMeasurementDroneLine = new SpinnerLine(
+				"Number of \"MeasurementDrone\" agents :",
+				parameters.nbOfMeasurementDroneAgents,
+				0,
+				1500,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		measurementDetectionRangeLine = new SpinnerLine(
+				"Measurement drone Detection Range :",
+				(int)parameters.measurementDroneDetectionRange,
+				0,
+				1000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		/*
+		 * microphone drone parameters
+		 */	
+		new MyLabel("Microphone drone parameters",gblConfigInterface,this);
+		nbOfMicrophoneDroneLine = new SpinnerLine(
+				"Number of \"MicrohponeDrone\" agents :",
+				parameters.nbOfMicrophoneDroneAgents,
+				0,
+				1500,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		microphoneDetectionRangeLine = new SpinnerLine(
+				"Microphone drone Detection Range :",
+				(int)parameters.microphoneDroneDetectionRange,
+				0,
+				1000, 
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		/*
+		 * boids parameters
+		 */			
+		new MyLabel("Boids model parameters",gblConfigInterface,this);
+		attractionDistanceLine = new SpinnerLine(
+				"Attraction distance :",
+				(int)parameters.attractionDistance,
+				0,
+				1500,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		orientationDistanceLine = new SpinnerLine(
+				"Orientation distance :",
+				(int)parameters.orientationDistance,
+				0,
+				1500, 
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		repulsionDistanceLine = new SpinnerLine(
+				"Repulsion distance :",
+				(int)parameters.repulsionDistance,
+				0,
+				1500, 
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		attractionCoeffLine = new SpinnerLine(
+				"Attraction coefficient :",
+				(int)parameters.attractionCoeff,
+				0,
+				10000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		orientationCoeffLine = new SpinnerLine(
+				"Orientation coefficient :",
+				(int)parameters.orientationCoeff,
+				0,
+				10000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
+		
+		repulsionCoeffLine = new SpinnerLine(
+				"Repulsion coefficient :",
+				(int)parameters.repulsionCoeff,
+				0,
+				10000,
+				gblConfigInterface, 
+				this,
+				changeListener
+				);
 		
 		//Dernière ligne
 		JButton launchSimu = new JButton("Launch Simulation");
 		configCons.anchor = GridBagConstraints.WEST;
 		gblConfigInterface.setConstraints(launchSimu, configCons);
-		configInterface.add(launchSimu);
+		add(launchSimu);
 		launchSimu.addActionListener(this);
 		launchSimu.setActionCommand("Launch Simulation");
 		
 		
-		JButton quitSimu = new JButton("Quit");
-		configCons.gridwidth = GridBagConstraints.REMAINDER;
-		gblConfigInterface.setConstraints(quitSimu, configCons);
-		configCons.gridwidth = 1;
-		configInterface.add(quitSimu);
-		quitSimu.addActionListener(this);
-		quitSimu.setActionCommand("Quit");
 		
 		//
-		configInterface.pack();
-		configInterface.setVisible(true);
-		//configInterface.setSize(300, 500);
-		
-		/*
-		TextField serverAdress = new TextField("localhost",40);
-		g1.setConstraints(serverAdress, constraints);
-		interface1.add(serverAdress);
-						
-		JButton connect = new JButton("Connect");
-		g1.setConstraints(connect, constraints);
-		interface1.add(connect);
-		connect.addActionListener(this);
-		connect.setActionCommand("Connect");
-
-						
-		JButton disconnect = new JButton("Disconnect");
-		constraints.gridwidth = GridBagConstraints.REMAINDER;
-		g1.setConstraints(disconnect, constraints);
-		constraints.gridwidth = 1;
-		interface1.add(disconnect);
-		disconnect.addActionListener(this);
-		disconnect.setActionCommand("Disconnect");
-		*/
+		pack();
+		setVisible(true);
+		//setSize(300, 500);
 	}
 
 	
-	public JFormattedTextField getTextField(JSpinner spinner) {
+	public static JFormattedTextField getTextField(JSpinner spinner) {
 	    JComponent editor = spinner.getEditor();
 	    if (editor instanceof JSpinner.DefaultEditor) {
 	        return ((JSpinner.DefaultEditor)editor).getTextField();
@@ -184,15 +361,10 @@ public class ConfigInterface extends JFrame
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getActionCommand().equals("Quit"))
-		{
-			System.exit(0);
-		}
-		else if (e.getActionCommand().equals("Launch Simulation"))
+		
+		if (e.getActionCommand().equals("Launch Simulation"))
 		{
 			configurationOK=true;
-			//configInterface.setVisible(false);
 		}
 	}
 
