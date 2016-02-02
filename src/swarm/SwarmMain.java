@@ -57,7 +57,7 @@ public class SwarmMain {
 		AgtMeasurementDroneFactory.setParameters( parameters );
 
 		ConfigInterface configInterface = new ConfigInterface(parameters);	
-		while (configInterface.configurationOK==false){  }; //Attente qu'on lance la simulation via la l'interface de configuration
+		while (configInterface.configurationOK==false){ System.out.print(""); }; //Wait for the simulation parameters to be ready.
 		
 		// Create the simulation engine that will run simulations
 		engine = new EngineMonothreadedDefaultdisambiguation( );

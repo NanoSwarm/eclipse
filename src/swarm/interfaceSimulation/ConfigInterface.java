@@ -447,7 +447,6 @@ public class ConfigInterface extends JFrame
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		if (e.getActionCommand().equals("Launch Simulation"))
 		{
 			configurationOK=true;

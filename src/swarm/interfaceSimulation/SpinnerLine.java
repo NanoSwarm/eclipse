@@ -74,7 +74,6 @@ public class SpinnerLine {
 		
 		//change the stepSize of the spinner to have more precision
 		double stepSize = 1.0/scaleFactor;
-		System.out.println(stepSize);
 		SpinnerModel model = new SpinnerNumberModel(init,min,max,stepSize);
 		
 		spinner = new JSpinner(model);
