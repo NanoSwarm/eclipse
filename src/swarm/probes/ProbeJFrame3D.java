@@ -82,7 +82,6 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	 * the constructor of the interface
 	 * @param parameters of the simulation
 	 */
-
 	public ProbeJFrame3D (SwarmParameters parameters)
 	{
 		this.parameters = parameters;
@@ -160,6 +159,9 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	) { 
 		
 	}
+	/**
+	 * Set the graphical user interface
+	 */
 	public void initGUI()
 	{	
 		System.setProperty("sun.awt.noerasebackground", "true");
@@ -206,7 +208,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	public void createAgents(
 		SimulationTimeStamp timestamp,
 		ISimulationEngine simulationEngine
-){
+	){
 	IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
 			SwarmLevelList.ROOM
 			
@@ -215,7 +217,8 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	Vector3d centre=new Vector3d(0,0,2.41);
 	int somme=0;
 	
-	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() ){
+	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() )
+	{
 		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
 		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
 			castedAgtState = (AgtCameraDronePLSInRoom) agtState;
@@ -257,43 +260,44 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	tg.setTransform(transs);
 	//sensitivity of the movement
 	double mousesensitivity=0.005;
-	    // Creation of the rotation Y axis ( hold left click )
-	    MouseRotate mouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
-	    mouseRotate.setFactor(mousesensitivity);
-	    mouseRotate.setTransformGroup(tg);
-	    // Area of the rotation Y
-	    mouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0), 1000));
-	 	this.branchGroup.addChild(mouseRotate);
-	    // Creation of the translation X(hold right click)
-	    MouseTranslate mouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
-	    mouseTranslate.setFactor(mousesensitivity);
-	    mouseTranslate.setTransformGroup(tg);
-	    // Area of the translation X
-	    BoundingBox box= new BoundingBox(new Point3d (0,0,0),new Point3d(0.0001,0,0));
-	    mouseTranslate.setSchedulingBounds(box);
-	    this.branchGroup.addChild(mouseTranslate);
-	    // Creation of the zoom (hold alt+left click) 
-	    MouseZoom mouseZoom = new MouseZoom(MouseBehavior.INVERT_INPUT);
-	    mouseZoom.setFactor(mousesensitivity);
-	    mouseZoom.setTransformGroup(tg);
-	    // Area of the zoom
-	    mouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
-	    this.branchGroup.addChild(mouseZoom); 
-	    //Navigation using keypad
-	    /* Down/up arrow : move backward/forward
-	     * right/left_arrow : move right/left
-	     * page up/down : move up/down
-	     * +shift to slow movement
-	     */
-	    KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
-	    key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
-	    this.branchGroup.addChild(key);
-	
+    // Creation of the rotation Y axis ( hold left click )
+    MouseRotate mouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
+    mouseRotate.setFactor(mousesensitivity);
+    mouseRotate.setTransformGroup(tg);
+    // Area of the rotation Y
+    mouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0), 1000));
+ 	this.branchGroup.addChild(mouseRotate);
+    // Creation of the translation X(hold right click)
+    MouseTranslate mouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
+    mouseTranslate.setFactor(mousesensitivity);
+    mouseTranslate.setTransformGroup(tg);
+    // Area of the translation X
+    BoundingBox box= new BoundingBox(new Point3d (0,0,0),new Point3d(0.0001,0,0));
+    mouseTranslate.setSchedulingBounds(box);
+    this.branchGroup.addChild(mouseTranslate);
+    // Creation of the zoom (hold alt+left click) 
+    MouseZoom mouseZoom = new MouseZoom(MouseBehavior.INVERT_INPUT);
+    mouseZoom.setFactor(mousesensitivity);
+    mouseZoom.setTransformGroup(tg);
+    // Area of the zoom
+    mouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
+    this.branchGroup.addChild(mouseZoom); 
+    //Navigation using keypad
+    /* Down/up arrow : move backward/forward
+     * right/left_arrow : move right/left
+     * page up/down : move up/down
+     * +shift to slow movement
+     */
+    KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
+    key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
+    this.branchGroup.addChild(key);
+
 	}
 	/**
 	 * Create the universe (ie the space where are the nanodrones)
 	 */
-	public void createUniverse(){		
+	public void createUniverse()
+	{		
 		Transform3D translate=new Transform3D();
  		translate.setTranslation(new Vector3d(
  				parameters.roomBounds.x/(2*FACTOR3D),
@@ -354,7 +358,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 		
 	}
 	/**
-	 * Create the vertice of the box
+	 * Create the vertices of the box
 	 * @param v1
 	 * @param v2
 	 */
@@ -374,65 +378,65 @@ public class ProbeJFrame3D extends Frame implements IProbe{
  * @param simulationEngine The engine where the simulation is running.
  */
 
-public void updateagents(SimulationTimeStamp timestamp,
-		ISimulationEngine simulationEngine
-){
-	IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
-			SwarmLevelList.ROOM
-	);
-	for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() )
-	{
-		AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-		if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
-			castedAgtState = (AgtCameraDronePLSInRoom) agtState;	
-		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
-			castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;	
-		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
-			castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-		}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
-			castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
+	public void updateagents(SimulationTimeStamp timestamp,
+			ISimulationEngine simulationEngine
+	){
+		IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
+				SwarmLevelList.ROOM
+		);
+		for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() )
+		{
+			AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+				castedAgtState = (AgtCameraDronePLSInRoom) agtState;	
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+				castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;	
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+				castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
+				castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
+			}
+			//Get the current position and transformation
+				Transform3D currentTrans=new Transform3D();
+				Transform3D trans=new Transform3D();
+				Transform3D rotate=new Transform3D();
+				Vector3d currentVect=new Vector3d();
+				Vector3d position =new Vector3d(
+						castedAgtState.getLocation().x/FACTOR3D,
+						-castedAgtState.getLocation().y/FACTOR3D,
+						castedAgtState.getLocation().z/FACTOR3D);			
+				castedAgtState.transformGroup.getTransform(currentTrans);
+				trans.get(currentVect);
+			//Calculate and set the new vector
+				Vector3d newVect=new Vector3d(
+						position.x-currentVect.x,
+						position.y-currentVect.y,
+						position.z-currentVect.z);
+				
+				trans.setTranslation(newVect);	
+				Vector3d vit=new Vector3d(
+											castedAgtState.getVelocity().getX(),
+											castedAgtState.getVelocity().getY(),
+											castedAgtState.getVelocity().getZ()
+											);
+			// Set the angle for the orientation to match the movement													
+			rotate.rotX(0);
+			rotate.rotY(0);
+			rotate.rotZ(Math.PI + Math.atan2(vit.x, vit.y) );			
+	 		trans.mul(rotate);
+	 		
+	 		rotate.rotX(0);
+	 		rotate.rotY( Math.atan2( vit.z , Math.sqrt(Math.pow(vit.x,2) + Math.pow(vit.y, 2))) );
+	 		rotate.rotZ(0);
+	 		trans.mul(rotate);
+	 		
+	 		rotate.rotX( Math.PI/2 );
+	 		rotate.rotY(0);
+	 		rotate.rotZ(0);
+	 		trans.mul(rotate);
+	 		
+			castedAgtState.transformGroup.setTransform(trans);		
+			}
 		}
-		//Get the current position and transformation
-			Transform3D currentTrans=new Transform3D();
-			Transform3D trans=new Transform3D();
-			Transform3D rotate=new Transform3D();
-			Vector3d currentVect=new Vector3d();
-			Vector3d position =new Vector3d(
-					castedAgtState.getLocation().x/FACTOR3D,
-					-castedAgtState.getLocation().y/FACTOR3D,
-					castedAgtState.getLocation().z/FACTOR3D);			
-			castedAgtState.transformGroup.getTransform(currentTrans);
-			trans.get(currentVect);
-		//Calculate and set the new vector
-			Vector3d newVect=new Vector3d(
-					position.x-currentVect.x,
-					position.y-currentVect.y,
-					position.z-currentVect.z);
-			
-			trans.setTranslation(newVect);	
-			Vector3d vit=new Vector3d(
-										castedAgtState.getVelocity().getX(),
-										castedAgtState.getVelocity().getY(),
-										castedAgtState.getVelocity().getZ()
-										);
-		// Set the angle for the orientation to match the movement													
-		rotate.rotX(0);
-		rotate.rotY(0);
-		rotate.rotZ(Math.PI + Math.atan2(vit.x, vit.y) );			
- 		trans.mul(rotate);
- 		
- 		rotate.rotX(0);
- 		rotate.rotY( Math.atan2( vit.z , Math.sqrt(Math.pow(vit.x,2) + Math.pow(vit.y, 2))) );
- 		rotate.rotZ(0);
- 		trans.mul(rotate);
- 		
- 		rotate.rotX( Math.PI/2 );
- 		rotate.rotY(0);
- 		rotate.rotZ(0);
- 		trans.mul(rotate);
- 		
-		castedAgtState.transformGroup.setTransform(trans);		
-		}
-	}
 }
 

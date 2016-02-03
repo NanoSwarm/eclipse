@@ -27,61 +27,84 @@ import swarm.model.SwarmParameters;
  * The probe displaying the map of the space explored.
  *
  */
-public class MapInterface extends JFrame implements IProbe,ActionListener{
+public class MapInterface extends JFrame implements IProbe,ActionListener
+{
 	/** 
 	 * The main panel 
 	 */
 	public JPanel mainPanel;
+	/**
+	 * the level of the altitude to show
+	 */
 	public JLabel niveauZ;
+	/**
+	 * the panel of the commands
+	 */
 	public JPanel actions;
+	/**
+	 * the button to up the altitude 
+	 */
 	public JButton NextButton;
+	/**
+	 * the parameters of the simulation
+	 */
 	public SwarmParameters parameters;
 	/**
 	 * the drawer of the map
 	 */
 	private MapDrawer drawer; 
 	/**
-	 * 
+	 * The constructor of the interface
 	 * @param str the title of the window
 	 */
     public MapInterface(String str,SwarmParameters param)
     {
     	parameters=param;
     	mainPanel = new JPanel();
-    	mainPanel.setLayout(new BorderLayout());
-    	this.setContentPane(mainPanel);
+    	niveauZ=new JLabel("Z = 0"+"("+parameters.roomBoundsZ+")");
     	NextButton=new JButton("Next level");
+      	drawer=new MapDrawer(param);
+    	actions=new JPanel();
+    	initGUI();
+    	this.setTitle(str);
+        this.setVisible(false); 
+    }
+    /**
+     * set the graphical user interface
+     */
+    public void initGUI()
+    {
+    	mainPanel.setLayout(new BorderLayout());
+    	this.setContentPane(mainPanel);	
     	NextButton.addActionListener(this);
     	NextButton.setActionCommand("suivant");
-    	niveauZ=new JLabel("Z = 0"+"("+parameters.roomBoundsZ+")");
     	niveauZ.setHorizontalAlignment(JLabel.CENTER);
     	niveauZ.setFont(new Font(niveauZ.getName(), Font.BOLD, 2*niveauZ.getFont().getSize()));
-    	actions=new JPanel();
     	actions.setLayout(new BorderLayout());
     	mainPanel.add(actions,BorderLayout.NORTH);
     	actions.add(niveauZ,BorderLayout.NORTH);
     	actions.add(NextButton,BorderLayout.SOUTH);
-    	
-    	drawer=new MapDrawer(param);
     	mainPanel.add(drawer,BorderLayout.CENTER);
     	
 	    //parameters of the window
 	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
 		//get maximum window bounds
 		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
-    	this.setTitle(str);
+    	
         this.setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
         this.setLocation((int)maximumWindowBounds.getWidth()/2,0);
-        //this.setBackground(Color.LIGHT_GRAY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(false); 
     }
-    
+    /**
+     * {@inheritDoc}
+     */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		String command=new String();
-		command= e.getActionCommand();
-		if (command=="suivant") {
+		command = e.getActionCommand();
+		if (command=="suivant") 
+		{
 			drawer.setZ(drawer.getZ()+1);
 			if (drawer.getZ() >= drawer.graph.getKmax()) drawer.setZ(0);
 			niveauZ.setText("Z = "+drawer.getZ()*drawer.graph.getLength()+"("+parameters.roomBoundsZ+")");

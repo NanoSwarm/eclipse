@@ -33,8 +33,7 @@ public class SwarmMain {
 	private SwarmMain() 
 	{
 		
-	}
-	
+	}	
 	public static void main(String[] Args)
 	{
 		

@@ -8,6 +8,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -53,9 +54,14 @@ import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
 @SuppressWarnings("serial")
+/**
+ * 
+ * @author Alexandre JIN
+ * The probe displaying the chart of the energy consumption and the creation of the files
+ *
+ */
 public class ProbeInterface 	extends Frame 
-								implements 	WindowListener,
-											ActionListener,
+								implements 	ActionListener,
 											IProbe
 {
 	/**
@@ -107,7 +113,10 @@ public class ProbeInterface 	extends Frame
 	 * A condition to block the selection of the number of drone before selecting the type of the drone
 	 */
 	private boolean bloc = false;
-	
+	/**
+	 * the constructor of the interface
+	 * @param parameters of the simulation
+	 */
 	public ProbeInterface(SwarmParameters param)
 	{
 		initParameters(param);
@@ -139,15 +148,11 @@ public class ProbeInterface 	extends Frame
 		this.listCommunicatorDrone = new String[parameters.nbOfCommunicatorDroneAgents];
 		this.listMeasurementDrone = new String[parameters.nbOfMeasurementDroneAgents];
 	}
+	/**
+	 * Set the graphical user interface
+	 */
 	public void initGUI()
 	{
-	    //parameters of the window
-	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
-		//get maximum window bounds
-		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
-		setTitle("Energy consumption over time");
-		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
-		setLocation(0,0);
 		setLayout(new BorderLayout());
 		// Container in the north part for the Jcombobox
 		Container comboBoxContent = new Container();
@@ -183,7 +188,7 @@ public class ProbeInterface 	extends Frame
         chartPanel = new ChartPanel(chart);
     	plot.setDataset(0,null);
 		plot.setRenderer(0,null);  
-      //  chartPanel.setPreferredSize(new Dimension(500, 270));
+		// chartPanel.setPreferredSize(new Dimension(500, 270));
         add(BorderLayout.CENTER,chartPanel);
         // Radio Buttons
     	Container radioButtonContent=new Container();
@@ -238,7 +243,21 @@ public class ProbeInterface 	extends Frame
 		radioButtonContent.add(allMeasurementDrone);
 		radioButtonContent.add(reset);
         add(BorderLayout.EAST,radioButtonContent);
-		addWindowListener(this);
+        addWindowListener(
+				new WindowAdapter()
+				{ 
+					public void windowClosing(WindowEvent e)
+					{
+						System.exit(0);
+					}
+				});
+	    //parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+		setTitle("Energy consumption over time");
+		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
+		setLocation(0,0);
 		pack();
 		setVisible(false);
 	}
@@ -266,7 +285,7 @@ public class ProbeInterface 	extends Frame
     private JFreeChart createChart(final XYDataset dataset) 
     {
         final JFreeChart chart = ChartFactory.createXYLineChart(
-            "Energy consumption",     //title
+            "Energy consumption",     // the title
             "Time Interval",          // x axis label
             "Energy",                 // y axis label
             dataset,                  // data
@@ -288,49 +307,43 @@ public class ProbeInterface 	extends Frame
         plot.getRenderer().setSeriesPaint(0, Color.RED);   
         return chart;
     }
+    
     //Actionlistener methods implemented
-	public void windowActivated(WindowEvent e){}
-	public void windowClosed(WindowEvent e){System.exit(0);}
-	public void windowClosing(WindowEvent e){System.exit(0);}
-	public void windowDeactivated(WindowEvent e){}
-	public void windowIconified(WindowEvent e){}
-	public void windowDeiconified(WindowEvent e){}
-	public void windowOpened(WindowEvent e){}	
 	public void actionPerformed(ActionEvent e)
 	{		
-			String com=e.getActionCommand();
-			if(com.equals("type"))typeSelection();
-			else if((com.equals("num"))&&bloc)numSelection();
-			else if(com.equals("clear"))clearGraph();
-			else if (com.equals("total camera"))positionTotalCamera = displayTotalGraph(totalCamera,positionTotalCamera,parameters.cameraDroneColor.get(),listCameraDroneEnergy);
-			else if (com.equals("total microphone"))positionTotalMicrophone = displayTotalGraph(totalMicrophone,positionTotalMicrophone,parameters.microphoneDroneColor.get(),listMicrophoneDroneEnergy);
-			else if (com.equals("total drone"))positionTotalDrone = displayTotalGraph(totalDrone,positionTotalDrone,parameters.droneColor.get(),listDroneEnergy);
-			else if (com.equals("total communicator"))positionTotalCommunicator = displayTotalGraph(totalCommunicator,positionTotalCommunicator,parameters.communicatorDroneColor.get(),listCommunicatorDroneEnergy);
-			else if (com.equals("total measurement"))positionTotalMeasurement = displayTotalGraph(totalMeasurement,positionTotalMeasurement,parameters.measurementDroneColor.get(),listMeasurementDroneEnergy);
-			else if (com.equals("all drone"))positionAllDrone = displayAllGraph(allDrone,positionAllDrone,listDroneEnergy);
-			else if (com.equals("all cameradrone"))positionAllCameraDrone = displayAllGraph(allCameraDrone,positionAllCameraDrone,listCameraDroneEnergy);
-			else if (com.equals("all communicatordrone"))positionAllCommunicatorDrone = displayAllGraph(allCommunicatorDrone,positionAllCommunicatorDrone,listCommunicatorDroneEnergy);		
-			else if (com.equals("all microphonedrone"))positionAllMicrophoneDrone = displayAllGraph(allMicrophoneDrone,positionAllMicrophoneDrone,listMicrophoneDroneEnergy);	
-			else if (com.equals("all measurementdrone"))positionAllMeasurementDrone = displayAllGraph(allMeasurementDrone,positionAllMeasurementDrone,listMeasurementDroneEnergy);			
-			else if (com.equals("total"))
+		String com=e.getActionCommand();
+		if(com.equals("type"))typeSelection();
+		else if((com.equals("num"))&&bloc)numSelection();
+		else if(com.equals("clear"))clearGraph();
+		else if (com.equals("total camera"))positionTotalCamera = displayTotalGraph(totalCamera,positionTotalCamera,parameters.cameraDroneColor.get(),listCameraDroneEnergy);
+		else if (com.equals("total microphone"))positionTotalMicrophone = displayTotalGraph(totalMicrophone,positionTotalMicrophone,parameters.microphoneDroneColor.get(),listMicrophoneDroneEnergy);
+		else if (com.equals("total drone"))positionTotalDrone = displayTotalGraph(totalDrone,positionTotalDrone,parameters.droneColor.get(),listDroneEnergy);
+		else if (com.equals("total communicator"))positionTotalCommunicator = displayTotalGraph(totalCommunicator,positionTotalCommunicator,parameters.communicatorDroneColor.get(),listCommunicatorDroneEnergy);
+		else if (com.equals("total measurement"))positionTotalMeasurement = displayTotalGraph(totalMeasurement,positionTotalMeasurement,parameters.measurementDroneColor.get(),listMeasurementDroneEnergy);
+		else if (com.equals("all drone"))positionAllDrone = displayAllGraph(allDrone,positionAllDrone,listDroneEnergy);
+		else if (com.equals("all cameradrone"))positionAllCameraDrone = displayAllGraph(allCameraDrone,positionAllCameraDrone,listCameraDroneEnergy);
+		else if (com.equals("all communicatordrone"))positionAllCommunicatorDrone = displayAllGraph(allCommunicatorDrone,positionAllCommunicatorDrone,listCommunicatorDroneEnergy);		
+		else if (com.equals("all microphonedrone"))positionAllMicrophoneDrone = displayAllGraph(allMicrophoneDrone,positionAllMicrophoneDrone,listMicrophoneDroneEnergy);	
+		else if (com.equals("all measurementdrone"))positionAllMeasurementDrone = displayAllGraph(allMeasurementDrone,positionAllMeasurementDrone,listMeasurementDroneEnergy);			
+		else if (com.equals("total"))
+		{
+			if (total.isSelected())
+			{		
+				positionTotal = numberOfGraph;
+				plot.setDataset(positionTotal,createDataset(listTotalEnergy)) ;             
+				plot.setRenderer(positionTotal, new StandardXYItemRenderer());
+				numberOfGraph++;	          
+			}			
+			else
 			{
-				if (total.isSelected())
-				{		
-					positionTotal = numberOfGraph;
-					plot.setDataset(positionTotal,createDataset(listTotalEnergy)) ;             
-					plot.setRenderer(positionTotal, new StandardXYItemRenderer());
-					numberOfGraph++;	          
-				}			
-				else
+				if (numberOfGraph>0)
 				{
-					if (numberOfGraph>0)
-					{
-						plot.setDataset(positionTotal,null);
-						plot.setRenderer(positionTotal, null);
-						numberOfGraph--;
-					}
+					plot.setDataset(positionTotal,null);
+					plot.setRenderer(positionTotal, null);
+					numberOfGraph--;
 				}
 			}
+		}
 	}
 /**
  * Selection of the type
@@ -451,15 +464,14 @@ public class ProbeInterface 	extends Frame
 	public int displayAllGraph(JRadioButton button, int pos, ArrayList[] listEnergy)
 	{
 		if (button.isSelected())
-		{
-			 
-		  pos = numberOfGraph;
-		  for (int f = 0;f<listEnergy.length-1;f++)
+		{			 
+			pos = numberOfGraph;
+			for (int f = 0;f<listEnergy.length-1;f++)
 			{		
-			 this.plot.setDataset(pos+f,createDataset(listEnergy[f])) ;             
-	         this.plot.setRenderer(pos+f, new StandardXYItemRenderer());         
+				this.plot.setDataset(pos+f,createDataset(listEnergy[f])) ;             
+				this.plot.setRenderer(pos+f, new StandardXYItemRenderer());         
 			}
-          numberOfGraph = pos+listEnergy.length-2;       
+			numberOfGraph = pos+listEnergy.length-2;       
 		}
 		else
 		{
@@ -637,7 +649,17 @@ public class ProbeInterface 	extends Frame
 			ISimulationEngine simulationEngine
 	) 
 	{
+	
 		setVisible(true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void endObservation() {
+		calculateTotals();
+		createfiles();
 	}
 	/**
 	 * calculates the the totals of each type of drone.
@@ -686,38 +708,35 @@ public class ProbeInterface 	extends Frame
 		}
 	}
 	/**
-	 * {@inheritDoc}
+	 * create the files of the results
 	 */
-	@Override
-	public void endObservation() {
-		calculateTotals();
-		createfiles();
-	}
 	public void createfiles()
 	{	
 		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH-mm-ss");
 		Calendar cal = Calendar.getInstance();
 		String res=new String("Results "+dateFormat.format(cal.getTime()));
-		File measurementDroneFolder=new File(res+"\\MeasurementDrone"); 
-		File microphoneDroneFolder=new File(res+"\\MicrophoneDrone"); 
-		File cameraDroneFolder=new File(res+"\\CameraDrone"); 
-		File communicatorDroneFolder=new File(res+"\\CommunicatorDrone"); 	
-		File droneFolder=new File(res+"\\Drone"); 
+		File measurementDroneFolder=new File("Results\\"+res+"\\MeasurementDrone"); 
+		File microphoneDroneFolder=new File("Results\\"+res+"\\MicrophoneDrone"); 
+		File cameraDroneFolder=new File("Results\\"+res+"\\CameraDrone"); 
+		File communicatorDroneFolder=new File("Results\\"+res+"\\CommunicatorDrone"); 	
+		File droneFolder=new File("Results\\"+res+"\\Drone"); 
 		
 		deleteFolder(measurementDroneFolder);
 		deleteFolder(microphoneDroneFolder);
 		deleteFolder(cameraDroneFolder);
 		deleteFolder(communicatorDroneFolder);
 		deleteFolder(droneFolder);
+		// Creation of the folders 
 		measurementDroneFolder.mkdirs();
 		microphoneDroneFolder.mkdirs();
 		cameraDroneFolder.mkdirs();
 		communicatorDroneFolder.mkdirs();
 		droneFolder.mkdirs();
+		//Creation of the files
 		for (int k=0;k<listDrone.length;k++)
 		{
 			String name=listDrone[k].substring(47,listDrone[k].length());
-			File f = new File (res+"\\Drone\\"+name+".txt");
+			File f = new File ("Results\\"+res+"\\Drone\\"+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -738,7 +757,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listMeasurementDrone.length;k++)
 		{
 			String name=listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length());
-			File f = new File (res+"\\MeasurementDrone\\"+name+".txt");
+			File f = new File ("Results\\"+res+"\\MeasurementDrone\\"+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -759,7 +778,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listMicrophoneDrone.length;k++)
 		{
 			String name=listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length());
-			File f = new File (res+"\\MicrophoneDrone\\"+name+".txt");
+			File f = new File ("Results\\"+res+"\\MicrophoneDrone\\"+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -780,7 +799,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listCameraDrone.length;k++)
 		{
 			String name=listCameraDrone[k].substring(59,listCameraDrone[k].length());
-			File f = new File (res+"\\CameraDrone\\"+name+".txt");
+			File f = new File ("Results\\"+res+"\\CameraDrone\\"+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -801,7 +820,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listCommunicatorDrone.length;k++)
 		{
 			String name=listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length());
-			File f = new File (res+"\\CommunicatorDrone\\"+name+".txt");
+			File f = new File ("Results\\"+res+"\\CommunicatorDrone\\"+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -819,7 +838,7 @@ public class ProbeInterface 	extends Frame
 				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 			}
 		}
-		File f = new File (res+"\\Propertiesused.txt");
+		File f = new File ("Results\\"+res+"\\Propertiesused.txt");
 		try
 		{
 		    FileWriter fw = new FileWriter (f);
@@ -837,6 +856,10 @@ public class ProbeInterface 	extends Frame
 			System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		}
 	}
+	/**
+	 * delete a folder 
+	 * @param folder is the file of the folder to delete
+	 */
 	public void deleteFolder(File folder)
 	{
 		if (folder.isDirectory())

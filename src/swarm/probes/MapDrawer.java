@@ -33,48 +33,57 @@ public class MapDrawer extends JPanel
 	 * the max parameter of temperature
 	 */
 	public int tempMax;
+	/**
+	 * the parameters of the simulation
+	 */
 	public SwarmParameters parameters;
 	/**
-	 * Factors for the drawing
-	 */
+	 * Factor for the drawing axis x
+ 	 */
 	int IFACTOR;
+	/**
+	 * Factor for the drawing axis y
+ 	 */
 	int JFACTOR;
-	
-	MapDrawer(SwarmParameters param){
+	/**
+	 * The constructor of the drawer
+	 * @param param of the simulation
+	 */
+	MapDrawer(SwarmParameters param)
+	{
 		z = 0;
 		parameters =param;
 		tempMax=30;
 	}
 	/**
-	 * 
+	 * The method to draw the map
 	 */
    public void paint(Graphics g) 
    {		
 	   IFACTOR=this.getWidth()/graph.getImax();
 	   JFACTOR=this.getHeight()/graph.getJmax();
-	   double val=0 ;			
-	   this.setBackground(Color.LIGHT_GRAY);	
+	   double valueToEvaluate=0 ;			
 	   for (int i=0;i< graph.getImax();i++)
 	   {
 		  for (int j=0;j<graph.getJmax();j++)
 		  { 
 			  if ((graph.getSpaceGraph())[i][j][z].cubeIsVisited())
 			  {				  
-				  val =((1/graph.getSpaceGraph()[i][j][z].getMeasuredValue())*tempMax/Math.sqrt( Math.pow(parameters.objectivePosition.x , 2) 
+				  valueToEvaluate =((1/graph.getSpaceGraph()[i][j][z].getMeasuredValue())*tempMax/Math.sqrt( Math.pow(parameters.objectivePosition.x , 2) 
 							+Math.pow(parameters.objectivePosition.y , 2)
 							+Math.pow(parameters.objectivePosition.z , 2)
 							   ));;
-							   if (val==Double.POSITIVE_INFINITY||val==Double.NEGATIVE_INFINITY) val=tempMax;
-				  int valInt=(int) Math.floor(6*val);
+							   if (valueToEvaluate==Double.POSITIVE_INFINITY||valueToEvaluate==Double.NEGATIVE_INFINITY) valueToEvaluate=tempMax;
+				  int valInt=(int) Math.floor(6*valueToEvaluate);
 				  if (valInt>235) valInt=235;
 				  if (valInt<20) valInt=20;
-				  if (val<tempMax/8 ) {		
+				  if (valueToEvaluate<tempMax/8 ) {		
 					  g.setColor(new Color(255-valInt+20,valInt/6,valInt/6));
-				  }else if (val<tempMax/4){
+				  }else if (valueToEvaluate<tempMax/4){
 					  g.setColor(new Color(255,255-valInt,valInt/6));
-				  }else if (val<tempMax/2){
+				  }else if (valueToEvaluate<tempMax/2){
 					  g.setColor(new Color(valInt/6,255-valInt,255));
-				  }else if (val>tempMax/2){
+				  }else if (valueToEvaluate>tempMax/2){
 					  g.setColor(new Color(valInt/6,valInt/6,255-valInt+20));				   
 				  }
 				  g.fillRect(i*IFACTOR+IFACTOR, j*JFACTOR+JFACTOR,IFACTOR, JFACTOR);
