@@ -1,11 +1,11 @@
 package swarm.probes;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,6 +23,9 @@ import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.TransparencyAttributes;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
@@ -58,7 +61,7 @@ import swarm.model.level.SwarmLevelList;
  *
  */
 @SuppressWarnings("serial")
-public class ProbeJFrame3D extends Frame implements IProbe{
+public class ProbeJFrame3D extends JFrame implements IProbe{
 	
 	/**
 	 * the only and unique universe we are using
@@ -74,6 +77,14 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	 * the parameters of the simulation
 	 */
 	public SwarmParameters parameters;
+	/**
+	 * the canvas in which is displayed the simulation
+	 */
+	public Canvas3D canvas3D;
+	/**
+	 * the displayer of the timestamp 
+	 */
+	public JLabel timeDisplayer;
 	/**
 	 * the factor due to the 3D view
 	 */
@@ -96,80 +107,61 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 						dispose(); //Destroy the JFrame object
 					}
 				});
-	}
+		 addComponentListener(new ComponentListener() {
+		        public void componentResized(ComponentEvent e) {
+		        	Rectangle size=getWindowSize();
+		        	canvas3D.setBounds(0,0,size.width,size.height);       
+		        }
 
-	@Override
-	public void prepareObservation() { }
+				@Override
+				public void componentHidden(ComponentEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
 
-	/** 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void observeAtInitialTimes(
-			SimulationTimeStamp initialTimestamp,
-			ISimulationEngine simulationEngine
-	) {
-		this.createAgents(initialTimestamp,simulationEngine);
-		this.createUniverse();
-		branchGroup.compile();
-		this.simpleUniverse.addBranchGraph(this.branchGroup);
-	}
+				@Override
+				public void componentMoved(ComponentEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void observeAtPartialConsistentTime(
-			SimulationTimeStamp timestamp,
-			ISimulationEngine simulationEngine){
-		this.updateagents(timestamp,simulationEngine);
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void endObservation() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void reactToError(
-			String errorMessage, 
-			Throwable cause
-	) { }
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void reactToAbortion(
-			SimulationTimeStamp timestamp,
-			ISimulationEngine simulationEngine
-	) { }
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void observeAtFinalTime(
-			SimulationTimeStamp timestamp,
-			ISimulationEngine simulationEngine
-	) { 
-		
+				@Override
+				public void componentShown(ComponentEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+		    });
 	}
 	/**
 	 * Set the graphical user interface
 	 */
 	public void initGUI()
 	{	
+		 //parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+		setTitle("3D BOIDS");		
+		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
+		setLocation((int)maximumWindowBounds.getWidth()/2,0);
 		System.setProperty("sun.awt.noerasebackground", "true");
 		//Setting the view of the animation with a canvas3D
-		Canvas3D canvas3D=new Canvas3D(SimpleUniverse.getPreferredConfiguration());
-		add(BorderLayout.CENTER,canvas3D);
-		this.simpleUniverse=new SimpleUniverse(canvas3D);			
+		canvas3D=new Canvas3D(SimpleUniverse.getPreferredConfiguration());
+		timeDisplayer=new JLabel("0"+" / "+parameters.simulationTime);
+		timeDisplayer.setBackground(Color.gray);
+		timeDisplayer.setForeground(Color.white);
+		timeDisplayer.setHorizontalAlignment(JLabel.CENTER);
+		timeDisplayer.setFont(new Font(timeDisplayer.getName(), Font.BOLD, 2*timeDisplayer.getFont().getSize()));
+		timeDisplayer.setBounds(20,20,2*20*(parameters.simulationTime+"").length(),20);
+		timeDisplayer.setOpaque(true);
+
+		JLayeredPane pane= new  JLayeredPane();
+		canvas3D.setBounds(0,0,this.getSize().width,this.getSize().height);		
+		pane.add(canvas3D,JLayeredPane.POPUP_LAYER);
+		pane.add(timeDisplayer, JLayeredPane.DRAG_LAYER);
+		pane.setOpaque(false);
+		add(pane);
+		this.simpleUniverse=new SimpleUniverse(canvas3D);					
 		//Add a gray background
 		Background background = new Background(new Color3f(Color.gray));    
 		background.setApplicationBounds(new BoundingBox()); 
@@ -189,18 +181,33 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	    												light1Direction
 	    												);
 	    light1.setInfluencingBounds(bounds);
-	    branchGroup.addChild(light1);
-	    //parameters of the window
-	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
-		//get maximum window bounds
-		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
-		setTitle("3D BOIDS");		
-		setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
-		setLocation((int)maximumWindowBounds.getWidth()/2,0);
+	    branchGroup.addChild(light1);	   			
 		setVisible(true);
 	}
+	/**
+	 * the size of the window
+	 * @return the size of the window
+	 */
+	public Rectangle getWindowSize(){
+		return new Rectangle(0,0,this.getSize().width,this.getSize().height);
+	}
 	
-	
+	@Override
+	public void prepareObservation() { }
+
+	/** 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void observeAtInitialTimes(
+			SimulationTimeStamp initialTimestamp,
+			ISimulationEngine simulationEngine
+	) {
+		this.createAgents(initialTimestamp,simulationEngine);
+		this.createUniverse();
+		branchGroup.compile();
+		this.simpleUniverse.addBranchGraph(this.branchGroup);
+	}
 	/**
 	 * Create the agents at the initial position and state.
 	 * @param timestamp The time stamp when the observation is made.
@@ -292,6 +299,7 @@ public class ProbeJFrame3D extends Frame implements IProbe{
     KeyNavigatorBehavior key=new KeyNavigatorBehavior(tg); 
     key.setSchedulingBounds(new BoundingSphere(new Point3d(), 1000));
     this.branchGroup.addChild(key);
+    
 
 	}
 	/**
@@ -373,71 +381,119 @@ public class ProbeJFrame3D extends Frame implements IProbe{
 	}
 	
 	
-/**
- * Update the position of each agent at each stamptime.
- * @param timestamptimestamp The time stamp when the observation is made.
- * @param simulationEngine The engine where the simulation is running.
- */
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void observeAtPartialConsistentTime(
+			SimulationTimeStamp timestamp,
+			ISimulationEngine simulationEngine){
+		this.updateagents(timestamp,simulationEngine);
+		timeDisplayer.setText(timestamp.toString().substring(2,timestamp.toString().length()-1)+" / "+parameters.simulationTime);
+			
 
-	public void updateagents(SimulationTimeStamp timestamp,
+	}
+	/**
+	 * Update the position of each agent at each timestamp.
+	 * @param timestamptimestamp The time stamp when the observation is made.
+	 * @param simulationEngine The engine where the simulation is running.
+	 */
+
+		public void updateagents(SimulationTimeStamp timestamp,
+				ISimulationEngine simulationEngine
+		){
+			IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
+					SwarmLevelList.ROOM
+			);
+			for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() )
+			{
+				AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
+				if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
+					castedAgtState = (AgtCameraDronePLSInRoom) agtState;	
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
+					castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;	
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
+					castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
+				}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
+					castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
+				}
+				//Get the current position and transformation
+					Transform3D currentTrans=new Transform3D();
+					Transform3D trans=new Transform3D();
+					Transform3D rotate=new Transform3D();
+					Vector3d currentVect=new Vector3d();
+					Vector3d position =new Vector3d(
+							castedAgtState.getLocation().x/FACTOR3D,
+							-castedAgtState.getLocation().y/FACTOR3D,
+							castedAgtState.getLocation().z/FACTOR3D);			
+					castedAgtState.transformGroup.getTransform(currentTrans);
+					trans.get(currentVect);
+				//Calculate and set the new vector
+					Vector3d newVect=new Vector3d(
+							position.x-currentVect.x,
+							position.y-currentVect.y,
+							position.z-currentVect.z);
+					
+					trans.setTranslation(newVect);	
+					Vector3d vit=new Vector3d(
+												castedAgtState.getVelocity().getX(),
+												castedAgtState.getVelocity().getY(),
+												castedAgtState.getVelocity().getZ()
+												);
+				// Set the angle for the orientation to match the movement													
+				rotate.rotX(0);
+				rotate.rotY(0);
+				rotate.rotZ(Math.PI + Math.atan2(vit.x, vit.y) );			
+		 		trans.mul(rotate);
+		 		
+		 		rotate.rotX(0);
+		 		rotate.rotY( Math.atan2( vit.z , Math.sqrt(Math.pow(vit.x,2) + Math.pow(vit.y, 2))) );
+		 		rotate.rotZ(0);
+		 		trans.mul(rotate);
+		 		
+		 		rotate.rotX( Math.PI/2 );
+		 		rotate.rotY(0);
+		 		rotate.rotZ(0);
+		 		trans.mul(rotate);
+		 		
+				castedAgtState.transformGroup.setTransform(trans);		
+				}
+			}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void endObservation() {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void reactToError(
+			String errorMessage, 
+			Throwable cause
+	) { }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void reactToAbortion(
+			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine
-	){
-		IPublicLocalDynamicState chamberState = simulationEngine.getSimulationDynamicStates().get( 
-				SwarmLevelList.ROOM
-		);
-		for( ILocalStateOfAgent agtState : chamberState.getPublicLocalStateOfAgents() )
-		{
-			AgtDronePLSInRoom castedAgtState = (AgtDronePLSInRoom) agtState;
-			if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.CAMERADRONE ) ){
-				castedAgtState = (AgtCameraDronePLSInRoom) agtState;	
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.COMMUNICATORDRONE ) ){
-				castedAgtState = (AgtCommunicatorDronePLSInRoom) agtState;	
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MICROPHONEDRONE ) ){
-				castedAgtState = (AgtMicrophoneDronePLSInRoom) agtState;
-			}else if( agtState.getCategoryOfAgent().isA( SwarmAgentCategoriesList.MEASUREMENTDRONE ) ){
-				castedAgtState = (AgtMeasurementDronePLSInRoom) agtState;	
-			}
-			//Get the current position and transformation
-				Transform3D currentTrans=new Transform3D();
-				Transform3D trans=new Transform3D();
-				Transform3D rotate=new Transform3D();
-				Vector3d currentVect=new Vector3d();
-				Vector3d position =new Vector3d(
-						castedAgtState.getLocation().x/FACTOR3D,
-						-castedAgtState.getLocation().y/FACTOR3D,
-						castedAgtState.getLocation().z/FACTOR3D);			
-				castedAgtState.transformGroup.getTransform(currentTrans);
-				trans.get(currentVect);
-			//Calculate and set the new vector
-				Vector3d newVect=new Vector3d(
-						position.x-currentVect.x,
-						position.y-currentVect.y,
-						position.z-currentVect.z);
-				
-				trans.setTranslation(newVect);	
-				Vector3d vit=new Vector3d(
-											castedAgtState.getVelocity().getX(),
-											castedAgtState.getVelocity().getY(),
-											castedAgtState.getVelocity().getZ()
-											);
-			// Set the angle for the orientation to match the movement													
-			rotate.rotX(0);
-			rotate.rotY(0);
-			rotate.rotZ(Math.PI + Math.atan2(vit.x, vit.y) );			
-	 		trans.mul(rotate);
-	 		
-	 		rotate.rotX(0);
-	 		rotate.rotY( Math.atan2( vit.z , Math.sqrt(Math.pow(vit.x,2) + Math.pow(vit.y, 2))) );
-	 		rotate.rotZ(0);
-	 		trans.mul(rotate);
-	 		
-	 		rotate.rotX( Math.PI/2 );
-	 		rotate.rotY(0);
-	 		rotate.rotZ(0);
-	 		trans.mul(rotate);
-	 		
-			castedAgtState.transformGroup.setTransform(trans);		
-			}
-		}
+	) { }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void observeAtFinalTime(
+			SimulationTimeStamp timestamp,
+			ISimulationEngine simulationEngine
+	) { 
+		
+	}
+	
+
 }
 
