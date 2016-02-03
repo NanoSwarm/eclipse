@@ -56,46 +56,28 @@ public class SwarmMain {
 		AgtMeasurementDroneFactory.setParameters( parameters );
 
 		ConfigInterface configInterface = new ConfigInterface(parameters);	
-		while (configInterface.configurationOK==false){	System.out.print("");}
 		
-		// Create the simulation engine that will run simulations
-		engine = new EngineMonothreadedDefaultdisambiguation( );
-		// Create the probes that will listen to the execution of the simulation.	
-		
-		engine.addProbe( 
-				"Error printer", 
-				new ProbeExceptionPrinter( )
-		);
-		engine.addProbe(
-				"Trace printer", 
-				new ProbeExecutionTracker( System.err, false )
-		);
-		engine.addProbe(
-				"Chamber level Swing viewer3d",
-				new ProbeJFrame3D(parameters)														
-		);
-
-		
-		engine.addProbe(
-				"Energy consumption results",
-				 resultInterface=new ProbeInterface(parameters)	);									
-		
-		if (parameters.objectiveType == 2)
-		{
-			engine.addProbe(
-					"Mapping result",
-						new MapInterface("Map of the space",parameters)															
-				);
+		while (true) {
+			while (configInterface.configurationOK == false) {
+				System.out.print("");
+			}
+			// Create the simulation engine that will run simulations
+			engine = new EngineMonothreadedDefaultdisambiguation();
+			// Create the probes that will listen to the execution of the simulation.	
+			engine.addProbe("Error printer", new ProbeExceptionPrinter());
+			engine.addProbe("Trace printer", new ProbeExecutionTracker(System.err, false));
+			engine.addProbe("Chamber level Swing viewer3d", new ProbeJFrame3D(parameters));
+			engine.addProbe("Energy consumption results", resultInterface = new ProbeInterface(parameters));
+			if (parameters.objectiveType == 2) {
+				engine.addProbe("Mapping result", new MapInterface("Map of the space", parameters));
+			}
+			// Create the simulation model being used.
+			simulationModel = new SwarmInitialization(new SimulationTimeStamp(0),
+					new SimulationTimeStamp(parameters.simulationTime), parameters);
+			// Run the simulation.
+			engine.runNewSimulation(simulationModel);
+			configInterface.configurationOK = false;
 		}
-		
-		// Create the simulation model being used.
-		simulationModel = new SwarmInitialization(
-			new SimulationTimeStamp( 0 ), 
-			new SimulationTimeStamp( parameters.simulationTime ), 
-			parameters
-		);
-		// Run the simulation.
-		engine.runNewSimulation( simulationModel );
 	}
 	
 	public static void abordSimulation(){

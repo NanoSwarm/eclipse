@@ -253,13 +253,13 @@ public class ConfigInterface extends JFrame
 				 * Mission parameters
 				 */
 				
-				else if(e.getSource().hashCode() == objectiveTypeLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == objectiveTypeLine.getSliderHashcode() && !configurationOK){
 					parameters.objectiveType = (int)objectiveTypeLine.sliderChanged();
-				}else if (e.getSource().hashCode() == objectiveTypeLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == objectiveTypeLine.getSpinnerHashcode() && !configurationOK){
 					parameters.objectiveType = (int)objectiveTypeLine.spinnerChanged();
 				}
 				
-				else if(e.getSource().hashCode() == resolutionTypeLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == resolutionTypeLine.getSliderHashcode()  && !configurationOK){
 					if((int)resolutionTypeLine.sliderChanged() == 1){
 						parameters.resolutionType = "position minimum" ;
 					}else if ((int)resolutionTypeLine.sliderChanged() == 2){
@@ -267,34 +267,34 @@ public class ConfigInterface extends JFrame
 					}
 					
 					
-				}else if (e.getSource().hashCode() == resolutionTypeLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == resolutionTypeLine.getSpinnerHashcode() && !configurationOK){
 					if((int)resolutionTypeLine.spinnerChanged() == 1){
 						parameters.resolutionType = "position minimum" ;
-					}else if ((int)resolutionTypeLine.spinnerChanged() == 2){
+					}else if ((int)resolutionTypeLine.spinnerChanged() == 2 ){
 						parameters.resolutionType = "pso" ;
 					}
 				}
 				
-				else if(e.getSource().hashCode() == objectivePositionXLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == objectivePositionXLine.getSliderHashcode() && !configurationOK){
 					parameters.objectivePositionX = (int)objectivePositionXLine.sliderChanged();
 					parameters.refreshVect();
-				}else if (e.getSource().hashCode() == objectivePositionXLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == objectivePositionXLine.getSpinnerHashcode() && !configurationOK){
 					parameters.objectivePositionX = (int)objectivePositionXLine.spinnerChanged();
 					parameters.refreshVect();
 				}
 				
-				else if(e.getSource().hashCode() == objectivePositionYLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == objectivePositionYLine.getSliderHashcode() && !configurationOK){
 					parameters.objectivePositionY = (int)objectivePositionYLine.sliderChanged();
 					parameters.refreshVect();
-				}else if (e.getSource().hashCode() == objectivePositionYLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == objectivePositionYLine.getSpinnerHashcode() && !configurationOK){
 					parameters.objectivePositionY = (int)objectivePositionYLine.spinnerChanged();
 					parameters.refreshVect();
 				}
 				
-				else if(e.getSource().hashCode() == objectivePositionZLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == objectivePositionZLine.getSliderHashcode() && !configurationOK){
 					parameters.objectivePositionZ = (int)objectivePositionZLine.sliderChanged();
 					parameters.refreshVect();
-				}else if (e.getSource().hashCode() == objectivePositionZLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == objectivePositionZLine.getSpinnerHashcode() && !configurationOK){
 					parameters.objectivePositionZ = (int)objectivePositionZLine.spinnerChanged();
 					parameters.refreshVect();
 				}

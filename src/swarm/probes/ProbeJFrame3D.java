@@ -103,7 +103,8 @@ public class ProbeJFrame3D extends JFrame implements IProbe{
 				{ 
 					public void windowClosing(WindowEvent e)
 					{
-						System.exit(0);
+						setVisible(false);
+						dispose(); //Destroy the JFrame object
 					}
 				});
 		 addComponentListener(new ComponentListener() {

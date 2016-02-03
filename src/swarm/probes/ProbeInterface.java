@@ -248,7 +248,8 @@ public class ProbeInterface 	extends Frame
 				{ 
 					public void windowClosing(WindowEvent e)
 					{
-						System.exit(0);
+						setVisible(false);
+						dispose(); //Destroy the JFrame object
 					}
 				});
 	    //parameters of the window
