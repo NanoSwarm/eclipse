@@ -1,7 +1,9 @@
 package swarm.interfaceSimulation;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -59,7 +61,18 @@ public class ConfigInterface extends JFrame
 	private SpinnerLine attractionCoeffLine = null;
 	private SpinnerLine orientationCoeffLine = null;
 	private SpinnerLine repulsionCoeffLine = null;
-	 
+	
+	private SpinnerLine simulationTimeLine = null;
+	private SpinnerLine roomBoundsXLine = null;
+	private SpinnerLine roomBoundsYLine = null;
+	private SpinnerLine roomBoundsZLine = null;
+	
+	private SpinnerLine objectiveTypeLine = null;
+	private SpinnerLine resolutionTypeLine = null;
+	private SpinnerLine objectivePositionXLine = null;
+	private SpinnerLine objectivePositionYLine = null;
+	private SpinnerLine objectivePositionZLine = null;
+
 	
 	/**
 	 * 
@@ -199,6 +212,91 @@ public class ConfigInterface extends JFrame
 					parameters.repulsionCoeff = repulsionCoeffLine.sliderChanged();
 				}else if (e.getSource().hashCode() == repulsionCoeffLine.getSpinnerHashcode()){
 					parameters.repulsionCoeff = repulsionCoeffLine.spinnerChanged();
+				}
+				
+				/*
+				 * Simulation parameters
+				 */	
+				else if(e.getSource().hashCode() == simulationTimeLine.getSliderHashcode()){
+					parameters.simulationTime = (int)simulationTimeLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == simulationTimeLine.getSpinnerHashcode()){
+					parameters.simulationTime = (int)simulationTimeLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				else if(e.getSource().hashCode() == roomBoundsXLine.getSliderHashcode()){
+					parameters.roomBoundsX = (int)roomBoundsXLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == roomBoundsXLine.getSpinnerHashcode()){
+					parameters.roomBoundsX = (int)roomBoundsXLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				else if(e.getSource().hashCode() == roomBoundsYLine.getSliderHashcode()){
+					parameters.roomBoundsY = (int)roomBoundsYLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == roomBoundsYLine.getSpinnerHashcode()){
+					parameters.roomBoundsY = (int)roomBoundsYLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				else if(e.getSource().hashCode() == roomBoundsZLine.getSliderHashcode()){
+					parameters.roomBoundsZ = (int)roomBoundsZLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == roomBoundsZLine.getSpinnerHashcode()){
+					parameters.roomBoundsZ = (int)roomBoundsZLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				/*
+				 * Mission parameters
+				 */
+				
+				else if(e.getSource().hashCode() == objectiveTypeLine.getSliderHashcode()){
+					parameters.objectiveType = (int)objectiveTypeLine.sliderChanged();
+				}else if (e.getSource().hashCode() == objectiveTypeLine.getSpinnerHashcode()){
+					parameters.objectiveType = (int)objectiveTypeLine.spinnerChanged();
+				}
+				
+				else if(e.getSource().hashCode() == resolutionTypeLine.getSliderHashcode()){
+					if((int)resolutionTypeLine.sliderChanged() == 1){
+						parameters.resolutionType = "position minimum" ;
+					}else if ((int)resolutionTypeLine.sliderChanged() == 2){
+						parameters.resolutionType = "pso" ;
+					}
+					
+					
+				}else if (e.getSource().hashCode() == resolutionTypeLine.getSpinnerHashcode()){
+					if((int)resolutionTypeLine.spinnerChanged() == 1){
+						parameters.resolutionType = "position minimum" ;
+					}else if ((int)resolutionTypeLine.spinnerChanged() == 2){
+						parameters.resolutionType = "pso" ;
+					}
+				}
+				
+				else if(e.getSource().hashCode() == objectivePositionXLine.getSliderHashcode()){
+					parameters.objectivePositionX = (int)objectivePositionXLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == objectivePositionXLine.getSpinnerHashcode()){
+					parameters.objectivePositionX = (int)objectivePositionXLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				else if(e.getSource().hashCode() == objectivePositionYLine.getSliderHashcode()){
+					parameters.objectivePositionY = (int)objectivePositionYLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == objectivePositionYLine.getSpinnerHashcode()){
+					parameters.objectivePositionY = (int)objectivePositionYLine.spinnerChanged();
+					parameters.refreshVect();
+				}
+				
+				else if(e.getSource().hashCode() == objectivePositionZLine.getSliderHashcode()){
+					parameters.objectivePositionZ = (int)objectivePositionZLine.sliderChanged();
+					parameters.refreshVect();
+				}else if (e.getSource().hashCode() == objectivePositionZLine.getSpinnerHashcode()){
+					parameters.objectivePositionZ = (int)objectivePositionZLine.spinnerChanged();
+					parameters.refreshVect();
 				}
 			}
 		};
@@ -417,6 +515,120 @@ public class ConfigInterface extends JFrame
 				changeListener
 				);
 		
+		/*
+		 * Simulation parameters
+		 */
+		
+		new MyLabel("Simulation parameters",gblConfigInterface,container);
+		simulationTimeLine = new SpinnerLine(
+				"Simulation time :",
+				(int)parameters.simulationTime,
+				0,
+				10000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		roomBoundsXLine = new SpinnerLine(
+				"Room bounds X :",
+				(int)parameters.roomBoundsX,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		roomBoundsYLine = new SpinnerLine(
+				"Room bounds Y :",
+				(int)parameters.roomBoundsY,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		roomBoundsZLine = new SpinnerLine(
+				"Room bounds Z :",
+				(int)parameters.roomBoundsZ,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		/*
+		 * Mission parameters
+		 */
+		new MyLabel("Mission parameters",gblConfigInterface,container);
+		objectiveTypeLine = new SpinnerLine(
+				"Objective Type :",
+				(int)parameters.objectiveType,
+				1,
+				3,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		int resType = 0;
+		if (parameters.resolutionType == "position minimum"){
+			resType = 1;
+		}else if (parameters.resolutionType == "pso"){
+			resType = 2;
+		}
+		
+		resolutionTypeLine = new SpinnerLine(
+				"Resolution Type :",
+				resType,
+				1,
+				2,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		objectivePositionXLine = new SpinnerLine(
+				"Objective position X :",
+				parameters.objectivePositionX,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		objectivePositionYLine = new SpinnerLine(
+				"Objective position Y :",
+				parameters.objectivePositionY,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
+		
+		objectivePositionZLine = new SpinnerLine(
+				"Objective position Z :",
+				parameters.objectivePositionZ,
+				0,
+				30000,
+				1,
+				gblConfigInterface, 
+				container,
+				changeListener
+				);
 		
 		configCons.gridwidth = GridBagConstraints.REMAINDER;
 		JLabel filling1 = new JLabel(" ");
@@ -436,10 +648,14 @@ public class ConfigInterface extends JFrame
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		add(scrollpane);
 		
-		//
+		
+		//parameters of the window
+	    GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();       
+		//get maximum window bounds
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
 		pack();
+		setSize((int)(maximumWindowBounds.getWidth()*0.45),(int)(maximumWindowBounds.getHeight()*0.98));
 		setVisible(true);
-		//setSize(300, 500);
 	}
 	
 	/**
