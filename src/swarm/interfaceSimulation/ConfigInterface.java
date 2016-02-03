@@ -231,10 +231,10 @@ public class ConfigInterface extends JFrame
 				/*
 				 * Simulation parameters
 				 */	
-				else if(e.getSource().hashCode() == simulationTimeLine.getSliderHashcode()){
+				else if(e.getSource().hashCode() == simulationTimeLine.getSliderHashcode() && !configurationOK){
 					parameters.simulationTime = (int)simulationTimeLine.sliderChanged();
 					parameters.refreshVect();
-				}else if (e.getSource().hashCode() == simulationTimeLine.getSpinnerHashcode()){
+				}else if (e.getSource().hashCode() == simulationTimeLine.getSpinnerHashcode() && !configurationOK){
 					parameters.simulationTime = (int)simulationTimeLine.spinnerChanged();
 					parameters.refreshVect();
 				}
