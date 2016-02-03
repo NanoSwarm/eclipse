@@ -87,6 +87,20 @@ public class ConfigInterface extends JFrame
 		GridBagConstraints configCons = new GridBagConstraints();
 		container.setLayout(gblConfigInterface);
 		addWindowListener(this);
+
+		configCons.gridwidth = GridBagConstraints.REMAINDER;
+		JLabel filling1 = new JLabel(" ");
+		gblConfigInterface.setConstraints(filling1, configCons);
+		container.add(filling1);
+		
+		//Launch button
+		JButton launchSimu = new JButton("Launch Simulation");
+		configCons.anchor = GridBagConstraints.CENTER;
+		gblConfigInterface.setConstraints(launchSimu, configCons);
+		container.add(launchSimu);
+		launchSimu.addActionListener(this);
+		launchSimu.setActionCommand("Launch Simulation");
+		
 		
 		
 		ChangeListener changeListener = new ChangeListener()
@@ -631,17 +645,9 @@ public class ConfigInterface extends JFrame
 				);
 		
 		configCons.gridwidth = GridBagConstraints.REMAINDER;
-		JLabel filling1 = new JLabel(" ");
-		gblConfigInterface.setConstraints(filling1, configCons);
-		container.add(filling1);
-
-		//Last line
-		JButton launchSimu = new JButton("Launch Simulation");
-		configCons.anchor = GridBagConstraints.WEST;
-		gblConfigInterface.setConstraints(launchSimu, configCons);
-		container.add(launchSimu);
-		launchSimu.addActionListener(this);
-		launchSimu.setActionCommand("Launch Simulation");
+		JLabel filling2 = new JLabel(" ");
+		gblConfigInterface.setConstraints(filling2, configCons);
+		container.add(filling2);
 		
 		JScrollPane scrollpane = new JScrollPane(container, 
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
