@@ -8,6 +8,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -93,7 +95,15 @@ public class MapInterface extends JFrame implements IProbe,ActionListener
     	
         this.setSize((int)maximumWindowBounds.getWidth()/2,(int)maximumWindowBounds.getHeight());
         this.setLocation((int)maximumWindowBounds.getWidth()/2,0);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(
+				new WindowAdapter()
+				{ 
+					public void windowClosing(WindowEvent e)
+					{
+						setVisible(false);
+						dispose(); //Destroy the JFrame object
+					}
+				});
     }
     /**
      * {@inheritDoc}
