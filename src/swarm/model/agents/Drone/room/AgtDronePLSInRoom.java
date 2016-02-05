@@ -92,7 +92,7 @@ public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
 		this.energy = initialEnergy;
 		this.forme=new Cone(0.007f,0.015f);
 		this.color=color2;
-
+		
 		Color3f black=new Color3f(0.0f,0.0f,0.0f);
 		Color3f white=new Color3f(1.0f,1.0f,1.0f);
 		Appearance ap=new Appearance();

@@ -39,6 +39,7 @@ import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.Primitive;
+import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import fr.lgi2a.similar.microkernel.IProbe;
@@ -204,6 +205,7 @@ public class ProbeJFrame3D extends JFrame implements IProbe{
 			ISimulationEngine simulationEngine
 	) {
 		this.createAgents(initialTimestamp,simulationEngine);
+		this.createObjective();
 		this.createUniverse();
 		branchGroup.compile();
 		this.simpleUniverse.addBranchGraph(this.branchGroup);
@@ -301,6 +303,40 @@ public class ProbeJFrame3D extends JFrame implements IProbe{
     this.branchGroup.addChild(key);
     
 
+	}
+	/**
+	 * create a sphere at the objective position if needed
+	 */
+	public void createObjective()
+	{
+		if ((parameters.objectiveType==1)||(parameters.objectiveType==2))
+		{
+			Transform3D translate=new Transform3D();
+			Vector3d position=new Vector3d(
+					parameters.objectivePositionX/FACTOR3D,
+					-parameters.objectivePositionY/FACTOR3D,
+					parameters.objectivePositionZ/FACTOR3D
+					);
+	 		translate.setTranslation(position);
+	 		TransformGroup transformGroup= new TransformGroup();
+			transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+			transformGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+			transformGroup.setTransform(translate);
+			Sphere objectiveShape=new Sphere(0.01f);
+			Color3f yellow =new Color3f(Color.yellow);
+			Color3f black=new Color3f(0.0f,0.0f,0.0f);
+			Color3f white=new Color3f(1.0f,1.0f,1.0f);
+			Appearance ap=new Appearance();
+			Material material = new Material(yellow, black, yellow, white, 64);
+			material.setLightingEnable(true);
+			ap.setCapability(Appearance.ALLOW_MATERIAL_READ);
+			ap.setCapability(Appearance.ALLOW_MATERIAL_WRITE);
+			ap.setMaterial(material);
+			objectiveShape.setAppearance(ap);
+			transformGroup.addChild(objectiveShape);
+			this.branchGroup.addChild(transformGroup);
+			//
+		}
 	}
 	/**
 	 * Create the universe (ie the space where are the nanodrones)
