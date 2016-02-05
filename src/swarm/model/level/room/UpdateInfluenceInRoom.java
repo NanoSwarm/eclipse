@@ -85,7 +85,7 @@ public class UpdateInfluenceInRoom {
 			}
 		}
 		
-		if (parameters.resolutionType == "position minimum" && (parameters.objectiveType == 1 || parameters.objectiveType == 2) ){
+		if (parameters.resolutionType == 1 && (parameters.objectiveType == 1 || parameters.objectiveType == 2) ){
 			
 			if (agtDrone.getDestination().cubeIsVisited()){
 				SwarmMain.getSimulationModel().getGraph().assignedDrone(agtDrone);
@@ -222,7 +222,7 @@ public class UpdateInfluenceInRoom {
 				System.out.println("Objective found by " + agtMeasurementDrone.hashCode() + "as measurementDrone agent.\n");
 				SwarmMain.abordSimulation();
 			}
-		}else if(parameters.resolutionType == "pso" && parameters.objectiveType == 2){
+		}else if(parameters.resolutionType == 2 && parameters.objectiveType == 2){
 			Vector3d repulsionAcc = new Vector3d(); 
 			int nbOfDronesInRepulsionArea;
 			//Calculation of different influences	
@@ -292,7 +292,7 @@ public class UpdateInfluenceInRoom {
 			}else if (agtMeasurementDrone.getLocation().z > parameters.roomBounds.z - parameters.securityDistance){
 				agtMeasurementDrone.setInfluence(0,0,-5*parameters.maxAcc);
 			}
-		}else if (parameters.resolutionType == "position minimum" && (parameters.objectiveType == 1 || parameters.objectiveType == 2)){
+		}else if (parameters.resolutionType == 1 && (parameters.objectiveType == 1 || parameters.objectiveType == 2)){
 			
 		}
 	}

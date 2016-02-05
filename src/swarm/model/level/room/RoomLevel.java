@@ -111,7 +111,7 @@ public class RoomLevel extends AbstractLevel {
 			}
 		}
 		
-		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "position minimum" && (SwarmMain.getSimulationModel().getParameters().objectiveType == 2 || SwarmMain.getSimulationModel().getParameters().objectiveType == 1)){
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == 1 && (SwarmMain.getSimulationModel().getParameters().objectiveType == 2 || SwarmMain.getSimulationModel().getParameters().objectiveType == 1)){
 			SwarmMain.getSimulationModel().getGraph().updateCostMatrix(droneUpdateList);
 		}
 		
@@ -136,7 +136,7 @@ public class RoomLevel extends AbstractLevel {
 		
 		//Influences on "measurement drones" agents
 		for(AgtMeasurementDronePLSInRoom agtMeasurementDrone : measurementUpdateList){
-			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && SwarmMain.getSimulationModel().getParameters().resolutionType == "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2)
+			if (agtMeasurementDrone.bestOwnFitness>bestAllFitness && SwarmMain.getSimulationModel().getParameters().resolutionType == 2 && SwarmMain.getSimulationModel().getParameters().objectiveType == 2)
 				{
 				bestAllFitness=agtMeasurementDrone.bestOwnFitness;
 				bestAllPos.set(agtMeasurementDrone.getLocation().getX(),agtMeasurementDrone.getLocation().getY(),agtMeasurementDrone.getLocation().getZ());
@@ -258,7 +258,7 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtMeasurementDronePLSInRoom> dronesUpdateList,
 		InfluencesMap remainingInfluences
 	){	
-		if (SwarmMain.getSimulationModel().getParameters().resolutionType == "pso" && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType == 2 && SwarmMain.getSimulationModel().getParameters().objectiveType == 2) {
 			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
 				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters(), roomEnvState);
 
@@ -283,7 +283,7 @@ public class RoomLevel extends AbstractLevel {
 		Set<AgtDronePLSInRoom> dronesUpdateList,
 		InfluencesMap remainingInfluences
 	){		
-		if (SwarmMain.getSimulationModel().getParameters().resolutionType != "pso" || SwarmMain.getSimulationModel().getParameters().objectiveType != 2) {
+		if (SwarmMain.getSimulationModel().getParameters().resolutionType != 2 || SwarmMain.getSimulationModel().getParameters().objectiveType != 2) {
 			for (AgtDronePLSInRoom agtDrone : dronesUpdateList) {
 
 				UpdatePositionInRoom.UpdateDronePosition(agtDrone, SwarmMain.getSimulationModel().getParameters(),roomEnvState);

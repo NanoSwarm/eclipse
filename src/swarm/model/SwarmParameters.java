@@ -191,7 +191,7 @@ public class SwarmParameters extends LogoSimulationParameters{
 	 * resolutionType = "position minimum" -> the drones use a graph searching algorithm to do a full space search.
 	 * resolutionType = "pso" -> the drones use pso algorithm to find a local maximum.
 	 */
-	public String resolutionType;
+	public int resolutionType;
 
 	public double alphaPSO;
 	public double betaPSO;
@@ -265,12 +265,8 @@ public class SwarmParameters extends LogoSimulationParameters{
 		  this.securityDistance=Integer.parseInt(prop.getProperty("securityDistance"));
 		  this.simulationTime=Integer.parseInt(prop.getProperty("simulationTime"));
 		  this.objectiveType=Integer.parseInt(prop.getProperty("objectiveType"));
-		  
-		  if (Integer.parseInt(prop.getProperty("resolutionType")) == 1){
-			  this.resolutionType = "position minimum";
-		  }else if (Integer.parseInt(prop.getProperty("resolutionType")) == 2){
-			  this.resolutionType = "pso";
-		  }
+		  this.resolutionType=Integer.parseInt(prop.getProperty("resolutionType"));
+
 		  
 		  this.maxInitialSpeed=Double.parseDouble(prop.getProperty("maxInitialSpeed"));
 		  this.minInitialSpeed=Double.parseDouble(prop.getProperty("minInitialSpeed"));

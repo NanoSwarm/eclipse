@@ -1,8 +1,10 @@
 package swarm.interfaceSimulation;
 
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,17 +13,26 @@ import java.awt.event.WindowListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Properties;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import swarm.model.SwarmParameters;
+import swarm.model.agents.SwarmAgentCategoriesList;
 
 /**
  * 
@@ -67,13 +78,14 @@ public class ConfigInterface extends JFrame
 	private SpinnerLine roomBoundsYLine = null;
 	private SpinnerLine roomBoundsZLine = null;
 	
-	private SpinnerLine objectiveTypeLine = null;
-	private SpinnerLine resolutionTypeLine = null;
 	private SpinnerLine objectivePositionXLine = null;
 	private SpinnerLine objectivePositionYLine = null;
 	private SpinnerLine objectivePositionZLine = null;
 
+	public JComboBox<String> typeObjectiveList = null;
+	private JComboBox<String> resObjectiveList = null;
 	
+	private SwarmParameters param;
 	/**
 	 * 
 	 * @param parameters, the parameters of the simulation.
@@ -81,7 +93,7 @@ public class ConfigInterface extends JFrame
 	public ConfigInterface(SwarmParameters parameters)
 	{
 		super("Configuration");
-		
+		param=parameters;
 		JPanel container = new JPanel();		
 		GridBagLayout gblConfigInterface = new GridBagLayout();
 		GridBagConstraints configCons = new GridBagConstraints();
@@ -267,27 +279,6 @@ public class ConfigInterface extends JFrame
 				 * Mission parameters
 				 */
 				
-				else if(e.getSource().hashCode() == objectiveTypeLine.getSliderHashcode() && !configurationOK){
-					parameters.objectiveType = (int)objectiveTypeLine.sliderChanged();
-				}else if (e.getSource().hashCode() == objectiveTypeLine.getSpinnerHashcode() && !configurationOK){
-					parameters.objectiveType = (int)objectiveTypeLine.spinnerChanged();
-				}
-				
-				else if(e.getSource().hashCode() == resolutionTypeLine.getSliderHashcode()  && !configurationOK){
-					if((int)resolutionTypeLine.sliderChanged() == 1){
-						parameters.resolutionType = "position minimum" ;
-					}else if ((int)resolutionTypeLine.sliderChanged() == 2){
-						parameters.resolutionType = "pso" ;
-					}
-					
-					
-				}else if (e.getSource().hashCode() == resolutionTypeLine.getSpinnerHashcode() && !configurationOK){
-					if((int)resolutionTypeLine.spinnerChanged() == 1){
-						parameters.resolutionType = "position minimum" ;
-					}else if ((int)resolutionTypeLine.spinnerChanged() == 2 ){
-						parameters.resolutionType = "pso" ;
-					}
-				}
 				
 				else if(e.getSource().hashCode() == objectivePositionXLine.getSliderHashcode() && !configurationOK){
 					parameters.objectivePositionX = (int)objectivePositionXLine.sliderChanged();
@@ -582,34 +573,89 @@ public class ConfigInterface extends JFrame
 		 * Mission parameters
 		 */
 		new MyLabel("Mission parameters",gblConfigInterface,container);
-		objectiveTypeLine = new SpinnerLine(
-				"Objective Type :",
-				(int)parameters.objectiveType,
-				1,
-				3,
-				1,
-				gblConfigInterface, 
-				container,
-				changeListener
-				);
-		
-		int resType = 0;
-		if (parameters.resolutionType == "position minimum"){
-			resType = 1;
-		}else if (parameters.resolutionType == "pso"){
-			resType = 2;
+
+		String objectiveType = new String();
+		switch(parameters.objectiveType)
+		{
+			case 1 : objectiveType="point search";break;
+			case 2 : objectiveType="maximum search";break;
+			case 3 : objectiveType="boids";break;
 		}
 		
-		resolutionTypeLine = new SpinnerLine(
-				"Resolution Type :",
-				resType,
-				1,
-				2,
-				1,
-				gblConfigInterface, 
-				container,
-				changeListener
-				);
+		JLabel configInterObjTypeLabel = new JLabel("Objective Type :");
+		//GridBagConstraints configCons = new GridBagConstraints();
+		configCons.anchor = GridBagConstraints.WEST;
+		configCons.insets = new Insets(10,2,2,10);
+		configCons.gridwidth = 1;
+		gblConfigInterface.setConstraints(configInterObjTypeLabel, configCons);
+		container.add(configInterObjTypeLabel);
+		
+
+		
+		String[] typeObjective = { "point search", "maximum search", "boids"};			
+			
+		
+		typeObjectiveList = new JComboBox<String>(new DefaultComboBoxModel<String>(typeObjective));
+	        
+		Dimension d = typeObjectiveList.getPreferredSize();
+        d.width = 140;
+        typeObjectiveList.setPreferredSize(d);
+
+		typeObjectiveList.setSelectedIndex(parameters.objectiveType-1);
+		typeObjectiveList.setEditable(false);
+		typeObjectiveList.addActionListener(this);
+		typeObjectiveList.setActionCommand("Objectivetype");	
+		configCons.gridwidth = 1;
+		gblConfigInterface.setConstraints(typeObjectiveList, configCons);
+		container.add(typeObjectiveList);
+				
+		JLabel configInterObjTypeDefaultValueLabel = new JLabel("Default : "+objectiveType);
+		configCons.gridwidth = GridBagConstraints.REMAINDER;
+		gblConfigInterface.setConstraints(configInterObjTypeDefaultValueLabel, configCons);
+		container.add(configInterObjTypeDefaultValueLabel);
+		
+
+
+		String resType = new String();
+		switch(parameters.resolutionType)
+		{
+			case 1 : resType = "position minimum";break;
+			case 2 : resType = "pso";break;
+		}
+		
+		JLabel configInterResTypeLabel = new JLabel("Resolution Type :");
+		//GridBagConstraints configCons = new GridBagConstraints();
+		configCons.anchor = GridBagConstraints.WEST;
+		configCons.insets = new Insets(10,2,2,10);
+		configCons.gridwidth = 1;
+		gblConfigInterface.setConstraints(configInterResTypeLabel, configCons);
+		container.add(configInterResTypeLabel);
+		
+
+		
+		String[] resObjective = { "position minimum", "pso"};			
+			
+		
+		resObjectiveList = new JComboBox<String>(new DefaultComboBoxModel<String>(resObjective));
+	        
+		Dimension d1 = resObjectiveList.getPreferredSize();
+        d1.width = 140;
+        resObjectiveList.setPreferredSize(d);
+
+        resObjectiveList.setSelectedIndex(parameters.resolutionType-1);
+        resObjectiveList.setEditable(false);
+        resObjectiveList.addActionListener(this);
+        resObjectiveList.setActionCommand("Resolutiontype");	
+		configCons.gridwidth = 1;
+		gblConfigInterface.setConstraints(resObjectiveList, configCons);
+		container.add(resObjectiveList);
+				
+		JLabel configInterResTypeDefaultValueLabel = new JLabel("Default : "+resType);
+		configCons.gridwidth = GridBagConstraints.REMAINDER;
+		gblConfigInterface.setConstraints(configInterResTypeDefaultValueLabel, configCons);
+		container.add(configInterResTypeDefaultValueLabel);	
+		
+		
 		
 		objectivePositionXLine = new SpinnerLine(
 				"Objective position X :",
@@ -672,7 +718,20 @@ public class ConfigInterface extends JFrame
 		if (e.getActionCommand().equals("Launch Simulation"))
 		{
 			configurationOK=true;
+			typeObjectiveList.setEnabled(false);
+
 		}
+		else if ((e.getActionCommand().equals("Objectivetype"))&& !configurationOK)
+		{
+			param.objectiveType=(typeObjectiveList.getSelectedIndex()+1);
+		
+		}
+		else if ((e.getActionCommand().equals("Resolutiontype"))&& !configurationOK)
+		{		
+			param.resolutionType=(resObjectiveList.getSelectedIndex()+1);
+		}
+			
+	
 	}
 
 	@Override
@@ -712,5 +771,42 @@ public class ConfigInterface extends JFrame
 	         input.close();
 
 	      }
+	}
+	public void setEnabled(boolean bool)
+	{
+
+		 initialEnergyLine.slider.setEnabled(bool);
+		 initialEnergyLine.spinner.setEnabled(bool);
+		 
+		 nbOfCameraDroneLine.slider.setEnabled(bool);
+		 nbOfCameraDroneLine.spinner.setEnabled(bool);
+		 nbOfCommunicatorDroneLine.slider.setEnabled(bool);
+		 nbOfCommunicatorDroneLine.spinner.setEnabled(bool);
+		 nbOfMeasurementDroneLine.slider.setEnabled(bool);
+		 nbOfMeasurementDroneLine.spinner.setEnabled(bool);
+		 nbOfMicrophoneDroneLine.slider.setEnabled(bool);
+		 nbOfMicrophoneDroneLine.spinner.setEnabled(bool);
+		 
+		 simulationTimeLine.slider.setEnabled(bool);
+		 simulationTimeLine.spinner.setEnabled(bool);
+		 roomBoundsXLine.slider.setEnabled(bool);
+		 roomBoundsXLine.spinner.setEnabled(bool);
+		 roomBoundsYLine.slider.setEnabled(bool);
+		 roomBoundsYLine.spinner.setEnabled(bool);
+		 roomBoundsZLine.slider.setEnabled(bool);
+		 roomBoundsZLine.spinner.setEnabled(bool);
+		 
+		 objectivePositionXLine.spinner.setEnabled(bool);
+		 objectivePositionXLine.slider.setEnabled(bool);
+		 objectivePositionYLine.spinner.setEnabled(bool);
+		 objectivePositionYLine.slider.setEnabled(bool);
+		 objectivePositionZLine.spinner.setEnabled(bool);
+		 objectivePositionZLine.slider.setEnabled(bool);
+		 typeObjectiveList.setEnabled(bool);
+		 resObjectiveList.setEnabled(bool);
+		
+		
+
+
 	}
 }

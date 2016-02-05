@@ -61,6 +61,7 @@ public class SwarmMain {
 			while (configInterface.configurationOK == false) {
 				System.out.print("");
 			}
+			configInterface.setEnabled(false);
 			// Create the simulation engine that will run simulations
 			engine = new EngineMonothreadedDefaultdisambiguation();
 			// Create the probes that will listen to the execution of the simulation.	
@@ -77,12 +78,12 @@ public class SwarmMain {
 			// Run the simulation.
 			engine.runNewSimulation(simulationModel);
 			configInterface.configurationOK = false;
+			configInterface.setEnabled(true);
 		}
 	}
 	
 	public static void abordSimulation(){
 		engine.requestSimulationAbortion();
-		resultInterface.setVisible(true);
 	}
 	
 	public static SwarmInitialization getSimulationModel(){

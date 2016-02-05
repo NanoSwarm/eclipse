@@ -47,6 +47,7 @@ import fr.lgi2a.similar.microkernel.ISimulationEngine;
 import fr.lgi2a.similar.microkernel.SimulationTimeStamp;
 import fr.lgi2a.similar.microkernel.agents.ILocalStateOfAgent;
 import fr.lgi2a.similar.microkernel.dynamicstate.IPublicLocalDynamicState;
+import swarm.SwarmMain;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.SwarmAgentCategoriesList;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
@@ -106,6 +107,7 @@ public class ProbeJFrame3D extends JFrame implements IProbe{
 					{
 						setVisible(false);
 						dispose(); //Destroy the JFrame object
+						SwarmMain.abordSimulation();
 					}
 				});
 		 addComponentListener(new ComponentListener() {

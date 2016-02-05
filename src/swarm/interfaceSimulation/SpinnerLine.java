@@ -25,12 +25,12 @@ public class SpinnerLine {
 	/**
 	 * The slider of our interface.
 	 */
-	private JSlider slider;
+	public JSlider slider;
 	
 	/**
 	 * The spinner of our interface.
 	 */
-	private JSpinner spinner;
+	public JSpinner spinner;
 	
 	/**
 	 * the scale factor use to change the precision of the values.
