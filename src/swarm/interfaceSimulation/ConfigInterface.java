@@ -724,11 +724,24 @@ public class ConfigInterface extends JFrame
 		else if ((e.getActionCommand().equals("Objectivetype"))&& !configurationOK)
 		{
 			param.objectiveType=(typeObjectiveList.getSelectedIndex()+1);
+			String currentObjectiveType = typeObjectiveList.getSelectedItem().toString();
+			if (currentObjectiveType=="boids")
+			{
+				resObjectiveList.setEnabled(false);
+				resObjectiveList.setSelectedIndex(-1);
+			}
+			else
+			{
+				resObjectiveList.setEnabled(true);
+			}
+			
+
 		
 		}
 		else if ((e.getActionCommand().equals("Resolutiontype"))&& !configurationOK)
 		{		
 			param.resolutionType=(resObjectiveList.getSelectedIndex()+1);
+
 		}
 			
 	
@@ -805,7 +818,19 @@ public class ConfigInterface extends JFrame
 		 typeObjectiveList.setEnabled(bool);
 		 resObjectiveList.setEnabled(bool);
 		
-		
+		String currentType = resObjectiveList.getSelectedItem().toString();
+		if (currentType=="pso")
+		{
+			orientationDistanceLine.slider.setEnabled(bool);
+			orientationDistanceLine.spinner.setEnabled(bool);
+			orientationCoeffLine.spinner.setEnabled(bool);
+			orientationCoeffLine.slider.setEnabled(bool);
+			attractionDistanceLine.slider.setEnabled(bool);
+			attractionDistanceLine.spinner.setEnabled(bool);
+			attractionCoeffLine.spinner.setEnabled(bool);
+			attractionCoeffLine.slider.setEnabled(bool);
+						
+		}
 
 
 	}
