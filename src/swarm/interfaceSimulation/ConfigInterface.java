@@ -716,12 +716,13 @@ public class ConfigInterface extends JFrame
 		}
 		else if ((e.getActionCommand().equals("Objectivetype"))&& !configurationOK)
 		{
-			param.objectiveType=(typeObjectiveList.getSelectedIndex()+1);
-			String currentObjectiveType = new String(typeObjectiveList.getSelectedItem().toString());
+			param.objectiveType = (typeObjectiveList.getSelectedIndex()+1);
+			String currentObjectiveType = new String();
+			currentObjectiveType = typeObjectiveList.getSelectedItem().toString();
+			System.out.println(currentObjectiveType);
 			if (currentObjectiveType=="boids")
 			{
 				resObjectiveList.setEnabled(false);
-				resObjectiveList.setSelectedIndex(-1);
 			}
 			else
 			{
