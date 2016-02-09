@@ -712,14 +712,18 @@ public class ProbeInterface 	extends Frame
 	 */
 	public void createfiles()
 	{	
+		String slash =new String();
+		final String OS = System.getProperty("os.name").toLowerCase();
+		if (OS.indexOf("mac")>=0) slash ="/";
+		else if (OS.indexOf("win")>=0) slash ="\\";
 		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH-mm-ss");
 		Calendar cal = Calendar.getInstance();
 		String res=new String("Results "+dateFormat.format(cal.getTime()));
-		File measurementDroneFolder=new File("Results\\"+res+"\\MeasurementDrone"); 
-		File microphoneDroneFolder=new File("Results\\"+res+"\\MicrophoneDrone"); 
-		File cameraDroneFolder=new File("Results\\"+res+"\\CameraDrone"); 
-		File communicatorDroneFolder=new File("Results\\"+res+"\\CommunicatorDrone"); 	
-		File droneFolder=new File("Results\\"+res+"\\Drone"); 
+		File measurementDroneFolder=new File("Results"+slash+res+slash+"MeasurementDrone"); 
+		File microphoneDroneFolder=new File("Results"+slash+res+slash+"MicrophoneDrone"); 
+		File cameraDroneFolder=new File("Results"+slash+res+slash+"CameraDrone"); 
+		File communicatorDroneFolder=new File("Results"+slash+res+slash+"CommunicatorDrone"); 	
+		File droneFolder=new File("Results"+slash+res+slash+"Drone"); 
 		
 		deleteFolder(measurementDroneFolder);
 		deleteFolder(microphoneDroneFolder);
@@ -737,7 +741,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listDrone.length;k++)
 		{
 			 name=listDrone[k].substring(47,listDrone[k].length());
-			File f = new File ("Results\\"+res+"\\Drone\\"+name+".txt");
+			File f = new File ("Results"+slash+res+slash+"Drone"+slash+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -758,7 +762,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listMeasurementDrone.length;k++)
 		{
 			name=listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length());
-			File f = new File ("Results\\"+res+"\\MeasurementDrone\\"+name+".txt");
+			File f = new File ("Results"+slash+res+slash+"MeasurementDrone"+slash+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -779,7 +783,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listMicrophoneDrone.length;k++)
 		{
 			name=listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length());
-			File f = new File ("Results\\"+res+"\\MicrophoneDrone\\"+name+".txt");
+			File f = new File ("Results"+slash+res+slash+"MicrophoneDrone"+slash+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -800,7 +804,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listCameraDrone.length;k++)
 		{
 			name=listCameraDrone[k].substring(59,listCameraDrone[k].length());
-			File f = new File ("Results\\"+res+"\\CameraDrone\\"+name+".txt");
+			File f = new File ("Results"+slash+res+slash+"CameraDrone"+slash+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -821,7 +825,7 @@ public class ProbeInterface 	extends Frame
 		for (int k=0;k<listCommunicatorDrone.length;k++)
 		{
 			name=listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length());
-			File f = new File ("Results\\"+res+"\\CommunicatorDrone\\"+name+".txt");
+			File f = new File ("Results"+slash+res+slash+"CommunicatorDrone"+slash+name+".txt");
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
@@ -839,7 +843,7 @@ public class ProbeInterface 	extends Frame
 				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 			}
 		}
-		File f = new File ("Results\\"+res+"\\Propertiesused.txt");
+		File f = new File ("Results"+slash+res+slash+"Propertiesused.txt");
 		try
 		{
 		    FileWriter fw = new FileWriter (f);
