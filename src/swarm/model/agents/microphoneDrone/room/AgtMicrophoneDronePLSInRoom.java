@@ -7,7 +7,7 @@ import com.sun.j3d.utils.geometry.Primitive;
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * create a microphone agent and initialize it in the room in public local state 
  *
  */

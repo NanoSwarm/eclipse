@@ -58,7 +58,7 @@ import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 /**
  * 
- * @author Alexandre JIN
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The probe displaying the simulation 3D
  *
  */

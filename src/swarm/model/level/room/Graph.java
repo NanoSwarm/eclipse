@@ -9,10 +9,9 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * the graph use to ensure a full space coverage the space is divided in cubes depending on the 
  * precisions of the different measures.
- * @author Corentin Muselet
- *
  */
 
 public class Graph {

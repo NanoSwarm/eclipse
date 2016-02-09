@@ -8,6 +8,12 @@ import fr.lgi2a.similar.microkernel.influences.RegularInfluence;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ * This influence is sent by the environment to the "Room" level to trigger the computation 
+ * of the new acceleration, speed and location of the "Measurement Drone" agents.
+ */
 public class RIUpdateMeasurementDroneSpatialStateInRoom extends RegularInfluence{
 	/**
 	 * The category of this influence.

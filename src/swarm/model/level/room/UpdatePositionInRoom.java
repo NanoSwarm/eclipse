@@ -7,7 +7,7 @@ import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.environment.Objective;
 import swarm.model.environment.room.EnvPLSInRoom;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * Calculates the new position after the influences on agent are made.
  *
  */

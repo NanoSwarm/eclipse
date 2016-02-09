@@ -6,7 +6,8 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
-/*
+/**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * has a method to generate a microphone agent
  */
 public class AgtMicrophoneDroneFactory {

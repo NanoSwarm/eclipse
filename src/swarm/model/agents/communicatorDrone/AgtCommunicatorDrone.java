@@ -3,6 +3,11 @@ package swarm.model.agents.communicatorDrone;
 import fr.lgi2a.similar.microkernel.libs.generic.PassiveAgent;
 import swarm.model.agents.SwarmAgentCategoriesList;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ *
+ */
 public class AgtCommunicatorDrone extends PassiveAgent{
 	
 	/**

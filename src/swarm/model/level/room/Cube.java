@@ -2,6 +2,7 @@ package swarm.model.level.room;
 
 import javax.vecmath.Vector3d;
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * an element which composes the graph 
  *
  */

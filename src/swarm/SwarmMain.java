@@ -71,7 +71,11 @@ import swarm.probes.ProbeInterface;
 import swarm.probes.ProbeJFrame3D;
 
 
-
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ * The main class starting the simulation.
+ */
 public class SwarmMain {
 	
 	public static SwarmInitialization simulationModel;

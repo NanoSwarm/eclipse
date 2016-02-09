@@ -15,7 +15,7 @@ import swarm.model.level.room.Graph;
 @SuppressWarnings("serial")
 /**
  * 
- * @author Alexandre JIN
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The tool to repaint the map space after each change of z level
  *
  */

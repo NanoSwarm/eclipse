@@ -8,6 +8,11 @@ import fr.lgi2a.similar.microkernel.influences.RegularInfluence;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ * Influence sent by the level room to trigger the computation of the energy of the drones
+ */
 public class RIUpdateDroneEnergyLevelInRoom extends RegularInfluence{
 	/**
 	 * The category of this influence.

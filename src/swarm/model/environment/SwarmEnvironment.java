@@ -25,6 +25,7 @@ import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
 
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The environment used in the "swarm" simulation.
  */
 public class SwarmEnvironment extends AbstractEnvironment {

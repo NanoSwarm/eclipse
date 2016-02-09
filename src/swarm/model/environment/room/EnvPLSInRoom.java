@@ -8,6 +8,7 @@ import swarm.model.level.SwarmLevelList;
 import swarm.model.level.room.Graph;
 
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The public local state of the environment in the "Room" level.
  */
 public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {

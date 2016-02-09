@@ -6,7 +6,9 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.cameraDrone.room.AgtCameraDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
-/*
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * has a method to generate a camera agent
  */
 public class AgtCameraDroneFactory {

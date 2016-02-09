@@ -7,7 +7,7 @@ import javax.vecmath.Vector3d;
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * Calculates the energy consumption
  *
  */

@@ -7,6 +7,11 @@ import com.sun.j3d.utils.geometry.Primitive;
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ * allow the generation of Communicator drones in the room.
+ */
 public class AgtCommunicatorDronePLSInRoom extends AgtDronePLSInRoom {
 	
 	public Primitive forme;

@@ -8,9 +8,8 @@ import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar2logo.kernel.model.LogoSimulationParameters;
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The parameters of the simulation
- * 
- *
  */
 public class SwarmParameters extends LogoSimulationParameters{
 	

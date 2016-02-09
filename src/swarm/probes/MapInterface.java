@@ -24,7 +24,7 @@ import swarm.model.SwarmParameters;
 @SuppressWarnings("serial")
 /**
  * 
- * @author Alexandre JIN
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The probe displaying the map of the space explored.
  *
  */

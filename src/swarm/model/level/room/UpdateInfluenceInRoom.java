@@ -14,7 +14,7 @@ import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.Objective;
 import swarm.tools.RandomValueFactory;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * Calculates all the influence before setting them
  *
  */

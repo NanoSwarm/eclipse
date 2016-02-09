@@ -2,7 +2,7 @@ package swarm.model.environment;
 
 import javax.vecmath.Vector3d;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * Used to define the objective settings 
  *
  */

@@ -9,7 +9,7 @@ import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.environment.Objective;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * create a measurement agent and initialize it in the room in public local state 
  *
  */

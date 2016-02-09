@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
 
 /**
  * 
- * @author Corentin
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The object including all the elements of a line in our interface.
  */
 public class SpinnerLine {

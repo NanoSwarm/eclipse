@@ -26,6 +26,11 @@ import swarm.model.influences.toRoom.RIUpdateMeasurementDroneSpatialStateInRoom;
 import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ *  The only level in our simulation.
+ */
 public class RoomLevel extends AbstractLevel {
 	/**
 	 * the best fitness of all the measurement drones

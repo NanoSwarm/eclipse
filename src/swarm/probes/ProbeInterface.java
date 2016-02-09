@@ -55,7 +55,7 @@ import swarm.model.level.SwarmLevelList;
 @SuppressWarnings("serial")
 /**
  * 
- * @author Alexandre JIN
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The probe displaying the chart of the energy consumption and the creation of the files
  *
  */

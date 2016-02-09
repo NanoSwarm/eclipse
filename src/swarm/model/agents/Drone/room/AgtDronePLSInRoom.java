@@ -15,7 +15,7 @@ import swarm.SwarmMain;
 import swarm.model.level.SwarmLevelList;
 import swarm.model.level.room.Cube;
 /**
- * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * create an agent and initialize it in the room in public local state 
  *
  */

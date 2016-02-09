@@ -29,7 +29,7 @@ import swarm.model.SwarmParameters;
 
 /**
  * 
- * @author akanash
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The main interface, used to change the parameters before the simulation.
  */
 public class ConfigInterface extends JFrame

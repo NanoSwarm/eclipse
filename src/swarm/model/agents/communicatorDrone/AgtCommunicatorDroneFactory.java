@@ -7,6 +7,11 @@ import swarm.model.agents.communicatorDrone.room.AgtCommunicatorDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
 
+/**
+ * 
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
+ * the factory for communicator drones, create the drone in the environment.
+ */
 public class AgtCommunicatorDroneFactory {
 	
 	/**

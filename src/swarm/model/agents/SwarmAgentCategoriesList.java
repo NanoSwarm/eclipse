@@ -3,6 +3,7 @@ package swarm.model.agents;
 import fr.lgi2a.similar.microkernel.AgentCategory;
 
 /**
+ * @author Alexandre Jin, Corentin Muselet, Mathieu Varinas, Marc Verraes.
  * The list of levels of a "Swarm" simulation.
  */
 public class SwarmAgentCategoriesList {
