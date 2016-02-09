@@ -14,18 +14,22 @@ import fr.lgi2a.similar.microkernel.libs.abstractimpl.AbstractLocalStateOfAgent;
 import swarm.SwarmMain;
 import swarm.model.level.SwarmLevelList;
 import swarm.model.level.room.Cube;
-
+/**
+ * 
+ * create an agent and initialize it in the room in public local state 
+ *
+ */
 public class AgtDronePLSInRoom extends AbstractLocalStateOfAgent {
-	/**
-	 * 
+	/*
+	 * the transformgroup of the drone in the 3D Probe
 	 */
 	public TransformGroup transformGroup;
-	/**
-	 * 
+	/*
+	 * the shape of the drone in the 3D Probe
 	 */
 	public Primitive forme;
-	/**
-	 * 
+	/*
+	 * the color of the drone in the 3D Probe
 	 */
 	public Color3f color;
 	

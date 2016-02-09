@@ -7,7 +7,11 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Vector3d;
 
 import fr.lgi2a.similar2logo.kernel.model.LogoSimulationParameters;
-
+/**
+ * The parameters of the simulation
+ * 
+ *
+ */
 public class SwarmParameters extends LogoSimulationParameters{
 	
 	/**

@@ -27,8 +27,13 @@ import swarm.model.influences.toRoom.RIUpdateMicrophoneDroneSpatialStateInRoom;
 import swarm.model.level.SwarmLevelList;
 
 public class RoomLevel extends AbstractLevel {
-	
+	/**
+	 * the best fitness of all the measurement drones
+	 */
 	public static double bestAllFitness=0;
+	/*
+	 * the best position of all the measurement drones
+	 */
 	public static Vector3d bestAllPos=new Vector3d(0,0,0);
 	
 	/**

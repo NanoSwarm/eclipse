@@ -8,19 +8,40 @@ import com.sun.j3d.utils.geometry.Primitive;
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.environment.Objective;
-
+/**
+ * 
+ * create a measurement agent and initialize it in the room in public local state 
+ *
+ */
 public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
-
+	/*
+	 * the fitness to measure its performance
+	 */
 	public double fitness;
+	/*
+	 * the best known position for pso
+	 */
 	public Vector3d bestOwnPos;
+	/*
+	 * the best known fitness
+	 */
 	public double bestOwnFitness;
+	/*
+	 * to get the fitness
+	 */
 	public double getFitness(){
 		return fitness;
 	}
+	/*
+	 * calculate the fitness of the drone
+	 */
 	public void calculateFitness()
 	{
 		fitness=Objective.getObjective(this.getLocation());
 	}
+	/*
+	 * compare the current fitness to its best known one
+	 */
 	public void updateFitness()
 	{
 		if (fitness>bestOwnFitness)
@@ -29,6 +50,9 @@ public class AgtMeasurementDronePLSInRoom extends AgtDronePLSInRoom{
 			bestOwnPos.set(this.getLocation().getX(),this.getLocation().getY(),this.getLocation().getZ());
 		}
 	}
+	/*
+	 * the shape of the drone in the 3D Probe
+	 */
 	public Primitive forme;
 	/**
 	 * 

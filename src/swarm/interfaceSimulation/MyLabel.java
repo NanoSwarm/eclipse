@@ -6,7 +6,11 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * 
+ * custom label 
+ *
+ */
 public class MyLabel {
 	
 	public MyLabel(String txt, GridBagLayout gblConfigInterface,JPanel configInterface){

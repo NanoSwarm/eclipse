@@ -6,7 +6,9 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
-
+/*
+ * has a method to generate an measurement agent
+ */
 public class AgtMeasurementDroneFactory {
 	
 	/**

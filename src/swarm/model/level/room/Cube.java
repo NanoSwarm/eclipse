@@ -1,7 +1,10 @@
 package swarm.model.level.room;
 
 import javax.vecmath.Vector3d;
-
+/**
+ * an element which composes the graph 
+ *
+ */
 public class Cube {
 	
 	private Vector3d position;

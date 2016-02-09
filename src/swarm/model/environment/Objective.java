@@ -1,17 +1,21 @@
 package swarm.model.environment;
 
 import javax.vecmath.Vector3d;
-
+/**
+ * 
+ * Used to define the objective settings 
+ *
+ */
 public class Objective {
 	
 	
 	/**
-	 * 
+	 * the position of the objective
 	 */
 	private static Vector3d objectivePosition;
 	
 	/**
-	 * 
+	 * defines the behavior of the swarm
 	 */
 	private static int ObjectiveType;
 	

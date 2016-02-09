@@ -6,7 +6,11 @@ import javax.vecmath.Vector3d;
 
 import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
-
+/**
+ * 
+ * Calculates the energy consumption
+ *
+ */
 public class UpdateEnergyLevelInRoom {
 	
 	/**

@@ -13,7 +13,11 @@ import swarm.model.agents.measurementDrone.room.AgtMeasurementDronePLSInRoom;
 import swarm.model.agents.microphoneDrone.room.AgtMicrophoneDronePLSInRoom;
 import swarm.model.environment.Objective;
 import swarm.tools.RandomValueFactory;
-
+/**
+ * 
+ * Calculates all the influence before setting them
+ *
+ */
 public class UpdateInfluenceInRoom {
 	
 	/**

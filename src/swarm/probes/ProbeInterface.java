@@ -663,7 +663,7 @@ public class ProbeInterface 	extends Frame
 		createfiles();
 	}
 	/**
-	 * calculates the the totals of each type of drone.
+    * calculates the the totals of each type of drone.
 	 */
 	public void calculateTotals()
 	{

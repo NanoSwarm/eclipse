@@ -6,7 +6,9 @@ import swarm.model.SwarmParameters;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
 import swarm.model.level.SwarmLevelList;
 import swarm.tools.RandomValueFactory;
-
+/*
+ * has a method to generate an agent
+ */
 public class AgtDroneFactory {
 	
 	/**

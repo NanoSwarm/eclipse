@@ -1,7 +1,11 @@
 package swarm.model.level;
 
 import fr.lgi2a.similar.microkernel.LevelIdentifier;
-
+/**
+ * 
+ * The list of all the levels of the simulation
+ *
+ */
 public class SwarmLevelList {
 	
 	/**

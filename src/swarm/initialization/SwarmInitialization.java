@@ -24,7 +24,10 @@ import swarm.model.level.SwarmLevelList;
 import swarm.model.level.room.Graph;
 import swarm.model.level.room.RoomLevel;
 import swarm.tools.RandomValueFactory;
-
+/**
+ * Initilization of the model of simulation
+ *
+ */
 public class SwarmInitialization extends AbstractSimulationModel{
 	
 	private Graph graph;

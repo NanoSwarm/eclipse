@@ -6,9 +6,16 @@ import com.sun.j3d.utils.geometry.Primitive;
 
 import fr.lgi2a.similar.microkernel.agents.IAgent4Engine;
 import swarm.model.agents.Drone.room.AgtDronePLSInRoom;
-
+/**
+ * 
+ * create a microphone agent and initialize it in the room in public local state 
+ *
+ */
 public class AgtMicrophoneDronePLSInRoom extends AgtDronePLSInRoom {
-public Primitive forme;
+	/*
+	 * the shape of the drone in the 3D Probe
+	 */
+	public Primitive forme;
 
 	/**
 	 * 

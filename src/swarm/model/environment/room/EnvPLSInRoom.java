@@ -11,7 +11,9 @@ import swarm.model.level.room.Graph;
  * The public local state of the environment in the "Room" level.
  */
 public class EnvPLSInRoom extends AbstractLocalStateOfEnvironment {
-
+	/**
+	 * the graph of space
+	 */
 	private Graph graph;
 	
 	/**
