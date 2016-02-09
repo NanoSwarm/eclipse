@@ -717,7 +717,7 @@ public class ConfigInterface extends JFrame
 		else if ((e.getActionCommand().equals("Objectivetype"))&& !configurationOK)
 		{
 			param.objectiveType=(typeObjectiveList.getSelectedIndex()+1);
-			String currentObjectiveType = typeObjectiveList.getSelectedItem().toString();
+			String currentObjectiveType = new String(typeObjectiveList.getSelectedItem().toString());
 			if (currentObjectiveType=="boids")
 			{
 				resObjectiveList.setEnabled(false);
@@ -811,7 +811,8 @@ public class ConfigInterface extends JFrame
 		 typeObjectiveList.setEnabled(bool);
 		 resObjectiveList.setEnabled(bool);
 		
-		String currentType = resObjectiveList.getSelectedItem().toString();
+		String currentType = new String();
+		currentType=resObjectiveList.getSelectedItem().toString();
 		if (currentType=="pso")
 		{
 			orientationDistanceLine.slider.setEnabled(bool);
