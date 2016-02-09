@@ -735,9 +735,10 @@ public class ProbeInterface 	extends Frame
 		communicatorDroneFolder.mkdirs();
 		droneFolder.mkdirs();
 		//Creation of the files
+		String name=new String();
 		for (int k=0;k<listDrone.length;k++)
 		{
-			String name=listDrone[k].substring(47,listDrone[k].length());
+			 name=listDrone[k].substring(47,listDrone[k].length());
 			File f = new File ("Results\\"+res+"\\Drone\\"+name+".txt");
 			try
 			{
@@ -758,7 +759,7 @@ public class ProbeInterface 	extends Frame
 		}
 		for (int k=0;k<listMeasurementDrone.length;k++)
 		{
-			String name=listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length());
+			name=listMeasurementDrone[k].substring(69,listMeasurementDrone[k].length());
 			File f = new File ("Results\\"+res+"\\MeasurementDrone\\"+name+".txt");
 			try
 			{
@@ -779,7 +780,7 @@ public class ProbeInterface 	extends Frame
 		}
 		for (int k=0;k<listMicrophoneDrone.length;k++)
 		{
-			String name=listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length());
+			name=listMicrophoneDrone[k].substring(67,listMicrophoneDrone[k].length());
 			File f = new File ("Results\\"+res+"\\MicrophoneDrone\\"+name+".txt");
 			try
 			{
@@ -800,7 +801,7 @@ public class ProbeInterface 	extends Frame
 		}
 		for (int k=0;k<listCameraDrone.length;k++)
 		{
-			String name=listCameraDrone[k].substring(59,listCameraDrone[k].length());
+			name=listCameraDrone[k].substring(59,listCameraDrone[k].length());
 			File f = new File ("Results\\"+res+"\\CameraDrone\\"+name+".txt");
 			try
 			{
@@ -821,7 +822,7 @@ public class ProbeInterface 	extends Frame
 		}
 		for (int k=0;k<listCommunicatorDrone.length;k++)
 		{
-			String name=listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length());
+			name=listCommunicatorDrone[k].substring(71,listCommunicatorDrone[k].length());
 			File f = new File ("Results\\"+res+"\\CommunicatorDrone\\"+name+".txt");
 			try
 			{
