@@ -133,6 +133,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener
 			SimulationTimeStamp initialTimestamp,
 			ISimulationEngine simulationEngine
 	) {
+		drawer.setGraph(simulationEngine);
 		
 	}
 
@@ -151,6 +152,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener
 	 */
 	@Override
 	public void endObservation() {
+		this.setVisible(true);
 	}
 
 	/**
@@ -178,8 +180,7 @@ public class MapInterface extends JFrame implements IProbe,ActionListener
 			SimulationTimeStamp timestamp,
 			ISimulationEngine simulationEngine
 	) { 
-		drawer.setGraph(simulationEngine);
-		this.setVisible(true);
+
 	}
 	
 }

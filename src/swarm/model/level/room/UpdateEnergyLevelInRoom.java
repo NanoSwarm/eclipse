@@ -19,17 +19,17 @@ public class UpdateEnergyLevelInRoom {
 		 * The loss in energy is calculated directly from the influences 
 		 *(ie the forced applied by the drones on the environment).
 		 */
-
+		double gravity=9.81/100;
 		double energyDiff = parameters.basicDroneMass*(Math.abs(agtDrone.getAcceleration().x)+
 													   Math.abs(agtDrone.getAcceleration().y)+
-													   Math.abs(agtDrone.getAcceleration().z+9.81)+
+													   Math.abs(agtDrone.getAcceleration().z+gravity)+
 										       3.54465*Math.pow(10,-7)*(Math.pow(agtDrone.getAcceleration().x, 2)+
 												       Math.pow(agtDrone.getAcceleration().y, 2)+
-													   Math.pow(agtDrone.getAcceleration().z+9.81, 2)))*
+													   Math.pow(agtDrone.getAcceleration().z+gravity, 2)))*
 													   Math.sqrt(	
 															   Math.pow(agtDrone.getAcceleration().x, 2) +
 															   Math.pow(agtDrone.getAcceleration().y, 2) +
-															   Math.pow(agtDrone.getAcceleration().z+9.81, 2)
+															   Math.pow(agtDrone.getAcceleration().z+gravity, 2)
 															   );
 								    
 		

@@ -650,7 +650,7 @@ public class ProbeInterface 	extends Frame
 	) 
 	{
 	
-		setVisible(true);
+		
 	}
 	
 	/**
@@ -658,6 +658,7 @@ public class ProbeInterface 	extends Frame
 	 */
 	@Override
 	public void endObservation() {
+		setVisible(true);
 		calculateTotals();
 		createfiles();
 	}
